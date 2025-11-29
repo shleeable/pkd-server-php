@@ -1,0 +1,19 @@
+{
+    "source": {
+        "directories": [
+			"public",
+            "src"
+        ]
+    },
+    "threads": "max",
+    "minCoveredMsi": 50,
+    "phpUnit": {
+        "configDir": "."
+    },
+    "mutators": {
+        "@default": true
+    },
+    "logs": {
+        "text": "infection.log"
+    }
+}

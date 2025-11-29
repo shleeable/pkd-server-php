@@ -1,0 +1,71 @@
+<?php
+declare(strict_types=1);
+namespace FediE2EE\PKDServer;
+
+use Exception;
+use ParagonIE\EasyDB\EasyDB;
+use ParagonIE\EasyDB\EasyDBCache;
+use PDO;
+use RuntimeException;
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+function tableExists(EasyDB $db, string $tableName): bool
+{
+    try {
+        return match ($db->getDriver()) {
+            'mysql' => $db->exists(
+                "SELECT COUNT(*) FROM information_schema.tables 
+                         WHERE table_schema = DATABASE() 
+                         AND table_name = ?",
+                $tableName
+            ),
+            'pgsql' => $db->exists(
+                "SELECT COUNT(*) FROM information_schema.tables 
+                         WHERE table_schema = 'public' 
+                         AND table_name = ?",
+                $tableName
+            ),
+            'sqlite' => $db->exists(
+                "SELECT COUNT(*) FROM sqlite_master 
+                         WHERE type='table' AND name=?",
+                $tableName
+            ),
+            default => throw new RuntimeException("Unsupported driver: {$db->getDriver()}"),
+        };
+    } catch (Exception) {
+        return false;
+    }
+}
+
+if (!isset($GLOBALS['config'])) {
+    echo 'Could not load PHP config.', PHP_EOL;
+    exit(255);
+}
+if (!($GLOBALS['config'] instanceof ServerConfig)) {
+    echo 'Config is not an instance of the correct class.', PHP_EOL;
+    exit(254);
+}
+
+(function () {
+    $config = $GLOBALS['config'];
+    if (!($config instanceof ServerConfig)) {
+        echo 'Config is not an instance of the correct class.', PHP_EOL;
+        exit(253);
+    }
+    if ($config->getDb()->getDriver() === 'sqlite') {
+        if (!is_dir(__DIR__ . '/tmp/db/')) {
+            mkdir(__DIR__ . '/tmp/db/');
+        }
+        $temp = __DIR__ . '/tmp/db/' . sodium_bin2hex(random_bytes(16)) . '-test.db';
+        $config->withDatabase(new EasyDBCache(new PDO('sqlite:' . $temp)));
+    }
+    $db = $GLOBALS['config']->getDb();
+    if (!tableExists($db, 'pkd_merkle_state')) {
+        $argv_backup = $_SERVER['argv'];
+        $_SERVER['argv'] = [$_SERVER['argv'][0]];
+        require __DIR__ . '/cmd/init.php';
+        $_SERVER['argv'] = $argv_backup;
+        echo 'Imported!', PHP_EOL;
+    }
+})();

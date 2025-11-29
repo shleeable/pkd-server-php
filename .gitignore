@@ -1,0 +1,13 @@
+/.idea
+/config/local/
+/config/*.db
+/config/*.json
+/config/*.key
+!/config/local/.gitkeep
+/composer.lock
+/composer.phar
+/tmp/
+/tmp/*
+!/tmp/.gitkeep
+/vendor
+/.phpunit.cache
