@@ -1,5 +1,5 @@
 {
-  "name": "fedi-e2ee/pkd-server-php",
+  "name": "fedi-e2ee/pkd-server",
   "autoload": {
     "files": [
       "autoload.php"
