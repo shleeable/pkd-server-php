@@ -68,13 +68,14 @@ class WebFinger
         }
         return $this->lookupUsername($identifier);
     }
+
     /**
-     * @param string $identifier
-     * @return string
+     * Fetch an entire remote WebFinger response.
+     *
      * @throws GuzzleException
      * @throws NetworkException
      */
-    protected function lookupUsername(string $identifier): string
+    public function fetch(string $identifier): array
     {
         [, $host] = explode('@', $identifier);
         $url = "https://{$host}/.well-known/webfinger?resource=acct:{$identifier}";
@@ -86,6 +87,18 @@ class WebFinger
         if (!is_array($jrd)) {
             throw new NetworkException('Invalid JSON');
         }
+        return $jrd;
+    }
+
+    /**
+     * @param string $identifier
+     * @return string
+     * @throws GuzzleException
+     * @throws NetworkException
+     */
+    protected function lookupUsername(string $identifier): string
+    {
+        $jrd = $this->fetch($identifier);
         if (empty($jrd['subject'])) {
             throw new NetworkException('No subject found');
         }

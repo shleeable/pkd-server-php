@@ -60,9 +60,10 @@ $router->group('/api', function(RouteGroup $r) use ($router) {
 });
 // ActivityPub integration
 $router->map('GET', '/.well-known/webfinger', Finger::class);
-$router->map('GET', '/users/{user_id}/inbox', Inbox::class);
+$router->map(['GET', 'POST'], '/users/{user_id}/inbox', Inbox::class);
 $router->map('GET', '/users/{user_id}', UserPage::class);
 
+// Index page just to have something basic:
 $router->map('GET', '/', IndexPage::class);
 
 return $router;
