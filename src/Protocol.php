@@ -15,6 +15,7 @@ use FediE2EE\PKDServer\Exceptions\{
     TableException
 };
 use FediE2EE\PKDServer\{
+    ActivityPub\ActivityStream,
     ActivityPub\WebFinger,
     Protocol\Payload
 };
@@ -39,6 +40,11 @@ class Protocol
     public function __construct(private readonly ServerConfig $config)
     {
         $this->parser = new Parser();
+    }
+
+    public function process(ActivityStream $enqueued): void
+    {
+        // TODO
     }
 
     /**
