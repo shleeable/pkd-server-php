@@ -8,7 +8,6 @@
 [![Fuzzing](https://github.com/fedi-e2ee/pkd-server-php/actions/workflows/fuzz.yml/badge.svg)](https://github.com/fedi-e2ee/pkd-server-php/actions/workflows/fuzz.yml)
 [![Mutation Testing](https://github.com/fedi-e2ee/pkd-server-php/actions/workflows/infection.yml/badge.svg)](https://github.com/fedi-e2ee/pkd-server-php/actions/workflows/infection.yml)  
 [![Latest Stable Version](https://poser.pugx.org/fedi-e2ee/pkd-server/v/stable)](https://packagist.org/packages/fedi-e2ee/pkd-server)
-[![Latest Unstable Version](https://poser.pugx.org/fedi-e2ee/pkd-server/v/unstable)](https://packagist.org/packages/fedi-e2ee/pkd-server)
 [![License](https://poser.pugx.org/fedi-e2ee/pkd-server/license)](https://packagist.org/packages/fedi-e2ee/pkd-server)
 [![Downloads](https://img.shields.io/packagist/dt/fedi-e2ee/pkd-server.svg)](https://packagist.org/packages/fedi-e2ee/pkd-server)
 
