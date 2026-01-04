@@ -34,16 +34,15 @@ use FediE2EE\PKDServer\RequestHandlers\Api\{
     Revoke,
     ServerPublicKey
 };
-use FediE2EE\PKDServer\{
-    ActivityPub\WebFinger,
+use FediE2EE\PKDServer\{ActivityPub\WebFinger,
     AppCache,
     Dependency\WrappedEncryptedRow,
+    Math,
     Protocol,
     Protocol\Payload,
     ServerConfig,
     Table,
-    TableCache
-};
+    TableCache};
 use FediE2EE\PKDServer\Exceptions\{
     CacheException,
     DependencyException,
@@ -108,6 +107,7 @@ use SodiumException;
 #[UsesClass(TableCache::class)]
 #[UsesClass(WebFinger::class)]
 #[UsesClass(WrappedEncryptedRow::class)]
+#[UsesClass(Math::class)]
 class ApiTest extends TestCase
 {
     use ConfigTrait;
@@ -116,6 +116,7 @@ class ApiTest extends TestCase
     public function setUp(): void
     {
         $this->config = $this->getConfig();
+        $this->truncateTables();
     }
 
     #[After]
@@ -296,6 +297,7 @@ class ApiTest extends TestCase
 
         $this->assertNotInTransaction();
         $response = $listKeysHandler->handle($request);
+        $this->assertNotInTransaction();
         $this->assertSame(200, $response->getStatusCode());
         $body = json_decode($response->getBody()->getContents(), true);
         $this->assertSame('fedi-e2ee:v1/api/actor/get-keys', $body['!pkd-context']);
@@ -410,6 +412,7 @@ class ApiTest extends TestCase
 
         $this->assertNotInTransaction();
         $response = $listAuxDataHandler->handle($request);
+        $this->assertNotInTransaction();
         $this->assertSame(200, $response->getStatusCode());
         $body = json_decode($response->getBody()->getContents(), true);
         $this->assertSame('fedi-e2ee:v1/api/actor/aux-info', $body['!pkd-context']);
@@ -433,6 +436,7 @@ class ApiTest extends TestCase
 
         $this->assertNotInTransaction();
         $response = $getAuxDataHandler->handle($request);
+        $this->assertNotInTransaction();
         $this->assertSame(200, $response->getStatusCode());
         $body = json_decode($response->getBody()->getContents(), true);
         $this->assertSame('fedi-e2ee:v1/api/actor/get-aux', $body['!pkd-context']);
@@ -504,6 +508,7 @@ class ApiTest extends TestCase
         $this->assertNotInTransaction();
         $request = $this->makeGetRequest('/api/history');
         $response = $historyHandler->handle($request);
+        $this->assertNotInTransaction();
         $this->assertSame(200, $response->getStatusCode());
         $body = json_decode($response->getBody()->getContents(), true);
         $this->assertSame('fedi-e2ee:v1/api/history', $body['!pkd-context']);
@@ -521,6 +526,7 @@ class ApiTest extends TestCase
         $request = $this->makeGetRequest('/api/history/since/' . urlencode($latestRoot));
         $request = $request->withAttribute('hash', $latestRoot);
         $response = $sinceHandler->handle($request);
+        $this->assertNotInTransaction();
         $this->assertSame(200, $response->getStatusCode());
         $body = json_decode($response->getBody()->getContents(), true);
         $this->assertSame('fedi-e2ee:v1/api/history/since', $body['!pkd-context']);
@@ -566,6 +572,7 @@ class ApiTest extends TestCase
         $this->assertNotInTransaction();
         $request = $this->makeGetRequest('/api/extensions');
         $response = $extensionsHandler->handle($request);
+        $this->assertNotInTransaction();
         $this->assertSame(200, $response->getStatusCode());
         $body = json_decode($response->getBody()->getContents(), true);
         $this->assertSame('fedi-e2ee:v1/api/extensions', $body['!pkd-context']);
@@ -578,6 +585,7 @@ class ApiTest extends TestCase
         $this->assertNotInTransaction();
         $request = $this->makeGetRequest('/api/server-public-key');
         $response = $spkHandler->handle($request);
+        $this->assertNotInTransaction();
         $this->assertSame(200, $response->getStatusCode());
         $body = json_decode($response->getBody()->getContents(), true);
         $this->assertSame('fedi-e2ee:v1/api/server-public-key', $body['!pkd-context']);

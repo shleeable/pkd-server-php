@@ -22,15 +22,14 @@ use FediE2EE\PKDServer\RequestHandlers\Api\{
     Actor,
     ListKeys,
 };
-use FediE2EE\PKDServer\{
-    ActivityPub\WebFinger,
+use FediE2EE\PKDServer\{ActivityPub\WebFinger,
     AppCache,
     Dependency\WrappedEncryptedRow,
+    Math,
     Protocol,
     ServerConfig,
     Table,
-    TableCache
-};
+    TableCache};
 use FediE2EE\PKDServer\Exceptions\{
     CacheException,
     DependencyException,
@@ -84,6 +83,7 @@ use SodiumException;
 #[UsesClass(ServerConfig::class)]
 #[UsesClass(Table::class)]
 #[UsesClass(WrappedEncryptedRow::class)]
+#[UsesClass(Math::class)]
 class ActorLifecycleTest extends TestCase
 {
     use ConfigTrait;
@@ -92,6 +92,7 @@ class ActorLifecycleTest extends TestCase
     public function setUp(): void
     {
         $this->config = $this->getConfig();
+        $this->truncateTables();
     }
 
     /**
@@ -167,6 +168,7 @@ class ActorLifecycleTest extends TestCase
 
         // Test the HTTP response
         $response = $actorHandler->handle($request);
+        $this->assertNotInTransaction();
         $this->assertSame(200, $response->getStatusCode());
         $body = json_decode($response->getBody()->getContents(), true);
         $this->assertIsArray($body);
@@ -193,6 +195,7 @@ class ActorLifecycleTest extends TestCase
 
         // Verify with HTTP request
         $response = $actorHandler->handle($request);
+        $this->assertNotInTransaction();
         $this->assertSame(404, $response->getStatusCode());
         $body = json_decode($response->getBody()->getContents(), true);
         $this->assertIsArray($body);
