@@ -94,6 +94,9 @@ class Witness
      */
     protected function witnessFor(Peer $peer): void
     {
+        if ($this->db->inTransaction()) {
+            $this->db->commit();
+        }
         // Try to lock the table in case another process hits it too:
         switch ($this->db->getDriver()) {
             case 'pgsql':
@@ -172,6 +175,7 @@ class Witness
             // Save progress:
             $peer->tree = $cosignature->getTree();
             $this->peers->save($peer);
+            $this->db->commit();
         }
     }
 

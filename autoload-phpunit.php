@@ -60,14 +60,21 @@ if (!($GLOBALS['pkdConfig'] instanceof ServerConfig)) {
         }
         $temp = __DIR__ . '/tmp/db/' . sodium_bin2hex(random_bytes(16)) . '-test.db';
         $pkdConfig->withDatabase(new EasyDBCache(new PDO('sqlite:' . $temp)));
+
+        // Create second DB connection for testing concurrency
+        $GLOBALS['PKD_PHPUNIT_DB'] = new EasyDBCache(new PDO('sqlite:' . $temp));
+    } else {
+        // Create second DB connection for testing concurrency
+        $GLOBALS['PKD_PHPUNIT_DB'] = require __DIR__ . '/config/database.php';
     }
+
     $db = $GLOBALS['pkdConfig']->getDb();
     if (!tableExists($db, 'pkd_merkle_state')) {
         $argv_backup = $_SERVER['argv'];
         $_SERVER['argv'] = [$_SERVER['argv'][0]];
         require __DIR__ . '/cmd/init-database.php';
         $_SERVER['argv'] = $argv_backup;
-        if (tableExists($db, 'pkd_loh')) {
+        if (tableExists($db, 'pkd_log')) {
             echo 'Imported!', PHP_EOL;
         } else {
             // This is normally dangerous, but we need to trigger it again just to be sure:

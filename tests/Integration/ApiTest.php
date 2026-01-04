@@ -64,10 +64,7 @@ use FediE2EE\PKDServer\Tables\Records\{
 use FediE2EE\PKD\Extensions\ExtensionInterface;
 use FediE2EE\PKDServer\Tests\HttpTestTrait;
 use FediE2EE\PKDServer\Traits\ConfigTrait;
-use PHPUnit\Framework\Attributes\{
-    CoversClass,
-    UsesClass
-};
+use PHPUnit\Framework\Attributes\{After, CoversClass, UsesClass};
 use Mdanter\Ecc\Exception\InsecureCurveException;
 use ParagonIE\Certainty\Exception\CertaintyException;
 use ParagonIE\CipherSweet\Exception\{
@@ -121,6 +118,14 @@ class ApiTest extends TestCase
         $this->config = $this->getConfig();
     }
 
+    #[After]
+    public function commitDanglingTransaction(): void
+    {
+        if ($this->config->getDb()->inTransaction()) {
+            $this->config->getDb()->commit();
+        }
+    }
+
     /**
      * @throws ArrayKeyException
      * @throws BlindIndexNotFoundException
@@ -145,6 +150,7 @@ class ApiTest extends TestCase
         [$actorId, $canonical] = $this->makeDummyActor('example.com');
         $keypair = SecretKey::generate();
         $config = $this->getConfig();
+        $this->clearOldTransaction($config);
         $protocol = new Protocol($config);
         $webFinger = new WebFinger($config, $this->getMockClient([
             new Response(
@@ -174,7 +180,9 @@ class ApiTest extends TestCase
             $serverHpke->encapsKey,
             $serverHpke->cs
         );
+        $this->assertNotInTransaction();
         $protocol->addKey($encryptedForServer, $canonical);
+        $this->clearOldTransaction($config);
 
         // Add aux data
         $addAux = new AddAuxData($canonical, 'test', 'test');
@@ -189,7 +197,9 @@ class ApiTest extends TestCase
             $serverHpke->encapsKey,
             $serverHpke->cs
         );
+        $this->assertNotInTransaction();
         $protocol->addAuxData($encryptedForServer, $canonical);
+        $this->clearOldTransaction($config);
 
         $request = $this->makeGetRequest('/api/actor/' . urlencode($actorId));
         $request = $request->withAttribute('actor_id', $actorId);
@@ -203,6 +213,7 @@ class ApiTest extends TestCase
             $constructor->invoke($actorHandler);
         }
 
+        $this->assertNotInTransaction();
         $response = $actorHandler->handle($request);
         $this->assertSame(200, $response->getStatusCode());
         $body = json_decode($response->getBody()->getContents(), true);
@@ -210,6 +221,7 @@ class ApiTest extends TestCase
         $this->assertSame($canonical, $body['actor-id']);
         $this->assertSame(1, $body['count-aux']);
         $this->assertSame(1, $body['count-keys']);
+        $this->assertNotInTransaction();
     }
 
     /**
@@ -236,6 +248,7 @@ class ApiTest extends TestCase
         [$actorId, $canonical] = $this->makeDummyActor('example.com');
         $keypair = SecretKey::generate();
         $config = $this->getConfig();
+        $this->clearOldTransaction($config);
         $protocol = new Protocol($config);
         $webFinger = new WebFinger($config, $this->getMockClient([
             new Response(
@@ -265,7 +278,9 @@ class ApiTest extends TestCase
             $serverHpke->encapsKey,
             $serverHpke->cs
         );
+        $this->assertNotInTransaction();
         $protocol->addKey($encryptedForServer, $canonical);
+        $this->assertNotInTransaction();
 
         $request = $this->makeGetRequest('/api/actor/' . urlencode($actorId) . '/keys');
         $request = $request->withAttribute('actor_id', $actorId);
@@ -279,6 +294,7 @@ class ApiTest extends TestCase
             $constructor->invoke($listKeysHandler);
         }
 
+        $this->assertNotInTransaction();
         $response = $listKeysHandler->handle($request);
         $this->assertSame(200, $response->getStatusCode());
         $body = json_decode($response->getBody()->getContents(), true);
@@ -301,12 +317,14 @@ class ApiTest extends TestCase
             $constructor->invoke($getKeyHandler);
         }
 
+        $this->assertNotInTransaction();
         $response = $getKeyHandler->handle($request);
         $this->assertSame(200, $response->getStatusCode());
         $body = json_decode($response->getBody()->getContents(), true);
         $this->assertSame('fedi-e2ee:v1/api/actor/key-info', $body['!pkd-context']);
         $this->assertSame($canonical, $body['actor-id']);
         $this->assertSame($keypair->getPublicKey()->toString(), $body['public-key']);
+        $this->assertNotInTransaction();
     }
 
     /**
@@ -333,6 +351,7 @@ class ApiTest extends TestCase
         [$actorId, $canonical] = $this->makeDummyActor('example.com');
         $keypair = SecretKey::generate();
         $config = $this->getConfig();
+        $this->clearOldTransaction($config);
         $protocol = new Protocol($config);
         $webFinger = new WebFinger($config, $this->getMockClient([
             new Response(200, ['Content-Type' => 'application/json'], '{"subject":"' . $canonical . '"}')
@@ -358,6 +377,7 @@ class ApiTest extends TestCase
             $serverHpke->encapsKey,
             $serverHpke->cs
         );
+        $this->assertNotInTransaction();
         $protocol->addKey($encryptedForServer, $canonical);
 
         // Add aux data
@@ -373,6 +393,7 @@ class ApiTest extends TestCase
             $serverHpke->encapsKey,
             $serverHpke->cs
         );
+        $this->assertNotInTransaction();
         $protocol->addAuxData($encryptedForServer, $canonical);
 
         $request = $this->makeGetRequest('/api/actor/' . urlencode($actorId) . '/auxiliary');
@@ -387,6 +408,7 @@ class ApiTest extends TestCase
             $constructor->invoke($listAuxDataHandler);
         }
 
+        $this->assertNotInTransaction();
         $response = $listAuxDataHandler->handle($request);
         $this->assertSame(200, $response->getStatusCode());
         $body = json_decode($response->getBody()->getContents(), true);
@@ -409,6 +431,7 @@ class ApiTest extends TestCase
             $constructor->invoke($getAuxDataHandler);
         }
 
+        $this->assertNotInTransaction();
         $response = $getAuxDataHandler->handle($request);
         $this->assertSame(200, $response->getStatusCode());
         $body = json_decode($response->getBody()->getContents(), true);
@@ -416,6 +439,7 @@ class ApiTest extends TestCase
         $this->assertSame($canonical, $body['actor-id']);
         $this->assertSame('test', $body['aux-type']);
         $this->assertSame('test-data', $body['aux-data']);
+        $this->assertNotInTransaction();
     }
 
     /**
@@ -437,6 +461,7 @@ class ApiTest extends TestCase
         [$actorId, $canonical] = $this->makeDummyActor();
         $keypair = SecretKey::generate();
         $config = $this->getConfig();
+        $this->clearOldTransaction($config);
         $protocol = new Protocol($config);
         $webFinger = new WebFinger($config, $this->getMockClient([
             new Response(200, ['Content-Type' => 'application/json'], '{"subject":"' . $canonical . '"}')
@@ -462,7 +487,9 @@ class ApiTest extends TestCase
             $serverHpke->encapsKey,
             $serverHpke->cs
         );
+        $this->assertNotInTransaction();
         $protocol->addKey($encryptedForServer, $canonical);
+        $this->assertNotInTransaction();
         $newRoot = $merkleState->getLatestRoot();
         $this->assertNotSame($newRoot, $latestRoot);
 
@@ -474,6 +501,7 @@ class ApiTest extends TestCase
             $constructor->invoke($historyHandler);
         }
 
+        $this->assertNotInTransaction();
         $request = $this->makeGetRequest('/api/history');
         $response = $historyHandler->handle($request);
         $this->assertSame(200, $response->getStatusCode());
@@ -489,6 +517,7 @@ class ApiTest extends TestCase
             $constructor->invoke($sinceHandler);
         }
 
+        $this->assertNotInTransaction();
         $request = $this->makeGetRequest('/api/history/since/' . urlencode($latestRoot));
         $request = $request->withAttribute('hash', $latestRoot);
         $response = $sinceHandler->handle($request);
@@ -506,6 +535,7 @@ class ApiTest extends TestCase
             $constructor->invoke($viewHandler);
         }
 
+        $this->assertNotInTransaction();
         $request = $this->makeGetRequest('/api/history/view/' . urlencode($newRoot));
         $request = $request->withAttribute('hash', $newRoot);
         $response = $viewHandler->handle($request);
@@ -513,6 +543,7 @@ class ApiTest extends TestCase
         $body = json_decode($response->getBody()->getContents(), true);
         $this->assertSame('fedi-e2ee:v1/api/history/view', $body['!pkd-context']);
         $this->assertSame($newRoot, $body['merkle-root']);
+        $this->assertNotInTransaction();
     }
 
     /**
@@ -527,10 +558,12 @@ class ApiTest extends TestCase
     public function testMetaEndpoints(): void
     {
         $config = $this->getConfig();
+        $this->clearOldTransaction($config);
         $reflector = new ReflectionClass(Extensions::class);
         $extensionsHandler = $reflector->newInstanceWithoutConstructor();
         $extensionsHandler->injectConfig($config);
 
+        $this->assertNotInTransaction();
         $request = $this->makeGetRequest('/api/extensions');
         $response = $extensionsHandler->handle($request);
         $this->assertSame(200, $response->getStatusCode());
@@ -542,12 +575,14 @@ class ApiTest extends TestCase
         $spkHandler = $reflector->newInstanceWithoutConstructor();
         $spkHandler->injectConfig($config);
 
+        $this->assertNotInTransaction();
         $request = $this->makeGetRequest('/api/server-public-key');
         $response = $spkHandler->handle($request);
         $this->assertSame(200, $response->getStatusCode());
         $body = json_decode($response->getBody()->getContents(), true);
         $this->assertSame('fedi-e2ee:v1/api/server-public-key', $body['!pkd-context']);
         $this->assertNotEmpty($body['hpke-public-key']);
+        $this->assertNotInTransaction();
     }
 
     /**
@@ -562,6 +597,7 @@ class ApiTest extends TestCase
         }
         $keypair = SecretKey::generate();
         $config = $this->getConfig();
+        $this->clearOldTransaction($config);
         $protocol = new Protocol($config);
         $webFinger = new WebFinger($config, $this->getMockClient([
             new Response(200, ['Content-Type' => 'application/json'], '{"subject":"' . $canonical . '"}')
@@ -587,6 +623,7 @@ class ApiTest extends TestCase
             $serverHpke->encapsKey,
             $serverHpke->cs
         );
+        $this->assertNotInTransaction();
         $protocol->addKey($encryptedForServer, $canonical);
 
         // Now, let's build a revocation token.
@@ -609,9 +646,11 @@ class ApiTest extends TestCase
         if ($constructor) {
             $constructor->invoke($revokeHandler);
         }
+        $this->assertNotInTransaction();
         $response = $revokeHandler->handle($request);
         $this->assertSame(204, $response->getStatusCode());
 
         $this->assertEmpty($pks->getPublicKeysFor($canonical));
+        $this->assertNotInTransaction();
     }
 }

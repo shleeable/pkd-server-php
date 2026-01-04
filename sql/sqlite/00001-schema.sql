@@ -1,8 +1,7 @@
-BEGIN TRANSACTION;
-
 -- A table with one row so we can lock its state:
 CREATE TABLE IF NOT EXISTS pkd_merkle_state (
-    merkle_state TEXT
+    merkle_state TEXT,
+    lock_challenge TEXT
 );
 
 -- The leaves of the Merkle tree. Sequential.
@@ -155,5 +154,3 @@ CREATE TRIGGER IF NOT EXISTS update_pkd_actors_auxdata_modtime
 BEGIN
     UPDATE pkd_actors_auxdata SET modified = CURRENT_TIMESTAMP WHERE actorauxdataid = OLD.actorauxdataid;
 END;
-
-COMMIT;

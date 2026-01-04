@@ -74,6 +74,7 @@ class ListAuxDataTest extends TestCase
         [$actorId, $canonical] = $this->makeDummyActor('example.com');
         $keypair = SecretKey::generate();
         $config = $this->getConfig();
+        $this->clearOldTransaction($config);
         $protocol = new Protocol($config);
         $webFinger = new WebFinger(
             $config,
@@ -102,7 +103,10 @@ class ListAuxDataTest extends TestCase
             $serverHpke->encapsKey,
             $serverHpke->cs
         );
+        $this->assertNotInTransaction();
         $protocol->addKey($encryptedForServer, $canonical);
+        $this->clearOldTransaction($this->config);
+        $this->ensureMerkleStateUnlocked();
 
         // Add aux data
         $addAux = new AddAuxData($canonical, 'test', 'test-data');
@@ -117,7 +121,9 @@ class ListAuxDataTest extends TestCase
             $serverHpke->encapsKey,
             $serverHpke->cs
         );
+        $this->assertNotInTransaction();
         $protocol->addAuxData($encryptedForServer, $canonical);
+        $this->clearOldTransaction($this->config);
 
         $request = $this->makeGetRequest('/api/actor/' . urlencode($actorId) . '/auxiliary');
         $request = $request->withAttribute('actor_id', $actorId);
@@ -131,12 +137,15 @@ class ListAuxDataTest extends TestCase
             $constructor->invoke($listAuxDataHandler);
         }
 
+        $this->assertNotInTransaction();
         $response = $listAuxDataHandler->handle($request);
+        $this->clearOldTransaction($this->config);
         $this->assertSame(200, $response->getStatusCode());
         $body = json_decode($response->getBody()->getContents(), true);
         $this->assertSame('fedi-e2ee:v1/api/actor/aux-info', $body['!pkd-context']);
         $this->assertSame($canonical, $body['actor-id']);
         $this->assertCount(1, $body['auxiliary']);
         $this->assertSame('test', $body['auxiliary'][0]['aux-type']);
+        $this->assertNotInTransaction();
     }
 }

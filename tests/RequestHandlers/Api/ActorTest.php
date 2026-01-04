@@ -39,6 +39,7 @@ use FediE2EE\PKDServer\Traits\ConfigTrait;
 use FediE2EE\PKDServer\Tests\HttpTestTrait;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\Attributes\{
+    After,
     CoversClass,
     UsesClass
 };
@@ -66,6 +67,14 @@ class ActorTest extends TestCase
     use ConfigTrait;
     use HttpTestTrait;
 
+    #[After]
+    public function commitDanglingTransaction(): void
+    {
+        if ($this->config->getDb()->inTransaction()) {
+            $this->config->getDb()->commit();
+        }
+    }
+
     /**
      * @throws Exception
      */
@@ -74,6 +83,7 @@ class ActorTest extends TestCase
         [$actorId, $canonical] = $this->makeDummyActor('example.com');
         $keypair = SecretKey::generate();
         $config = $this->getConfig();
+        $this->clearOldTransaction($config);
         $protocol = new Protocol($config);
         $webFinger = new WebFinger($config, $this->getMockClient([
             new Response(200, ['Content-Type' => 'application/json'], '{"subject":"' . $canonical . '"}')
@@ -99,7 +109,9 @@ class ActorTest extends TestCase
             $serverHpke->encapsKey,
             $serverHpke->cs
         );
+        $this->assertNotInTransaction();
         $protocol->addKey($encryptedForServer, $canonical);
+        $this->assertNotInTransaction();
 
         // Add aux data
         $addAux = new AddAuxData($canonical, 'test', 'test');
@@ -114,7 +126,9 @@ class ActorTest extends TestCase
             $serverHpke->encapsKey,
             $serverHpke->cs
         );
+        $this->assertNotInTransaction();
         $protocol->addAuxData($encryptedForServer, $canonical);
+        $this->assertNotInTransaction();
 
         $request = $this->makeGetRequest('/api/actor/' . urlencode($actorId));
         $request = $request->withAttribute('actor_id', $actorId);
@@ -135,5 +149,6 @@ class ActorTest extends TestCase
         $this->assertSame($canonical, $body['actor-id']);
         $this->assertSame(1, $body['count-aux']);
         $this->assertSame(1, $body['count-keys']);
+        $this->assertNotInTransaction();
     }
 }

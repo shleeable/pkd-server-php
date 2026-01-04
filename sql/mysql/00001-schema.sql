@@ -1,8 +1,7 @@
-START TRANSACTION;
-
 -- A table with one row so we can lock its state with "SELECT ... FOR UPDATE":
 CREATE TABLE IF NOT EXISTS pkd_merkle_state (
-    merkle_state TEXT
+    merkle_state TEXT,
+    lock_challenge TEXT
 );
 
 -- The leaves of the Merkle tree. Sequential.
@@ -133,5 +132,3 @@ CREATE TABLE IF NOT EXISTS pkd_peers(
     created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
-COMMIT;

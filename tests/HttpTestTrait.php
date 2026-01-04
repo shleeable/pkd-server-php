@@ -10,6 +10,7 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\ServerRequest;
 use ParagonIE\Certainty\Exception\CertaintyException;
+use PDOException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\SimpleCache\InvalidArgumentException;
@@ -29,6 +30,27 @@ trait HttpTestTrait
             $this->fail('Server config not injected');
         }
         return $GLOBALS['pkdConfig'];
+    }
+
+    public function clearOldTransaction(ServerConfig $config): void
+    {
+        $db = $config->getDb();
+        if ($db->inTransaction()) {
+            $db->rollback();
+        }
+    }
+
+    public function ensureMerkleStateUnlocked(): void
+    {
+        $db = $this->config()->getDb();
+        $lock = $db->cell("SELECT lock_challenge FROM pkd_merkle_state");
+        $this->assertEmpty($lock, 'lock = "' . $lock . '" but empty string was expected');
+    }
+
+    public function assertNotInTransaction(): void
+    {
+        $db = $this->config()->getDb();
+        $this->assertFalse($db->inTransaction(), 'we should not be in transaction');
     }
 
     public function getMockClient(array $responses = []): Client

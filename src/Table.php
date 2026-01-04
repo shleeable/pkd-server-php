@@ -96,7 +96,7 @@ abstract class Table
              *
              * NOTE: The spec wasn't specific, so we round up. I'll update the spec later.
              */
-            $cutoff = ($numLeaves + 1) >> 1;
+            $cutoff = Math::getHighVolumeCutoff($numLeaves);
         } else {
             /**
              * @link https://github.com/fedi-e2ee/public-key-directory-specification/blob/main/Specification.md#recent-merkle-root-included-in-plaintext-commitments
@@ -107,11 +107,14 @@ abstract class Table
              * reject messages newer than this threshold on basis of staleness.
              * """
              */
-            $log2 = (log($numLeaves) / log(2));
-            $cutoff = (int) ($numLeaves - ceil(2 * $log2 * $log2));
+            $cutoff = Math::getLowVolumeCutoff($numLeaves);
         }
-        if ($cutoff < 1) {
-            return true;
+        if ($cutoff < 16) {
+            $zero = (new Tree([], $this->config()->getParams()->hashAlgo))->getEncodedRoot();
+            if (hash_equals($zero, $merkleRoot)) {
+                return true;
+            }
+            $cutoff = 1;
         }
 
         return $this->db->exists(

@@ -9,8 +9,18 @@ use FediE2EE\PKD\Crypto\Exceptions\{
     NotImplementedException,
     ParserException
 };
-use FediE2EE\PKD\Crypto\Protocol\{Actions\AddKey, Cosignature, Handler, HistoricalRecord};
-use FediE2EE\PKD\Crypto\{Merkle\IncrementalTree, Merkle\Tree, SecretKey, SymmetricKey};
+use FediE2EE\PKD\Crypto\Protocol\{
+    Actions\AddKey,
+    Cosignature,
+    Handler,
+    HistoricalRecord
+};
+use FediE2EE\PKD\Crypto\{
+    Merkle\IncrementalTree,
+    Merkle\Tree,
+    SecretKey,
+    SymmetricKey
+};
 use FediE2EE\PKDServer\Exceptions\{
     CacheException,
     DependencyException,
@@ -102,6 +112,7 @@ class CosignLifecycleTest extends TestCase
      */
     private function makeDummyEntries(): void
     {
+        $this->assertNotInTransaction();
         [, $canonical] = $this->makeDummyActor();
         $keypair = SecretKey::generate();
         $config = $this->getConfig();
@@ -134,11 +145,14 @@ class CosignLifecycleTest extends TestCase
             $serverHpke->encapsKey,
             $serverHpke->cs
         );
+        $this->assertNotInTransaction();
         $protocol->addKey($encryptedForServer, $canonical);
+        $this->assertNotInTransaction();
     }
 
     public function testCosignLifecycle(): void
     {
+        $this->assertNotInTransaction();
         // First, we're going to generate a witness keypair
         $witnessSK = SecretKey::generate();
         $witnessPK = $witnessSK->getPublicKey();
@@ -180,6 +194,7 @@ class CosignLifecycleTest extends TestCase
         }
 
         // For every hash
+        $count = 0;
         foreach ($allHashes as $record) {
             $cosign = new Cosignature($tree);
             $thisRoot = $record['merkle-root'];
@@ -194,7 +209,13 @@ class CosignLifecycleTest extends TestCase
                 $record['publickeyhash'],
                 $record['signature'],
             );
-            $cosign->append($hist, $thisRoot);
+
+            try {
+                $cosign->append($hist, $thisRoot);
+            } catch (CryptoException $ex) {
+                var_dump($count, $record);
+                throw $ex;
+            }
 
             $cosigned = $cosign->cosign($witnessSK, $this->config->getParams()->hostname);
 
@@ -217,6 +238,7 @@ class CosignLifecycleTest extends TestCase
             $countAgain = $merkleState->countCosignatures($leaf->primaryKey);
             $this->assertNotSame($numCosigs, $countAgain, 'Number of cosignatures did not increase');
             $tree = $cosign->getTree();
+            ++$count;
         }
     }
 }
