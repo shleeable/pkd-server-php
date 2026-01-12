@@ -9,6 +9,7 @@
 [![Mutation Testing](https://github.com/fedi-e2ee/pkd-server-php/actions/workflows/infection.yml/badge.svg)](https://github.com/fedi-e2ee/pkd-server-php/actions/workflows/infection.yml)  
 [![Latest Stable Version](https://poser.pugx.org/fedi-e2ee/pkd-server/v/stable)](https://packagist.org/packages/fedi-e2ee/pkd-server)
 [![License](https://poser.pugx.org/fedi-e2ee/pkd-server/license)](https://packagist.org/packages/fedi-e2ee/pkd-server)
+[![Reference Docs](https://github.com/fedi-e2ee/pkd-server-php/actions/workflows/docs-ref.yml/badge.svg?branch=main)](https://github.com/fedi-e2ee/pkd-server-php/actions/workflows/docs-ref.yml)
 
 This is the reference implementation for the server-side component of the
 [Public Key Directory specification](https://github.com/fedi-e2ee/public-key-directory-specification),
