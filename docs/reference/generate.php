@@ -735,7 +735,7 @@ final class DocGenerator
             // Ensure pattern has exactly one leading slash
             $displayPattern = '/' . ltrim($pattern, '/');
             $filepath = str_replace('\\', '/', $class) . '.php';
-            $output .= "| `{$displayPattern}` | [`{$class}`](../src/{$filepath}) | `{$info['method']}` |\n";
+            $output .= "| `{$displayPattern}` | [`{$class}`](../../src/{$filepath}) | `{$info['method']}` |\n";
         }
 
         $output .= "\n## Route Details\n\n";
@@ -755,7 +755,7 @@ final class DocGenerator
 
         ksort($this->configFiles);
         foreach ($this->configFiles as $path => $description) {
-            $output .= "| [`{$path}`](../{$path}) | {$description} |\n";
+            $output .= "| [`{$path}`](../../{$path}) | {$description} |\n";
         }
 
         $output .= "\n## Local Configuration\n\n";
@@ -778,7 +778,7 @@ final class DocGenerator
 
         ksort($this->cmdScripts);
         foreach ($this->cmdScripts as $path => $description) {
-            $output .= "| [`{$path}`](../{$path}) | {$description} |\n";
+            $output .= "| [`{$path}`](../../{$path}) | {$description} |\n";
         }
 
         $output .= "\n## Usage\n\n";
