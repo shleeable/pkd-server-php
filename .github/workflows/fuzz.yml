@@ -26,3 +26,15 @@ jobs:
         run: php-fuzzer fuzz --max-runs 50000 fuzzing/FuzzProtocol.php
       - name: Run FuzzRequestHandlers
         run: php-fuzzer fuzz --max-runs 50000 fuzzing/FuzzRequestHandlers.php
+      - name: Run FuzzActivityStream
+        run: php-fuzzer fuzz --max-runs 50000 fuzzing/FuzzActivityStream.php
+      - name: Run FuzzJsonParsing
+        run: php-fuzzer fuzz --max-runs 50000 fuzzing/FuzzJsonParsing.php
+      - name: Run FuzzBase64
+        run: php-fuzzer fuzz --max-runs 50000 fuzzing/FuzzBase64.php
+      - name: Run FuzzMerkleLeaf
+        run: php-fuzzer fuzz --max-runs 50000 fuzzing/FuzzMerkleLeaf.php
+      - name: Run FuzzMerkleTree
+        run: php-fuzzer fuzz --max-runs 50000 fuzzing/FuzzMerkleTree.php
+      - name: Run FuzzTOTP
+        run: php-fuzzer fuzz --max-runs 50000 fuzzing/FuzzTOTP.php
