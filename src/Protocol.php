@@ -132,7 +132,7 @@ class Protocol
 
         // Parse the plaintext, grab the action parameter;
         if ($isActivityPub) {
-            $parsed = $this->parser->parseForActivityPub($raw);
+            $parsed = $this->parser->parseUnverifiedForActivityPub($raw);
         } else {
             $parsed = $this->parser->parseUnverified($raw);
         }
