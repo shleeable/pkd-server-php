@@ -6,6 +6,7 @@
 !/config/local/.gitkeep
 /composer.lock
 /composer.phar
+/infection.log
 /tmp/
 /tmp/*
 !/tmp/.gitkeep
