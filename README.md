@@ -15,6 +15,8 @@ This is the reference implementation for the server-side component of the
 [Public Key Directory specification](https://github.com/fedi-e2ee/public-key-directory-specification),
 written in PHP.
 
+**[Project Website: publickey.directory](https://publickey.directory)**
+
 ## What is this, and why does it exist?
 
 The hardest part of designing end-to-end encryption for the Fediverse, as with most cryptography undertakings, is key
