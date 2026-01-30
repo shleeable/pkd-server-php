@@ -114,7 +114,7 @@ static · Returns `string`
 
 **Throws:** `BaseJsonException`
 
-#### [`assertAllArrayKeysExist`](../../../src/RateLimit/Storage/Filesystem.php#L14-L19)
+#### [`assertAllArrayKeysExist`](../../../src/RateLimit/Storage/Filesystem.php#L27-L32)
 
 static · Returns `void`
 
@@ -125,7 +125,7 @@ static · Returns `void`
 
 **Throws:** `InputException`
 
-#### [`allArrayKeysExist`](../../../src/RateLimit/Storage/Filesystem.php#L21-L28)
+#### [`allArrayKeysExist`](../../../src/RateLimit/Storage/Filesystem.php#L34-L41)
 
 static · Returns `bool`
 
@@ -134,7 +134,7 @@ static · Returns `bool`
 - `$target`: `array`
 - `...$arrayKeys`: `string`
 
-#### [`constantTimeSelect`](../../../src/RateLimit/Storage/Filesystem.php#L35-L52)
+#### [`constantTimeSelect`](../../../src/RateLimit/Storage/Filesystem.php#L48-L65)
 
 Returns `string`
 
@@ -146,7 +146,7 @@ Returns `string`
 
 **Throws:** `CryptoException`
 
-#### [`dos2unix`](../../../src/RateLimit/Storage/Filesystem.php#L60-L63)
+#### [`dos2unix`](../../../src/RateLimit/Storage/Filesystem.php#L73-L76)
 
 static · Returns `string`
 
@@ -156,7 +156,7 @@ Normalize line-endings to UNIX-style (LF rather than CRLF).
 
 - `$in`: `string`
 
-#### [`preAuthEncode`](../../../src/RateLimit/Storage/Filesystem.php#L69-L78)
+#### [`preAuthEncode`](../../../src/RateLimit/Storage/Filesystem.php#L84-L97)
 
 static · Returns `string`
 
@@ -164,7 +164,7 @@ static · Returns `string`
 
 - `$pieces`: `array`
 
-#### [`sortByKey`](../../../src/RateLimit/Storage/Filesystem.php#L80-L88)
+#### [`sortByKey`](../../../src/RateLimit/Storage/Filesystem.php#L99-L107)
 
 static · Returns `void`
 
@@ -172,7 +172,7 @@ static · Returns `void`
 
 - `$arr`: `array`
 
-#### [`LE64`](../../../src/RateLimit/Storage/Filesystem.php#L90-L93)
+#### [`LE64`](../../../src/RateLimit/Storage/Filesystem.php#L111-L114)
 
 static · Returns `string`
 
@@ -180,7 +180,7 @@ static · Returns `string`
 
 - `$n`: `int`
 
-#### [`stringToByteArray`](../../../src/RateLimit/Storage/Filesystem.php#L95-L99)
+#### [`stringToByteArray`](../../../src/RateLimit/Storage/Filesystem.php#L116-L123)
 
 Returns `array`
 
@@ -188,7 +188,7 @@ Returns `array`
 
 - `$str`: `string`
 
-#### [`stripNewlines`](../../../src/RateLimit/Storage/Filesystem.php#L107-L141)
+#### [`stripNewlines`](../../../src/RateLimit/Storage/Filesystem.php#L131-L165)
 
 static · Returns `string`
 
@@ -293,7 +293,7 @@ static · Returns `string`
 
 **Throws:** `BaseJsonException`
 
-#### [`assertAllArrayKeysExist`](../../../src/RateLimit/Storage/Redis.php#L14-L19)
+#### [`assertAllArrayKeysExist`](../../../src/RateLimit/Storage/Redis.php#L27-L32)
 
 static · Returns `void`
 
@@ -304,7 +304,7 @@ static · Returns `void`
 
 **Throws:** `InputException`
 
-#### [`allArrayKeysExist`](../../../src/RateLimit/Storage/Redis.php#L21-L28)
+#### [`allArrayKeysExist`](../../../src/RateLimit/Storage/Redis.php#L34-L41)
 
 static · Returns `bool`
 
@@ -313,7 +313,7 @@ static · Returns `bool`
 - `$target`: `array`
 - `...$arrayKeys`: `string`
 
-#### [`constantTimeSelect`](../../../src/RateLimit/Storage/Redis.php#L35-L52)
+#### [`constantTimeSelect`](../../../src/RateLimit/Storage/Redis.php#L48-L65)
 
 Returns `string`
 
@@ -325,7 +325,7 @@ Returns `string`
 
 **Throws:** `CryptoException`
 
-#### [`dos2unix`](../../../src/RateLimit/Storage/Redis.php#L60-L63)
+#### [`dos2unix`](../../../src/RateLimit/Storage/Redis.php#L73-L76)
 
 static · Returns `string`
 
@@ -335,7 +335,7 @@ Normalize line-endings to UNIX-style (LF rather than CRLF).
 
 - `$in`: `string`
 
-#### [`preAuthEncode`](../../../src/RateLimit/Storage/Redis.php#L69-L78)
+#### [`preAuthEncode`](../../../src/RateLimit/Storage/Redis.php#L84-L97)
 
 static · Returns `string`
 
@@ -343,7 +343,7 @@ static · Returns `string`
 
 - `$pieces`: `array`
 
-#### [`sortByKey`](../../../src/RateLimit/Storage/Redis.php#L80-L88)
+#### [`sortByKey`](../../../src/RateLimit/Storage/Redis.php#L99-L107)
 
 static · Returns `void`
 
@@ -351,7 +351,7 @@ static · Returns `void`
 
 - `$arr`: `array`
 
-#### [`LE64`](../../../src/RateLimit/Storage/Redis.php#L90-L93)
+#### [`LE64`](../../../src/RateLimit/Storage/Redis.php#L111-L114)
 
 static · Returns `string`
 
@@ -359,7 +359,7 @@ static · Returns `string`
 
 - `$n`: `int`
 
-#### [`stringToByteArray`](../../../src/RateLimit/Storage/Redis.php#L95-L99)
+#### [`stringToByteArray`](../../../src/RateLimit/Storage/Redis.php#L116-L123)
 
 Returns `array`
 
@@ -367,7 +367,7 @@ Returns `array`
 
 - `$str`: `string`
 
-#### [`stripNewlines`](../../../src/RateLimit/Storage/Redis.php#L107-L141)
+#### [`stripNewlines`](../../../src/RateLimit/Storage/Redis.php#L131-L165)
 
 static · Returns `string`
 

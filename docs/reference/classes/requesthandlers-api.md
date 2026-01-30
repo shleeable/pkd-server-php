@@ -3544,7 +3544,7 @@ Returns `void`
 
 **Throws:** `ProtocolException`
 
-#### [`assertAllArrayKeysExist`](../../../src/RequestHandlers/Api/TotpDisenroll.php#L14-L19)
+#### [`assertAllArrayKeysExist`](../../../src/RequestHandlers/Api/TotpDisenroll.php#L27-L32)
 
 static · Returns `void`
 
@@ -3555,7 +3555,7 @@ static · Returns `void`
 
 **Throws:** `InputException`
 
-#### [`allArrayKeysExist`](../../../src/RequestHandlers/Api/TotpDisenroll.php#L21-L28)
+#### [`allArrayKeysExist`](../../../src/RequestHandlers/Api/TotpDisenroll.php#L34-L41)
 
 static · Returns `bool`
 
@@ -3564,7 +3564,7 @@ static · Returns `bool`
 - `$target`: `array`
 - `...$arrayKeys`: `string`
 
-#### [`constantTimeSelect`](../../../src/RequestHandlers/Api/TotpDisenroll.php#L35-L52)
+#### [`constantTimeSelect`](../../../src/RequestHandlers/Api/TotpDisenroll.php#L48-L65)
 
 Returns `string`
 
@@ -3576,7 +3576,7 @@ Returns `string`
 
 **Throws:** `CryptoException`
 
-#### [`dos2unix`](../../../src/RequestHandlers/Api/TotpDisenroll.php#L60-L63)
+#### [`dos2unix`](../../../src/RequestHandlers/Api/TotpDisenroll.php#L73-L76)
 
 static · Returns `string`
 
@@ -3586,7 +3586,7 @@ Normalize line-endings to UNIX-style (LF rather than CRLF).
 
 - `$in`: `string`
 
-#### [`preAuthEncode`](../../../src/RequestHandlers/Api/TotpDisenroll.php#L69-L78)
+#### [`preAuthEncode`](../../../src/RequestHandlers/Api/TotpDisenroll.php#L84-L97)
 
 static · Returns `string`
 
@@ -3594,7 +3594,7 @@ static · Returns `string`
 
 - `$pieces`: `array`
 
-#### [`sortByKey`](../../../src/RequestHandlers/Api/TotpDisenroll.php#L80-L88)
+#### [`sortByKey`](../../../src/RequestHandlers/Api/TotpDisenroll.php#L99-L107)
 
 static · Returns `void`
 
@@ -3602,7 +3602,7 @@ static · Returns `void`
 
 - `$arr`: `array`
 
-#### [`LE64`](../../../src/RequestHandlers/Api/TotpDisenroll.php#L90-L93)
+#### [`LE64`](../../../src/RequestHandlers/Api/TotpDisenroll.php#L111-L114)
 
 static · Returns `string`
 
@@ -3610,7 +3610,7 @@ static · Returns `string`
 
 - `$n`: `int`
 
-#### [`stringToByteArray`](../../../src/RequestHandlers/Api/TotpDisenroll.php#L95-L99)
+#### [`stringToByteArray`](../../../src/RequestHandlers/Api/TotpDisenroll.php#L116-L123)
 
 Returns `array`
 
@@ -3618,7 +3618,7 @@ Returns `array`
 
 - `$str`: `string`
 
-#### [`stripNewlines`](../../../src/RequestHandlers/Api/TotpDisenroll.php#L107-L141)
+#### [`stripNewlines`](../../../src/RequestHandlers/Api/TotpDisenroll.php#L131-L165)
 
 static · Returns `string`
 
@@ -3860,7 +3860,7 @@ Returns `void`
 
 **Throws:** `ProtocolException`
 
-#### [`assertAllArrayKeysExist`](../../../src/RequestHandlers/Api/TotpEnroll.php#L14-L19)
+#### [`assertAllArrayKeysExist`](../../../src/RequestHandlers/Api/TotpEnroll.php#L27-L32)
 
 static · Returns `void`
 
@@ -3871,7 +3871,7 @@ static · Returns `void`
 
 **Throws:** `InputException`
 
-#### [`allArrayKeysExist`](../../../src/RequestHandlers/Api/TotpEnroll.php#L21-L28)
+#### [`allArrayKeysExist`](../../../src/RequestHandlers/Api/TotpEnroll.php#L34-L41)
 
 static · Returns `bool`
 
@@ -3880,7 +3880,7 @@ static · Returns `bool`
 - `$target`: `array`
 - `...$arrayKeys`: `string`
 
-#### [`constantTimeSelect`](../../../src/RequestHandlers/Api/TotpEnroll.php#L35-L52)
+#### [`constantTimeSelect`](../../../src/RequestHandlers/Api/TotpEnroll.php#L48-L65)
 
 Returns `string`
 
@@ -3892,7 +3892,7 @@ Returns `string`
 
 **Throws:** `CryptoException`
 
-#### [`dos2unix`](../../../src/RequestHandlers/Api/TotpEnroll.php#L60-L63)
+#### [`dos2unix`](../../../src/RequestHandlers/Api/TotpEnroll.php#L73-L76)
 
 static · Returns `string`
 
@@ -3902,7 +3902,7 @@ Normalize line-endings to UNIX-style (LF rather than CRLF).
 
 - `$in`: `string`
 
-#### [`preAuthEncode`](../../../src/RequestHandlers/Api/TotpEnroll.php#L69-L78)
+#### [`preAuthEncode`](../../../src/RequestHandlers/Api/TotpEnroll.php#L84-L97)
 
 static · Returns `string`
 
@@ -3910,7 +3910,7 @@ static · Returns `string`
 
 - `$pieces`: `array`
 
-#### [`sortByKey`](../../../src/RequestHandlers/Api/TotpEnroll.php#L80-L88)
+#### [`sortByKey`](../../../src/RequestHandlers/Api/TotpEnroll.php#L99-L107)
 
 static · Returns `void`
 
@@ -3918,7 +3918,7 @@ static · Returns `void`
 
 - `$arr`: `array`
 
-#### [`LE64`](../../../src/RequestHandlers/Api/TotpEnroll.php#L90-L93)
+#### [`LE64`](../../../src/RequestHandlers/Api/TotpEnroll.php#L111-L114)
 
 static · Returns `string`
 
@@ -3926,7 +3926,7 @@ static · Returns `string`
 
 - `$n`: `int`
 
-#### [`stringToByteArray`](../../../src/RequestHandlers/Api/TotpEnroll.php#L95-L99)
+#### [`stringToByteArray`](../../../src/RequestHandlers/Api/TotpEnroll.php#L116-L123)
 
 Returns `array`
 
@@ -3934,7 +3934,7 @@ Returns `array`
 
 - `$str`: `string`
 
-#### [`stripNewlines`](../../../src/RequestHandlers/Api/TotpEnroll.php#L107-L141)
+#### [`stripNewlines`](../../../src/RequestHandlers/Api/TotpEnroll.php#L131-L165)
 
 static · Returns `string`
 
@@ -4176,7 +4176,7 @@ Returns `void`
 
 **Throws:** `ProtocolException`
 
-#### [`assertAllArrayKeysExist`](../../../src/RequestHandlers/Api/TotpRotate.php#L14-L19)
+#### [`assertAllArrayKeysExist`](../../../src/RequestHandlers/Api/TotpRotate.php#L27-L32)
 
 static · Returns `void`
 
@@ -4187,7 +4187,7 @@ static · Returns `void`
 
 **Throws:** `InputException`
 
-#### [`allArrayKeysExist`](../../../src/RequestHandlers/Api/TotpRotate.php#L21-L28)
+#### [`allArrayKeysExist`](../../../src/RequestHandlers/Api/TotpRotate.php#L34-L41)
 
 static · Returns `bool`
 
@@ -4196,7 +4196,7 @@ static · Returns `bool`
 - `$target`: `array`
 - `...$arrayKeys`: `string`
 
-#### [`constantTimeSelect`](../../../src/RequestHandlers/Api/TotpRotate.php#L35-L52)
+#### [`constantTimeSelect`](../../../src/RequestHandlers/Api/TotpRotate.php#L48-L65)
 
 Returns `string`
 
@@ -4208,7 +4208,7 @@ Returns `string`
 
 **Throws:** `CryptoException`
 
-#### [`dos2unix`](../../../src/RequestHandlers/Api/TotpRotate.php#L60-L63)
+#### [`dos2unix`](../../../src/RequestHandlers/Api/TotpRotate.php#L73-L76)
 
 static · Returns `string`
 
@@ -4218,7 +4218,7 @@ Normalize line-endings to UNIX-style (LF rather than CRLF).
 
 - `$in`: `string`
 
-#### [`preAuthEncode`](../../../src/RequestHandlers/Api/TotpRotate.php#L69-L78)
+#### [`preAuthEncode`](../../../src/RequestHandlers/Api/TotpRotate.php#L84-L97)
 
 static · Returns `string`
 
@@ -4226,7 +4226,7 @@ static · Returns `string`
 
 - `$pieces`: `array`
 
-#### [`sortByKey`](../../../src/RequestHandlers/Api/TotpRotate.php#L80-L88)
+#### [`sortByKey`](../../../src/RequestHandlers/Api/TotpRotate.php#L99-L107)
 
 static · Returns `void`
 
@@ -4234,7 +4234,7 @@ static · Returns `void`
 
 - `$arr`: `array`
 
-#### [`LE64`](../../../src/RequestHandlers/Api/TotpRotate.php#L90-L93)
+#### [`LE64`](../../../src/RequestHandlers/Api/TotpRotate.php#L111-L114)
 
 static · Returns `string`
 
@@ -4242,7 +4242,7 @@ static · Returns `string`
 
 - `$n`: `int`
 
-#### [`stringToByteArray`](../../../src/RequestHandlers/Api/TotpRotate.php#L95-L99)
+#### [`stringToByteArray`](../../../src/RequestHandlers/Api/TotpRotate.php#L116-L123)
 
 Returns `array`
 
@@ -4250,7 +4250,7 @@ Returns `array`
 
 - `$str`: `string`
 
-#### [`stripNewlines`](../../../src/RequestHandlers/Api/TotpRotate.php#L107-L141)
+#### [`stripNewlines`](../../../src/RequestHandlers/Api/TotpRotate.php#L131-L165)
 
 static · Returns `string`
 

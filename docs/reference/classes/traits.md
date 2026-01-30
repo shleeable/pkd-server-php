@@ -149,7 +149,7 @@ static · Returns `string`
 - `$auxDataType`: `string`
 - `$data`: `string`
 
-#### [`assertAllArrayKeysExist`](../../../src/Traits/AuxDataIdTrait.php#L14-L19)
+#### [`assertAllArrayKeysExist`](../../../src/Traits/AuxDataIdTrait.php#L27-L32)
 
 static · Returns `void`
 
@@ -160,7 +160,7 @@ static · Returns `void`
 
 **Throws:** `InputException`
 
-#### [`allArrayKeysExist`](../../../src/Traits/AuxDataIdTrait.php#L21-L28)
+#### [`allArrayKeysExist`](../../../src/Traits/AuxDataIdTrait.php#L34-L41)
 
 static · Returns `bool`
 
@@ -169,7 +169,7 @@ static · Returns `bool`
 - `$target`: `array`
 - `...$arrayKeys`: `string`
 
-#### [`constantTimeSelect`](../../../src/Traits/AuxDataIdTrait.php#L35-L52)
+#### [`constantTimeSelect`](../../../src/Traits/AuxDataIdTrait.php#L48-L65)
 
 Returns `string`
 
@@ -181,7 +181,7 @@ Returns `string`
 
 **Throws:** `CryptoException`
 
-#### [`dos2unix`](../../../src/Traits/AuxDataIdTrait.php#L60-L63)
+#### [`dos2unix`](../../../src/Traits/AuxDataIdTrait.php#L73-L76)
 
 static · Returns `string`
 
@@ -191,7 +191,7 @@ Normalize line-endings to UNIX-style (LF rather than CRLF).
 
 - `$in`: `string`
 
-#### [`preAuthEncode`](../../../src/Traits/AuxDataIdTrait.php#L69-L78)
+#### [`preAuthEncode`](../../../src/Traits/AuxDataIdTrait.php#L84-L97)
 
 static · Returns `string`
 
@@ -199,7 +199,7 @@ static · Returns `string`
 
 - `$pieces`: `array`
 
-#### [`sortByKey`](../../../src/Traits/AuxDataIdTrait.php#L80-L88)
+#### [`sortByKey`](../../../src/Traits/AuxDataIdTrait.php#L99-L107)
 
 static · Returns `void`
 
@@ -207,7 +207,7 @@ static · Returns `void`
 
 - `$arr`: `array`
 
-#### [`LE64`](../../../src/Traits/AuxDataIdTrait.php#L90-L93)
+#### [`LE64`](../../../src/Traits/AuxDataIdTrait.php#L111-L114)
 
 static · Returns `string`
 
@@ -215,7 +215,7 @@ static · Returns `string`
 
 - `$n`: `int`
 
-#### [`stringToByteArray`](../../../src/Traits/AuxDataIdTrait.php#L95-L99)
+#### [`stringToByteArray`](../../../src/Traits/AuxDataIdTrait.php#L116-L123)
 
 Returns `array`
 
@@ -223,7 +223,7 @@ Returns `array`
 
 - `$str`: `string`
 
-#### [`stripNewlines`](../../../src/Traits/AuxDataIdTrait.php#L107-L141)
+#### [`stripNewlines`](../../../src/Traits/AuxDataIdTrait.php#L131-L165)
 
 static · Returns `string`
 
@@ -891,7 +891,7 @@ static · Returns `string`
 
 **Throws:** `BaseJsonException`
 
-#### [`assertAllArrayKeysExist`](../../../src/Traits/TOTPTrait.php#L14-L19)
+#### [`assertAllArrayKeysExist`](../../../src/Traits/TOTPTrait.php#L27-L32)
 
 static · Returns `void`
 
@@ -902,7 +902,7 @@ static · Returns `void`
 
 **Throws:** `InputException`
 
-#### [`allArrayKeysExist`](../../../src/Traits/TOTPTrait.php#L21-L28)
+#### [`allArrayKeysExist`](../../../src/Traits/TOTPTrait.php#L34-L41)
 
 static · Returns `bool`
 
@@ -911,7 +911,7 @@ static · Returns `bool`
 - `$target`: `array`
 - `...$arrayKeys`: `string`
 
-#### [`constantTimeSelect`](../../../src/Traits/TOTPTrait.php#L35-L52)
+#### [`constantTimeSelect`](../../../src/Traits/TOTPTrait.php#L48-L65)
 
 Returns `string`
 
@@ -923,7 +923,7 @@ Returns `string`
 
 **Throws:** `CryptoException`
 
-#### [`dos2unix`](../../../src/Traits/TOTPTrait.php#L60-L63)
+#### [`dos2unix`](../../../src/Traits/TOTPTrait.php#L73-L76)
 
 static · Returns `string`
 
@@ -933,7 +933,7 @@ Normalize line-endings to UNIX-style (LF rather than CRLF).
 
 - `$in`: `string`
 
-#### [`preAuthEncode`](../../../src/Traits/TOTPTrait.php#L69-L78)
+#### [`preAuthEncode`](../../../src/Traits/TOTPTrait.php#L84-L97)
 
 static · Returns `string`
 
@@ -941,7 +941,7 @@ static · Returns `string`
 
 - `$pieces`: `array`
 
-#### [`sortByKey`](../../../src/Traits/TOTPTrait.php#L80-L88)
+#### [`sortByKey`](../../../src/Traits/TOTPTrait.php#L99-L107)
 
 static · Returns `void`
 
@@ -949,7 +949,7 @@ static · Returns `void`
 
 - `$arr`: `array`
 
-#### [`LE64`](../../../src/Traits/TOTPTrait.php#L90-L93)
+#### [`LE64`](../../../src/Traits/TOTPTrait.php#L111-L114)
 
 static · Returns `string`
 
@@ -957,7 +957,7 @@ static · Returns `string`
 
 - `$n`: `int`
 
-#### [`stringToByteArray`](../../../src/Traits/TOTPTrait.php#L95-L99)
+#### [`stringToByteArray`](../../../src/Traits/TOTPTrait.php#L116-L123)
 
 Returns `array`
 
@@ -965,7 +965,7 @@ Returns `array`
 
 - `$str`: `string`
 
-#### [`stripNewlines`](../../../src/Traits/TOTPTrait.php#L107-L141)
+#### [`stripNewlines`](../../../src/Traits/TOTPTrait.php#L131-L165)
 
 static · Returns `string`
 

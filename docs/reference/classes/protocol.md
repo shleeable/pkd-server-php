@@ -216,7 +216,7 @@ static · Returns `string`
 
 **Throws:** `BaseJsonException`
 
-#### [`assertAllArrayKeysExist`](../../../src/Protocol/KeyWrapping.php#L14-L19)
+#### [`assertAllArrayKeysExist`](../../../src/Protocol/KeyWrapping.php#L27-L32)
 
 static · Returns `void`
 
@@ -227,7 +227,7 @@ static · Returns `void`
 
 **Throws:** `InputException`
 
-#### [`allArrayKeysExist`](../../../src/Protocol/KeyWrapping.php#L21-L28)
+#### [`allArrayKeysExist`](../../../src/Protocol/KeyWrapping.php#L34-L41)
 
 static · Returns `bool`
 
@@ -236,7 +236,7 @@ static · Returns `bool`
 - `$target`: `array`
 - `...$arrayKeys`: `string`
 
-#### [`constantTimeSelect`](../../../src/Protocol/KeyWrapping.php#L35-L52)
+#### [`constantTimeSelect`](../../../src/Protocol/KeyWrapping.php#L48-L65)
 
 Returns `string`
 
@@ -248,7 +248,7 @@ Returns `string`
 
 **Throws:** `CryptoException`
 
-#### [`dos2unix`](../../../src/Protocol/KeyWrapping.php#L60-L63)
+#### [`dos2unix`](../../../src/Protocol/KeyWrapping.php#L73-L76)
 
 static · Returns `string`
 
@@ -258,7 +258,7 @@ Normalize line-endings to UNIX-style (LF rather than CRLF).
 
 - `$in`: `string`
 
-#### [`preAuthEncode`](../../../src/Protocol/KeyWrapping.php#L69-L78)
+#### [`preAuthEncode`](../../../src/Protocol/KeyWrapping.php#L84-L97)
 
 static · Returns `string`
 
@@ -266,7 +266,7 @@ static · Returns `string`
 
 - `$pieces`: `array`
 
-#### [`sortByKey`](../../../src/Protocol/KeyWrapping.php#L80-L88)
+#### [`sortByKey`](../../../src/Protocol/KeyWrapping.php#L99-L107)
 
 static · Returns `void`
 
@@ -274,7 +274,7 @@ static · Returns `void`
 
 - `$arr`: `array`
 
-#### [`LE64`](../../../src/Protocol/KeyWrapping.php#L90-L93)
+#### [`LE64`](../../../src/Protocol/KeyWrapping.php#L111-L114)
 
 static · Returns `string`
 
@@ -282,7 +282,7 @@ static · Returns `string`
 
 - `$n`: `int`
 
-#### [`stringToByteArray`](../../../src/Protocol/KeyWrapping.php#L95-L99)
+#### [`stringToByteArray`](../../../src/Protocol/KeyWrapping.php#L116-L123)
 
 Returns `array`
 
@@ -290,7 +290,7 @@ Returns `array`
 
 - `$str`: `string`
 
-#### [`stripNewlines`](../../../src/Protocol/KeyWrapping.php#L107-L141)
+#### [`stripNewlines`](../../../src/Protocol/KeyWrapping.php#L131-L165)
 
 static · Returns `string`
 

@@ -365,7 +365,7 @@ static · Returns `string`
 
 **Throws:** `BaseJsonException`
 
-#### [`assertAllArrayKeysExist`](../../../src/RateLimit/RateLimitData.php#L14-L19)
+#### [`assertAllArrayKeysExist`](../../../src/RateLimit/RateLimitData.php#L27-L32)
 
 static · Returns `void`
 
@@ -376,7 +376,7 @@ static · Returns `void`
 
 **Throws:** `InputException`
 
-#### [`allArrayKeysExist`](../../../src/RateLimit/RateLimitData.php#L21-L28)
+#### [`allArrayKeysExist`](../../../src/RateLimit/RateLimitData.php#L34-L41)
 
 static · Returns `bool`
 
@@ -385,7 +385,7 @@ static · Returns `bool`
 - `$target`: `array`
 - `...$arrayKeys`: `string`
 
-#### [`constantTimeSelect`](../../../src/RateLimit/RateLimitData.php#L35-L52)
+#### [`constantTimeSelect`](../../../src/RateLimit/RateLimitData.php#L48-L65)
 
 Returns `string`
 
@@ -397,7 +397,7 @@ Returns `string`
 
 **Throws:** `CryptoException`
 
-#### [`dos2unix`](../../../src/RateLimit/RateLimitData.php#L60-L63)
+#### [`dos2unix`](../../../src/RateLimit/RateLimitData.php#L73-L76)
 
 static · Returns `string`
 
@@ -407,7 +407,7 @@ Normalize line-endings to UNIX-style (LF rather than CRLF).
 
 - `$in`: `string`
 
-#### [`preAuthEncode`](../../../src/RateLimit/RateLimitData.php#L69-L78)
+#### [`preAuthEncode`](../../../src/RateLimit/RateLimitData.php#L84-L97)
 
 static · Returns `string`
 
@@ -415,7 +415,7 @@ static · Returns `string`
 
 - `$pieces`: `array`
 
-#### [`sortByKey`](../../../src/RateLimit/RateLimitData.php#L80-L88)
+#### [`sortByKey`](../../../src/RateLimit/RateLimitData.php#L99-L107)
 
 static · Returns `void`
 
@@ -423,7 +423,7 @@ static · Returns `void`
 
 - `$arr`: `array`
 
-#### [`LE64`](../../../src/RateLimit/RateLimitData.php#L90-L93)
+#### [`LE64`](../../../src/RateLimit/RateLimitData.php#L111-L114)
 
 static · Returns `string`
 
@@ -431,7 +431,7 @@ static · Returns `string`
 
 - `$n`: `int`
 
-#### [`stringToByteArray`](../../../src/RateLimit/RateLimitData.php#L95-L99)
+#### [`stringToByteArray`](../../../src/RateLimit/RateLimitData.php#L116-L123)
 
 Returns `array`
 
@@ -439,7 +439,7 @@ Returns `array`
 
 - `$str`: `string`
 
-#### [`stripNewlines`](../../../src/RateLimit/RateLimitData.php#L107-L141)
+#### [`stripNewlines`](../../../src/RateLimit/RateLimitData.php#L131-L165)
 
 static · Returns `string`
 

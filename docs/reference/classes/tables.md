@@ -198,7 +198,7 @@ static · Returns `string`
 - `$auxDataType`: `string`
 - `$data`: `string`
 
-#### [`assertAllArrayKeysExist`](../../../src/Tables/AuxData.php#L14-L19)
+#### [`assertAllArrayKeysExist`](../../../src/Tables/AuxData.php#L27-L32)
 
 static · Returns `void`
 
@@ -209,7 +209,7 @@ static · Returns `void`
 
 **Throws:** `InputException`
 
-#### [`allArrayKeysExist`](../../../src/Tables/AuxData.php#L21-L28)
+#### [`allArrayKeysExist`](../../../src/Tables/AuxData.php#L34-L41)
 
 static · Returns `bool`
 
@@ -218,7 +218,7 @@ static · Returns `bool`
 - `$target`: `array`
 - `...$arrayKeys`: `string`
 
-#### [`constantTimeSelect`](../../../src/Tables/AuxData.php#L35-L52)
+#### [`constantTimeSelect`](../../../src/Tables/AuxData.php#L48-L65)
 
 Returns `string`
 
@@ -230,7 +230,7 @@ Returns `string`
 
 **Throws:** `CryptoException`
 
-#### [`dos2unix`](../../../src/Tables/AuxData.php#L60-L63)
+#### [`dos2unix`](../../../src/Tables/AuxData.php#L73-L76)
 
 static · Returns `string`
 
@@ -240,7 +240,7 @@ Normalize line-endings to UNIX-style (LF rather than CRLF).
 
 - `$in`: `string`
 
-#### [`preAuthEncode`](../../../src/Tables/AuxData.php#L69-L78)
+#### [`preAuthEncode`](../../../src/Tables/AuxData.php#L84-L97)
 
 static · Returns `string`
 
@@ -248,7 +248,7 @@ static · Returns `string`
 
 - `$pieces`: `array`
 
-#### [`sortByKey`](../../../src/Tables/AuxData.php#L80-L88)
+#### [`sortByKey`](../../../src/Tables/AuxData.php#L99-L107)
 
 static · Returns `void`
 
@@ -256,7 +256,7 @@ static · Returns `void`
 
 - `$arr`: `array`
 
-#### [`LE64`](../../../src/Tables/AuxData.php#L90-L93)
+#### [`LE64`](../../../src/Tables/AuxData.php#L111-L114)
 
 static · Returns `string`
 
@@ -264,7 +264,7 @@ static · Returns `string`
 
 - `$n`: `int`
 
-#### [`stringToByteArray`](../../../src/Tables/AuxData.php#L95-L99)
+#### [`stringToByteArray`](../../../src/Tables/AuxData.php#L116-L123)
 
 Returns `array`
 
@@ -272,7 +272,7 @@ Returns `array`
 
 - `$str`: `string`
 
-#### [`stripNewlines`](../../../src/Tables/AuxData.php#L107-L141)
+#### [`stripNewlines`](../../../src/Tables/AuxData.php#L131-L165)
 
 static · Returns `string`
 
@@ -707,7 +707,7 @@ Returns `void`
 
 **Throws:** `ProtocolException`
 
-#### [`assertAllArrayKeysExist`](../../../src/Tables/PublicKeys.php#L14-L19)
+#### [`assertAllArrayKeysExist`](../../../src/Tables/PublicKeys.php#L27-L32)
 
 static · Returns `void`
 
@@ -718,7 +718,7 @@ static · Returns `void`
 
 **Throws:** `InputException`
 
-#### [`allArrayKeysExist`](../../../src/Tables/PublicKeys.php#L21-L28)
+#### [`allArrayKeysExist`](../../../src/Tables/PublicKeys.php#L34-L41)
 
 static · Returns `bool`
 
@@ -727,7 +727,7 @@ static · Returns `bool`
 - `$target`: `array`
 - `...$arrayKeys`: `string`
 
-#### [`constantTimeSelect`](../../../src/Tables/PublicKeys.php#L35-L52)
+#### [`constantTimeSelect`](../../../src/Tables/PublicKeys.php#L48-L65)
 
 Returns `string`
 
@@ -739,7 +739,7 @@ Returns `string`
 
 **Throws:** `CryptoException`
 
-#### [`dos2unix`](../../../src/Tables/PublicKeys.php#L60-L63)
+#### [`dos2unix`](../../../src/Tables/PublicKeys.php#L73-L76)
 
 static · Returns `string`
 
@@ -749,7 +749,7 @@ Normalize line-endings to UNIX-style (LF rather than CRLF).
 
 - `$in`: `string`
 
-#### [`preAuthEncode`](../../../src/Tables/PublicKeys.php#L69-L78)
+#### [`preAuthEncode`](../../../src/Tables/PublicKeys.php#L84-L97)
 
 static · Returns `string`
 
@@ -757,7 +757,7 @@ static · Returns `string`
 
 - `$pieces`: `array`
 
-#### [`sortByKey`](../../../src/Tables/PublicKeys.php#L80-L88)
+#### [`sortByKey`](../../../src/Tables/PublicKeys.php#L99-L107)
 
 static · Returns `void`
 
@@ -765,7 +765,7 @@ static · Returns `void`
 
 - `$arr`: `array`
 
-#### [`LE64`](../../../src/Tables/PublicKeys.php#L90-L93)
+#### [`LE64`](../../../src/Tables/PublicKeys.php#L111-L114)
 
 static · Returns `string`
 
@@ -773,7 +773,7 @@ static · Returns `string`
 
 - `$n`: `int`
 
-#### [`stringToByteArray`](../../../src/Tables/PublicKeys.php#L95-L99)
+#### [`stringToByteArray`](../../../src/Tables/PublicKeys.php#L116-L123)
 
 Returns `array`
 
@@ -781,7 +781,7 @@ Returns `array`
 
 - `$str`: `string`
 
-#### [`stripNewlines`](../../../src/Tables/PublicKeys.php#L107-L141)
+#### [`stripNewlines`](../../../src/Tables/PublicKeys.php#L131-L165)
 
 static · Returns `string`
 

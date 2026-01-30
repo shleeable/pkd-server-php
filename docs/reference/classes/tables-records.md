@@ -560,7 +560,7 @@ static · Returns `string`
 
 **Throws:** `BaseJsonException`
 
-#### [`assertAllArrayKeysExist`](../../../src/Tables/Records/MerkleLeaf.php#L14-L19)
+#### [`assertAllArrayKeysExist`](../../../src/Tables/Records/MerkleLeaf.php#L27-L32)
 
 static · Returns `void`
 
@@ -571,7 +571,7 @@ static · Returns `void`
 
 **Throws:** `InputException`
 
-#### [`allArrayKeysExist`](../../../src/Tables/Records/MerkleLeaf.php#L21-L28)
+#### [`allArrayKeysExist`](../../../src/Tables/Records/MerkleLeaf.php#L34-L41)
 
 static · Returns `bool`
 
@@ -580,7 +580,7 @@ static · Returns `bool`
 - `$target`: `array`
 - `...$arrayKeys`: `string`
 
-#### [`constantTimeSelect`](../../../src/Tables/Records/MerkleLeaf.php#L35-L52)
+#### [`constantTimeSelect`](../../../src/Tables/Records/MerkleLeaf.php#L48-L65)
 
 Returns `string`
 
@@ -592,7 +592,7 @@ Returns `string`
 
 **Throws:** `CryptoException`
 
-#### [`dos2unix`](../../../src/Tables/Records/MerkleLeaf.php#L60-L63)
+#### [`dos2unix`](../../../src/Tables/Records/MerkleLeaf.php#L73-L76)
 
 static · Returns `string`
 
@@ -602,7 +602,7 @@ Normalize line-endings to UNIX-style (LF rather than CRLF).
 
 - `$in`: `string`
 
-#### [`preAuthEncode`](../../../src/Tables/Records/MerkleLeaf.php#L69-L78)
+#### [`preAuthEncode`](../../../src/Tables/Records/MerkleLeaf.php#L84-L97)
 
 static · Returns `string`
 
@@ -610,7 +610,7 @@ static · Returns `string`
 
 - `$pieces`: `array`
 
-#### [`sortByKey`](../../../src/Tables/Records/MerkleLeaf.php#L80-L88)
+#### [`sortByKey`](../../../src/Tables/Records/MerkleLeaf.php#L99-L107)
 
 static · Returns `void`
 
@@ -618,7 +618,7 @@ static · Returns `void`
 
 - `$arr`: `array`
 
-#### [`LE64`](../../../src/Tables/Records/MerkleLeaf.php#L90-L93)
+#### [`LE64`](../../../src/Tables/Records/MerkleLeaf.php#L111-L114)
 
 static · Returns `string`
 
@@ -626,7 +626,7 @@ static · Returns `string`
 
 - `$n`: `int`
 
-#### [`stringToByteArray`](../../../src/Tables/Records/MerkleLeaf.php#L95-L99)
+#### [`stringToByteArray`](../../../src/Tables/Records/MerkleLeaf.php#L116-L123)
 
 Returns `array`
 
@@ -634,7 +634,7 @@ Returns `array`
 
 - `$str`: `string`
 
-#### [`stripNewlines`](../../../src/Tables/Records/MerkleLeaf.php#L107-L141)
+#### [`stripNewlines`](../../../src/Tables/Records/MerkleLeaf.php#L131-L165)
 
 static · Returns `string`
 
@@ -776,7 +776,7 @@ static · Returns `string`
 
 **Throws:** `BaseJsonException`
 
-#### [`assertAllArrayKeysExist`](../../../src/Tables/Records/Peer.php#L14-L19)
+#### [`assertAllArrayKeysExist`](../../../src/Tables/Records/Peer.php#L27-L32)
 
 static · Returns `void`
 
@@ -787,7 +787,7 @@ static · Returns `void`
 
 **Throws:** `InputException`
 
-#### [`allArrayKeysExist`](../../../src/Tables/Records/Peer.php#L21-L28)
+#### [`allArrayKeysExist`](../../../src/Tables/Records/Peer.php#L34-L41)
 
 static · Returns `bool`
 
@@ -796,7 +796,7 @@ static · Returns `bool`
 - `$target`: `array`
 - `...$arrayKeys`: `string`
 
-#### [`constantTimeSelect`](../../../src/Tables/Records/Peer.php#L35-L52)
+#### [`constantTimeSelect`](../../../src/Tables/Records/Peer.php#L48-L65)
 
 Returns `string`
 
@@ -808,7 +808,7 @@ Returns `string`
 
 **Throws:** `CryptoException`
 
-#### [`dos2unix`](../../../src/Tables/Records/Peer.php#L60-L63)
+#### [`dos2unix`](../../../src/Tables/Records/Peer.php#L73-L76)
 
 static · Returns `string`
 
@@ -818,7 +818,7 @@ Normalize line-endings to UNIX-style (LF rather than CRLF).
 
 - `$in`: `string`
 
-#### [`preAuthEncode`](../../../src/Tables/Records/Peer.php#L69-L78)
+#### [`preAuthEncode`](../../../src/Tables/Records/Peer.php#L84-L97)
 
 static · Returns `string`
 
@@ -826,7 +826,7 @@ static · Returns `string`
 
 - `$pieces`: `array`
 
-#### [`sortByKey`](../../../src/Tables/Records/Peer.php#L80-L88)
+#### [`sortByKey`](../../../src/Tables/Records/Peer.php#L99-L107)
 
 static · Returns `void`
 
@@ -834,7 +834,7 @@ static · Returns `void`
 
 - `$arr`: `array`
 
-#### [`LE64`](../../../src/Tables/Records/Peer.php#L90-L93)
+#### [`LE64`](../../../src/Tables/Records/Peer.php#L111-L114)
 
 static · Returns `string`
 
@@ -842,7 +842,7 @@ static · Returns `string`
 
 - `$n`: `int`
 
-#### [`stringToByteArray`](../../../src/Tables/Records/Peer.php#L95-L99)
+#### [`stringToByteArray`](../../../src/Tables/Records/Peer.php#L116-L123)
 
 Returns `array`
 
@@ -850,7 +850,7 @@ Returns `array`
 
 - `$str`: `string`
 
-#### [`stripNewlines`](../../../src/Tables/Records/Peer.php#L107-L141)
+#### [`stripNewlines`](../../../src/Tables/Records/Peer.php#L131-L165)
 
 static · Returns `string`
 
@@ -976,7 +976,7 @@ static · Returns `string`
 
 **Throws:** `BaseJsonException`
 
-#### [`assertAllArrayKeysExist`](../../../src/Tables/Records/ReplicaActor.php#L14-L19)
+#### [`assertAllArrayKeysExist`](../../../src/Tables/Records/ReplicaActor.php#L27-L32)
 
 static · Returns `void`
 
@@ -987,7 +987,7 @@ static · Returns `void`
 
 **Throws:** `InputException`
 
-#### [`allArrayKeysExist`](../../../src/Tables/Records/ReplicaActor.php#L21-L28)
+#### [`allArrayKeysExist`](../../../src/Tables/Records/ReplicaActor.php#L34-L41)
 
 static · Returns `bool`
 
@@ -996,7 +996,7 @@ static · Returns `bool`
 - `$target`: `array`
 - `...$arrayKeys`: `string`
 
-#### [`constantTimeSelect`](../../../src/Tables/Records/ReplicaActor.php#L35-L52)
+#### [`constantTimeSelect`](../../../src/Tables/Records/ReplicaActor.php#L48-L65)
 
 Returns `string`
 
@@ -1008,7 +1008,7 @@ Returns `string`
 
 **Throws:** `CryptoException`
 
-#### [`dos2unix`](../../../src/Tables/Records/ReplicaActor.php#L60-L63)
+#### [`dos2unix`](../../../src/Tables/Records/ReplicaActor.php#L73-L76)
 
 static · Returns `string`
 
@@ -1018,7 +1018,7 @@ Normalize line-endings to UNIX-style (LF rather than CRLF).
 
 - `$in`: `string`
 
-#### [`preAuthEncode`](../../../src/Tables/Records/ReplicaActor.php#L69-L78)
+#### [`preAuthEncode`](../../../src/Tables/Records/ReplicaActor.php#L84-L97)
 
 static · Returns `string`
 
@@ -1026,7 +1026,7 @@ static · Returns `string`
 
 - `$pieces`: `array`
 
-#### [`sortByKey`](../../../src/Tables/Records/ReplicaActor.php#L80-L88)
+#### [`sortByKey`](../../../src/Tables/Records/ReplicaActor.php#L99-L107)
 
 static · Returns `void`
 
@@ -1034,7 +1034,7 @@ static · Returns `void`
 
 - `$arr`: `array`
 
-#### [`LE64`](../../../src/Tables/Records/ReplicaActor.php#L90-L93)
+#### [`LE64`](../../../src/Tables/Records/ReplicaActor.php#L111-L114)
 
 static · Returns `string`
 
@@ -1042,7 +1042,7 @@ static · Returns `string`
 
 - `$n`: `int`
 
-#### [`stringToByteArray`](../../../src/Tables/Records/ReplicaActor.php#L95-L99)
+#### [`stringToByteArray`](../../../src/Tables/Records/ReplicaActor.php#L116-L123)
 
 Returns `array`
 
@@ -1050,7 +1050,7 @@ Returns `array`
 
 - `$str`: `string`
 
-#### [`stripNewlines`](../../../src/Tables/Records/ReplicaActor.php#L107-L141)
+#### [`stripNewlines`](../../../src/Tables/Records/ReplicaActor.php#L131-L165)
 
 static · Returns `string`
 
@@ -1180,7 +1180,7 @@ static · Returns `string`
 
 **Throws:** `BaseJsonException`
 
-#### [`assertAllArrayKeysExist`](../../../src/Tables/Records/ReplicaAuxDatum.php#L14-L19)
+#### [`assertAllArrayKeysExist`](../../../src/Tables/Records/ReplicaAuxDatum.php#L27-L32)
 
 static · Returns `void`
 
@@ -1191,7 +1191,7 @@ static · Returns `void`
 
 **Throws:** `InputException`
 
-#### [`allArrayKeysExist`](../../../src/Tables/Records/ReplicaAuxDatum.php#L21-L28)
+#### [`allArrayKeysExist`](../../../src/Tables/Records/ReplicaAuxDatum.php#L34-L41)
 
 static · Returns `bool`
 
@@ -1200,7 +1200,7 @@ static · Returns `bool`
 - `$target`: `array`
 - `...$arrayKeys`: `string`
 
-#### [`constantTimeSelect`](../../../src/Tables/Records/ReplicaAuxDatum.php#L35-L52)
+#### [`constantTimeSelect`](../../../src/Tables/Records/ReplicaAuxDatum.php#L48-L65)
 
 Returns `string`
 
@@ -1212,7 +1212,7 @@ Returns `string`
 
 **Throws:** `CryptoException`
 
-#### [`dos2unix`](../../../src/Tables/Records/ReplicaAuxDatum.php#L60-L63)
+#### [`dos2unix`](../../../src/Tables/Records/ReplicaAuxDatum.php#L73-L76)
 
 static · Returns `string`
 
@@ -1222,7 +1222,7 @@ Normalize line-endings to UNIX-style (LF rather than CRLF).
 
 - `$in`: `string`
 
-#### [`preAuthEncode`](../../../src/Tables/Records/ReplicaAuxDatum.php#L69-L78)
+#### [`preAuthEncode`](../../../src/Tables/Records/ReplicaAuxDatum.php#L84-L97)
 
 static · Returns `string`
 
@@ -1230,7 +1230,7 @@ static · Returns `string`
 
 - `$pieces`: `array`
 
-#### [`sortByKey`](../../../src/Tables/Records/ReplicaAuxDatum.php#L80-L88)
+#### [`sortByKey`](../../../src/Tables/Records/ReplicaAuxDatum.php#L99-L107)
 
 static · Returns `void`
 
@@ -1238,7 +1238,7 @@ static · Returns `void`
 
 - `$arr`: `array`
 
-#### [`LE64`](../../../src/Tables/Records/ReplicaAuxDatum.php#L90-L93)
+#### [`LE64`](../../../src/Tables/Records/ReplicaAuxDatum.php#L111-L114)
 
 static · Returns `string`
 
@@ -1246,7 +1246,7 @@ static · Returns `string`
 
 - `$n`: `int`
 
-#### [`stringToByteArray`](../../../src/Tables/Records/ReplicaAuxDatum.php#L95-L99)
+#### [`stringToByteArray`](../../../src/Tables/Records/ReplicaAuxDatum.php#L116-L123)
 
 Returns `array`
 
@@ -1254,7 +1254,7 @@ Returns `array`
 
 - `$str`: `string`
 
-#### [`stripNewlines`](../../../src/Tables/Records/ReplicaAuxDatum.php#L107-L141)
+#### [`stripNewlines`](../../../src/Tables/Records/ReplicaAuxDatum.php#L131-L165)
 
 static · Returns `string`
 
@@ -1400,7 +1400,7 @@ static · Returns `string`
 
 **Throws:** `BaseJsonException`
 
-#### [`assertAllArrayKeysExist`](../../../src/Tables/Records/ReplicaLeaf.php#L14-L19)
+#### [`assertAllArrayKeysExist`](../../../src/Tables/Records/ReplicaLeaf.php#L27-L32)
 
 static · Returns `void`
 
@@ -1411,7 +1411,7 @@ static · Returns `void`
 
 **Throws:** `InputException`
 
-#### [`allArrayKeysExist`](../../../src/Tables/Records/ReplicaLeaf.php#L21-L28)
+#### [`allArrayKeysExist`](../../../src/Tables/Records/ReplicaLeaf.php#L34-L41)
 
 static · Returns `bool`
 
@@ -1420,7 +1420,7 @@ static · Returns `bool`
 - `$target`: `array`
 - `...$arrayKeys`: `string`
 
-#### [`constantTimeSelect`](../../../src/Tables/Records/ReplicaLeaf.php#L35-L52)
+#### [`constantTimeSelect`](../../../src/Tables/Records/ReplicaLeaf.php#L48-L65)
 
 Returns `string`
 
@@ -1432,7 +1432,7 @@ Returns `string`
 
 **Throws:** `CryptoException`
 
-#### [`dos2unix`](../../../src/Tables/Records/ReplicaLeaf.php#L60-L63)
+#### [`dos2unix`](../../../src/Tables/Records/ReplicaLeaf.php#L73-L76)
 
 static · Returns `string`
 
@@ -1442,7 +1442,7 @@ Normalize line-endings to UNIX-style (LF rather than CRLF).
 
 - `$in`: `string`
 
-#### [`preAuthEncode`](../../../src/Tables/Records/ReplicaLeaf.php#L69-L78)
+#### [`preAuthEncode`](../../../src/Tables/Records/ReplicaLeaf.php#L84-L97)
 
 static · Returns `string`
 
@@ -1450,7 +1450,7 @@ static · Returns `string`
 
 - `$pieces`: `array`
 
-#### [`sortByKey`](../../../src/Tables/Records/ReplicaLeaf.php#L80-L88)
+#### [`sortByKey`](../../../src/Tables/Records/ReplicaLeaf.php#L99-L107)
 
 static · Returns `void`
 
@@ -1458,7 +1458,7 @@ static · Returns `void`
 
 - `$arr`: `array`
 
-#### [`LE64`](../../../src/Tables/Records/ReplicaLeaf.php#L90-L93)
+#### [`LE64`](../../../src/Tables/Records/ReplicaLeaf.php#L111-L114)
 
 static · Returns `string`
 
@@ -1466,7 +1466,7 @@ static · Returns `string`
 
 - `$n`: `int`
 
-#### [`stringToByteArray`](../../../src/Tables/Records/ReplicaLeaf.php#L95-L99)
+#### [`stringToByteArray`](../../../src/Tables/Records/ReplicaLeaf.php#L116-L123)
 
 Returns `array`
 
@@ -1474,7 +1474,7 @@ Returns `array`
 
 - `$str`: `string`
 
-#### [`stripNewlines`](../../../src/Tables/Records/ReplicaLeaf.php#L107-L141)
+#### [`stripNewlines`](../../../src/Tables/Records/ReplicaLeaf.php#L131-L165)
 
 static · Returns `string`
 
@@ -1604,7 +1604,7 @@ static · Returns `string`
 
 **Throws:** `BaseJsonException`
 
-#### [`assertAllArrayKeysExist`](../../../src/Tables/Records/ReplicaPublicKey.php#L14-L19)
+#### [`assertAllArrayKeysExist`](../../../src/Tables/Records/ReplicaPublicKey.php#L27-L32)
 
 static · Returns `void`
 
@@ -1615,7 +1615,7 @@ static · Returns `void`
 
 **Throws:** `InputException`
 
-#### [`allArrayKeysExist`](../../../src/Tables/Records/ReplicaPublicKey.php#L21-L28)
+#### [`allArrayKeysExist`](../../../src/Tables/Records/ReplicaPublicKey.php#L34-L41)
 
 static · Returns `bool`
 
@@ -1624,7 +1624,7 @@ static · Returns `bool`
 - `$target`: `array`
 - `...$arrayKeys`: `string`
 
-#### [`constantTimeSelect`](../../../src/Tables/Records/ReplicaPublicKey.php#L35-L52)
+#### [`constantTimeSelect`](../../../src/Tables/Records/ReplicaPublicKey.php#L48-L65)
 
 Returns `string`
 
@@ -1636,7 +1636,7 @@ Returns `string`
 
 **Throws:** `CryptoException`
 
-#### [`dos2unix`](../../../src/Tables/Records/ReplicaPublicKey.php#L60-L63)
+#### [`dos2unix`](../../../src/Tables/Records/ReplicaPublicKey.php#L73-L76)
 
 static · Returns `string`
 
@@ -1646,7 +1646,7 @@ Normalize line-endings to UNIX-style (LF rather than CRLF).
 
 - `$in`: `string`
 
-#### [`preAuthEncode`](../../../src/Tables/Records/ReplicaPublicKey.php#L69-L78)
+#### [`preAuthEncode`](../../../src/Tables/Records/ReplicaPublicKey.php#L84-L97)
 
 static · Returns `string`
 
@@ -1654,7 +1654,7 @@ static · Returns `string`
 
 - `$pieces`: `array`
 
-#### [`sortByKey`](../../../src/Tables/Records/ReplicaPublicKey.php#L80-L88)
+#### [`sortByKey`](../../../src/Tables/Records/ReplicaPublicKey.php#L99-L107)
 
 static · Returns `void`
 
@@ -1662,7 +1662,7 @@ static · Returns `void`
 
 - `$arr`: `array`
 
-#### [`LE64`](../../../src/Tables/Records/ReplicaPublicKey.php#L90-L93)
+#### [`LE64`](../../../src/Tables/Records/ReplicaPublicKey.php#L111-L114)
 
 static · Returns `string`
 
@@ -1670,7 +1670,7 @@ static · Returns `string`
 
 - `$n`: `int`
 
-#### [`stringToByteArray`](../../../src/Tables/Records/ReplicaPublicKey.php#L95-L99)
+#### [`stringToByteArray`](../../../src/Tables/Records/ReplicaPublicKey.php#L116-L123)
 
 Returns `array`
 
@@ -1678,7 +1678,7 @@ Returns `array`
 
 - `$str`: `string`
 
-#### [`stripNewlines`](../../../src/Tables/Records/ReplicaPublicKey.php#L107-L141)
+#### [`stripNewlines`](../../../src/Tables/Records/ReplicaPublicKey.php#L131-L165)
 
 static · Returns `string`
 
