@@ -25,16 +25,19 @@ use FediE2EE\PKDServer\RequestHandlers\Api\{
     Actor,
     ListKeys,
 };
-use FediE2EE\PKDServer\{ActivityPub\WebFinger,
+use FediE2EE\PKDServer\{
+    ActivityPub\WebFinger,
     AppCache,
     Dependency\WrappedEncryptedRow,
     Math,
+    Meta\Params,
     Protocol,
     Protocol\KeyWrapping,
     Protocol\RewrapConfig,
     ServerConfig,
     Table,
-    TableCache};
+    TableCache
+};
 use FediE2EE\PKDServer\Exceptions\{
     CacheException,
     DependencyException,
@@ -87,6 +90,7 @@ use SodiumException;
 #[UsesClass(AuxData::class)]
 #[UsesClass(AppCache::class)]
 #[UsesClass(MerkleLeaf::class)]
+#[UsesClass(Params::class)]
 #[UsesClass(MerkleState::class)]
 #[UsesClass(PublicKeys::class)]
 #[UsesClass(TableCache::class)]
@@ -245,12 +249,13 @@ class ActorLifecycleTest extends TestCase
 
         // 6. Checkpoint (Doesn't have symmetric keys, so rewrap won't happen)
         $latestRoot = $merkleState->getLatestRoot();
+        $emptyRoot = $config->getParams()->getEmptyTreeRoot();
         $checkpoint = new \FediE2EE\PKD\Crypto\Protocol\Actions\Checkpoint(
             'from.example.org',
-            'pkd-mr-v1:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+            $emptyRoot,
             SecretKey::generate()->getPublicKey(),
             'to.example.org',
-            'pkd-mr-v1:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+            $emptyRoot
         );
         $akm = new AttributeKeyMap();
         // Checkpoints are not encrypted but still handled by Handler
