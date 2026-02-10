@@ -17,7 +17,10 @@ use FediE2EE\PKDServer\Exceptions\{
     ProtocolException,
     TableException
 };
-use FediE2EE\PKDServer\Tables\PublicKeys;
+use FediE2EE\PKDServer\Tables\{
+    Actors,
+    PublicKeys
+};
 use JsonException;
 use ParagonIE\CipherSweet\Exception\{
     ArrayKeyException,
@@ -163,5 +166,84 @@ trait TOTPTrait
         if ($diff < 0) {
             throw new ProtocolException('OTP is too new; did you time travel?');
         }
+    }
+
+    /**
+     * @param string $rawBody
+     * @param string $subKey
+     * @param string[] $requiredSubFields
+     * @return array{body: array<string, mixed>, sub: array<string, mixed>}
+     *
+     * @throws JsonException
+     * @throws ProtocolException
+     */
+    protected function parseTotpBody(
+        string $rawBody,
+        string $subKey,
+        array $requiredSubFields,
+    ): array {
+        $body = self::jsonDecode($rawBody);
+        $sub = $body[$subKey] ?? [];
+        foreach ($requiredSubFields as $field) {
+            if (empty($sub[$field])) {
+                throw new ProtocolException('Missing required fields');
+            }
+        }
+        if (empty($body['action']) || empty($body['current-time']) || empty($body['!pkd-context'])) {
+            throw new ProtocolException('Missing required fields');
+        }
+        return ['body' => $body, 'sub' => $sub];
+    }
+
+    /**
+     * @param array<string, mixed> $body
+     * @param string $actorId
+     * @param string $keyId
+     * @param string $expectedContext
+     * @param string $expectedAction
+     * @return string
+     *
+     * @throws ArrayKeyException
+     * @throws BlindIndexNotFoundException
+     * @throws CacheException
+     * @throws CipherSweetException
+     * @throws CryptoException
+     * @throws CryptoOperationException
+     * @throws DateMalformedStringException
+     * @throws DependencyException
+     * @throws InvalidCiphertextException
+     * @throws JsonException
+     * @throws NotImplementedException
+     * @throws ProtocolException
+     * @throws SodiumException
+     * @throws TableException
+     */
+    protected function validateTotpRequest(
+        array $body,
+        string $actorId,
+        string $keyId,
+        string $expectedContext,
+        string $expectedAction,
+    ): string {
+        $this->verifySignature($body, $actorId, $keyId);
+        if (!hash_equals($expectedContext, $body['!pkd-context'] ?? '')) {
+            throw new ProtocolException('Invalid !pkd-context');
+        }
+        if (!hash_equals($expectedAction, $body['action'] ?? '')) {
+            throw new ProtocolException('Invalid action');
+        }
+        $this->throwIfTimeOutsideWindow((int)($body['current-time'] ?? 0));
+
+        /** @var Actors $actorTable */
+        $actorTable = $this->table('Actors');
+        $actor = $actorTable->searchForActor($actorId);
+        if (is_null($actor)) {
+            throw new ProtocolException('Actor not found');
+        }
+        $domain = self::parseUrlHost($actor->actorID);
+        if (is_null($domain)) {
+            throw new ProtocolException('Invalid actor URL');
+        }
+        return $domain;
     }
 }
