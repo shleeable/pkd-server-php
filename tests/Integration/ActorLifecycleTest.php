@@ -402,7 +402,7 @@ class ActorLifecycleTest extends TestCase
 
         $latestRoot = $merkleState->getLatestRoot();
         $addKey2 = new AddKey($canonical, $keypair2->getPublicKey());
-        $akm2 = new AttributeKeyMap()
+        $akm2 = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('public-key', SymmetricKey::generate());
         $bundle2 = $handler->handle($addKey2->encrypt($akm2), $keypair1, $akm2, $latestRoot);
@@ -657,7 +657,7 @@ class ActorLifecycleTest extends TestCase
 
         // 1. AddKey (self-signed)
         $addKey1 = new AddKey($canonical, $keypair1->getPublicKey());
-        $akm1 = new AttributeKeyMap()
+        $akm1 = (new AttributeKeyMap())
             ->addRandomKey('actor')
             ->addRandomKey('public-key');
         $encryptedMsg1 = $addKey1->encrypt($akm1);

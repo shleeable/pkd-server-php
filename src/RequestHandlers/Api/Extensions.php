@@ -36,7 +36,7 @@ class Extensions implements RequestHandlerInterface
     {
         return $this->json([
             '!pkd-context' => 'fedi-e2ee:v1/api/extensions',
-            'current-time' => (string) new DateTime()->getTimestamp(),
+            'current-time' => (string) (new DateTime())->getTimestamp(),
             'extensions' => $this->config()->getAuxDataTypeAllowList(),
         ]);
     }

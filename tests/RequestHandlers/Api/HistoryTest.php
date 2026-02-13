@@ -96,7 +96,7 @@ class HistoryTest extends TestCase
 
         // Add a key
         $addKey = new AddKey($canonical, $keypair->getPublicKey());
-        $akm = new AttributeKeyMap()
+        $akm = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('public-key', SymmetricKey::generate());
         $encryptedMsg = $addKey->encrypt($akm);

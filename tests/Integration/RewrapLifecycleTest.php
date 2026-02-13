@@ -172,7 +172,7 @@ class RewrapLifecycleTest extends TestCase
 
         $handler = new Handler();
         $addKey = new AddKey($canonical, $keypair->getPublicKey());
-        $akm = new AttributeKeyMap()
+        $akm = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('public-key', SymmetricKey::generate());
         $encryptedMsg = $addKey->encrypt($akm);

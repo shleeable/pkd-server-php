@@ -211,7 +211,7 @@ class ProtocolTest extends TestCase
 
         // 1. First AddKey (self-signed)
         $addKey1 = new AddKey($canonical, $keypair1->getPublicKey());
-        $akm1 = new AttributeKeyMap()
+        $akm1 = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('public-key', SymmetricKey::generate());
         $encryptedMsg1 = $addKey1->encrypt($akm1);
@@ -235,7 +235,7 @@ class ProtocolTest extends TestCase
 
         // 2. Second AddKey (signed by key 1)
         $addKey2 = new AddKey($canonical, $keypair2->getPublicKey());
-        $akm2 = new AttributeKeyMap()
+        $akm2 = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('public-key', SymmetricKey::generate());
         $encryptedMsg2 = $addKey2->encrypt($akm2);
@@ -265,7 +265,7 @@ class ProtocolTest extends TestCase
         $this->assertNotSame($latestRoot2, $latestRoot3);
 
         $revokeKey = new RevokeKey($canonical, $keypair2->getPublicKey());
-        $akm3 = new AttributeKeyMap()
+        $akm3 = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('public-key', SymmetricKey::generate());
 
@@ -340,7 +340,7 @@ class ProtocolTest extends TestCase
 
         // 1. AddKey (self-signed)
         $addKey = new AddKey($canonical, $keypair->getPublicKey());
-        $akm1 = new AttributeKeyMap()
+        $akm1 = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('public-key', SymmetricKey::generate());
         $encryptedMsg1 = $addKey->encrypt($akm1);
@@ -363,7 +363,7 @@ class ProtocolTest extends TestCase
         // 2. Add second key
         $latestRoot2 = $merkleState->getLatestRoot();
         $addKey2 = new AddKey($canonical, $keypair2->getPublicKey());
-        $akm2 = new AttributeKeyMap()
+        $akm2 = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('public-key', SymmetricKey::generate());
         $encryptedMsg2 = $addKey2->encrypt($akm2);
@@ -383,7 +383,7 @@ class ProtocolTest extends TestCase
         // 3. MoveIdentity
         $latestRoot3 = $merkleState->getLatestRoot();
         $moveIdentity = new MoveIdentity($canonical, $canonical2);
-        $akm3 = new AttributeKeyMap()
+        $akm3 = (new AttributeKeyMap())
             ->addKey('old-actor', SymmetricKey::generate())
             ->addKey('new-actor', SymmetricKey::generate());
         $encryptedMsg3 = $moveIdentity->encrypt($akm3);
@@ -443,7 +443,7 @@ class ProtocolTest extends TestCase
         // 1. AddKey for actor
         $latestRoot1 = $merkleState->getLatestRoot();
         $addKey1 = new AddKey($canonActor, $actorKey->getPublicKey());
-        $akm1 = new AttributeKeyMap()
+        $akm1 = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('public-key', SymmetricKey::generate());
         $encryptedMsg1 = $addKey1->encrypt($akm1);
@@ -460,7 +460,7 @@ class ProtocolTest extends TestCase
         // 2. AddKey for operator
         $latestRoot2 = $merkleState->getLatestRoot();
         $addKey2 = new AddKey($canonOperator, $operatorKey->getPublicKey());
-        $akm2 = new AttributeKeyMap()
+        $akm2 = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('public-key', SymmetricKey::generate());
         $encryptedMsg2 = $addKey2->encrypt($akm2);
@@ -482,7 +482,7 @@ class ProtocolTest extends TestCase
         // 3. BurnDown (plaintext - not HPKE encrypted, but with attribute encryption)
         $latestRoot3 = $merkleState->getLatestRoot();
         $burnDown = new BurnDown($canonActor, $canonOperator);
-        $akm3 = new AttributeKeyMap()
+        $akm3 = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('operator', SymmetricKey::generate());
         $encryptedMsg3 = $burnDown->encrypt($akm3);
@@ -529,7 +529,7 @@ class ProtocolTest extends TestCase
         // 1. AddKey for actor
         $latestRoot1 = $merkleState->getLatestRoot();
         $addKey1 = new AddKey($canonActor, $actorKey->getPublicKey());
-        $akm1 = new AttributeKeyMap()
+        $akm1 = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('public-key', SymmetricKey::generate());
         $encryptedMsg1 = $addKey1->encrypt($akm1);
@@ -547,7 +547,7 @@ class ProtocolTest extends TestCase
         // 2. AddKey for operator
         $latestRoot2 = $merkleState->getLatestRoot();
         $addKey2 = new AddKey($canonOperator, $operatorKey->getPublicKey());
-        $akm2 = new AttributeKeyMap()
+        $akm2 = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('public-key', SymmetricKey::generate());
         $encryptedMsg2 = $addKey2->encrypt($akm2);
@@ -565,7 +565,7 @@ class ProtocolTest extends TestCase
         // 3. Fireproof
         $latestRoot3 = $merkleState->getLatestRoot();
         $fireproof = new Fireproof($canonActor);
-        $akm3 = new AttributeKeyMap()
+        $akm3 = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate());
         $encryptedMsg3 = $fireproof->encrypt($akm3);
         $bundle3 = $handler->handle($encryptedMsg3, $actorKey, $akm3, $latestRoot3);
@@ -586,7 +586,7 @@ class ProtocolTest extends TestCase
         $this->expectExceptionMessage('BurnDown MUST NOT be encrypted.');
         $latestRoot5 = $merkleState->getLatestRoot();
         $burnDown = new BurnDown($canonActor, $canonOperator);
-        $akm4 = new AttributeKeyMap()
+        $akm4 = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('operator', SymmetricKey::generate());
         $encryptedMsg4 = $burnDown->encrypt($akm4);
@@ -642,7 +642,7 @@ class ProtocolTest extends TestCase
         // 1. AddKey for actor
         $latestRoot1 = $merkleState->getLatestRoot();
         $addKey1 = new AddKey($canonicalActor, $actorKey->getPublicKey());
-        $akm1 = new AttributeKeyMap()
+        $akm1 = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('public-key', SymmetricKey::generate());
         $encryptedMsg1 = $addKey1->encrypt($akm1);
@@ -661,7 +661,7 @@ class ProtocolTest extends TestCase
         // 2. AddKey for operator
         $latestRoot2 = $merkleState->getLatestRoot();
         $addKey2 = new AddKey($canonicalOperator, $operatorKey->getPublicKey());
-        $akm2 = new AttributeKeyMap()
+        $akm2 = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('public-key', SymmetricKey::generate());
         $encryptedMsg2 = $addKey2->encrypt($akm2);
@@ -680,7 +680,7 @@ class ProtocolTest extends TestCase
         // 3. Fireproof
         $latestRoot3 = $merkleState->getLatestRoot();
         $fireproof = new Fireproof($canonicalActor);
-        $akm3 = new AttributeKeyMap()
+        $akm3 = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate());
         $encryptedMsg3 = $fireproof->encrypt($akm3);
         $bundle3 = $handler->handle($encryptedMsg3, $actorKey, $akm3, $latestRoot3, $actorKeyId);
@@ -700,7 +700,7 @@ class ProtocolTest extends TestCase
         // 4. UndoFireproof
         $latestRoot5 = $merkleState->getLatestRoot();
         $undoFireproof = new UndoFireproof($canonicalActor);
-        $akm4 = new AttributeKeyMap()
+        $akm4 = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate());
         $encryptedMsg4 = $undoFireproof->encrypt($akm4);
         $bundle4 = $handler->handle($encryptedMsg4, $actorKey, $akm4, $latestRoot5, $actorKeyId);
@@ -720,7 +720,7 @@ class ProtocolTest extends TestCase
         // 5. BurnDown (should succeed - plaintext with attribute encryption)
         $latestRoot7 = $merkleState->getLatestRoot();
         $burnDown = new BurnDown($canonicalActor, $canonicalOperator);
-        $akm5 = new AttributeKeyMap()
+        $akm5 = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('operator', SymmetricKey::generate());
         $encryptedMsg5 = $burnDown->encrypt($akm5);
@@ -765,7 +765,7 @@ class ProtocolTest extends TestCase
         // 1. AddKey for actor
         $latestRoot1 = $merkleState->getLatestRoot();
         $addKey1 = new AddKey($canonEve, $actorKey->getPublicKey());
-        $akm1 = new AttributeKeyMap()
+        $akm1 = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('public-key', SymmetricKey::generate());
         $encryptedMsg1 = $addKey1->encrypt($akm1);
@@ -783,7 +783,7 @@ class ProtocolTest extends TestCase
         // 2. AddAuxData
         $latestRoot2 = $merkleState->getLatestRoot();
         $addAuxData = new AddAuxData($canonEve, 'test', 'test');
-        $akm2 = new AttributeKeyMap()
+        $akm2 = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('aux-type', SymmetricKey::generate())
             ->addKey('aux-data', SymmetricKey::generate());
@@ -804,7 +804,7 @@ class ProtocolTest extends TestCase
         // 3. RevokeAuxData
         $latestRoot4 = $merkleState->getLatestRoot();
         $revokeAuxData = new RevokeAuxData($canonEve, 'test', 'test');
-        $akm3 = new AttributeKeyMap()
+        $akm3 = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('aux-type', SymmetricKey::generate())
             ->addKey('aux-data', SymmetricKey::generate());
@@ -992,7 +992,7 @@ class ProtocolTest extends TestCase
         $serverHpke = $this->config->getHPKE();
         $handler = new Handler();
         $revokeKey = new RevokeKey($canonical, $keypair1->getPublicKey());
-        $akm = new AttributeKeyMap()
+        $akm = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('public-key', SymmetricKey::generate());
         $bundle = $handler->handle(
@@ -1069,7 +1069,7 @@ class ProtocolTest extends TestCase
         // Add key2 (signed by key1)
         $latestRoot = $merkleState->getLatestRoot();
         $addKey2 = new AddKey($canonical, $keypair2->getPublicKey());
-        $akm2 = new AttributeKeyMap()
+        $akm2 = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('public-key', SymmetricKey::generate());
         $bundle2 = $handler->handle(
@@ -1093,7 +1093,7 @@ class ProtocolTest extends TestCase
         // Try to revoke key1, signed by key1 (self-revocation)
         $latestRoot = $merkleState->getLatestRoot();
         $revokeKey = new RevokeKey($canonical, $keypair1->getPublicKey());
-        $akm3 = new AttributeKeyMap()
+        $akm3 = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('public-key', SymmetricKey::generate());
         $bundle3 = $handler->handle(
@@ -1172,7 +1172,7 @@ class ProtocolTest extends TestCase
         // Add key2 (signed by key1)
         $latestRoot = $merkleState->getLatestRoot();
         $addKey2 = new AddKey($canonical, $keypair2->getPublicKey());
-        $akm2 = new AttributeKeyMap()
+        $akm2 = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('public-key', SymmetricKey::generate());
         $bundle2 = $handler->handle(
@@ -1196,7 +1196,7 @@ class ProtocolTest extends TestCase
         // Revoke key2, signed by key1
         $latestRoot = $merkleState->getLatestRoot();
         $revokeKey = new RevokeKey($canonical, $keypair2->getPublicKey());
-        $akm3 = new AttributeKeyMap()
+        $akm3 = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('public-key', SymmetricKey::generate());
         $bundle3 = $handler->handle(
@@ -1271,7 +1271,7 @@ class ProtocolTest extends TestCase
         // Create a second AddKey bundle (key2 signed by key1)
         $latestRoot = $merkleState->getLatestRoot();
         $addKey2 = new AddKey($canonical, $keypair2->getPublicKey());
-        $akm = new AttributeKeyMap()
+        $akm = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('public-key', SymmetricKey::generate());
         $bundle = $handler->handle(
@@ -1368,7 +1368,7 @@ class ProtocolTest extends TestCase
         // Fireproof the actor
         $latestRoot = $merkleState->getLatestRoot();
         $fireproof = new Fireproof($canonActor);
-        $akm = new AttributeKeyMap()
+        $akm = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate());
         $bundle = $handler->handle(
             $fireproof->encrypt($akm),
@@ -1454,7 +1454,7 @@ class ProtocolTest extends TestCase
         // First Fireproof succeeds
         $latestRoot = $merkleState->getLatestRoot();
         $fireproof = new Fireproof($canonical);
-        $akm = new AttributeKeyMap()
+        $akm = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate());
         $bundle = $handler->handle(
             $fireproof->encrypt($akm),
@@ -1474,7 +1474,7 @@ class ProtocolTest extends TestCase
         // Second Fireproof must fail
         $latestRoot = $merkleState->getLatestRoot();
         $fireproof2 = new Fireproof($canonical);
-        $akm2 = new AttributeKeyMap()
+        $akm2 = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate());
         $bundle2 = $handler->handle(
             $fireproof2->encrypt($akm2),
@@ -1542,7 +1542,7 @@ class ProtocolTest extends TestCase
         // Try UndoFireproof without being fireproof
         $latestRoot = $merkleState->getLatestRoot();
         $undoFireproof = new UndoFireproof($canonical);
-        $akm = new AttributeKeyMap()
+        $akm = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate());
         $bundle = $handler->handle(
             $undoFireproof->encrypt($akm),
@@ -1621,7 +1621,7 @@ class ProtocolTest extends TestCase
         // Now try to add a key referencing the bogus root
         $keypair2 = SecretKey::generate();
         $addKey = new AddKey($canonical, $keypair2->getPublicKey());
-        $akm = new AttributeKeyMap()
+        $akm = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('public-key', SymmetricKey::generate());
         $bundle = $handler->handle(
@@ -1686,7 +1686,7 @@ class ProtocolTest extends TestCase
         // Create AddKey for actor A
         $latestRoot = $merkleState->getLatestRoot();
         $addKey = new AddKey($canonicalA, $keypairA->getPublicKey());
-        $akm = new AttributeKeyMap()
+        $akm = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('public-key', SymmetricKey::generate());
         $bundle = $handler->handle(

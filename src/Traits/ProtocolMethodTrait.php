@@ -30,6 +30,7 @@ use ParagonIE\Certainty\Exception\CertaintyException;
 use Psr\SimpleCache\InvalidArgumentException;
 use Random\RandomException;
 use SodiumException;
+use Throwable;
 
 use function hash_equals;
 
@@ -60,7 +61,7 @@ trait ProtocolMethodTrait
     ): mixed {
         // Before we do any insets, we should make sure we're not in a dangling transaction:
         if ($this->config()->getDb()->inTransaction()) {
-            $this->config()->getDb()->commit();
+            $this->config()->getDb()->rollBack();
         }
         $message = $payload->message;
         if ($message->getAction() !== $expectedAction) {
@@ -88,12 +89,17 @@ trait ProtocolMethodTrait
         $cb = function () use (&$result, $leaf, $payload, $callback) {
             $result = $callback($leaf, $payload);
         };
-        if (new MerkleState($this->config())->insertLeaf($leaf, $cb)) {
-            if ($this->config()->getDb()->inTransaction()) {
-                $this->config()->getDb()->commit();
+        try {
+            if ((new MerkleState($this->config()))->insertLeaf($leaf, $cb)) {
+                return $result;
             }
-            return $result;
+        } catch (Throwable $e) {
+            if ($this->config()->getDb()->inTransaction()) {
+                $this->config()->getDb()->rollBack();
+            }
+            throw $e;
         }
+
         // Before we do any insets, we should make sure we're not in a dangling transaction:
         if ($this->config()->getDb()->inTransaction()) {
             $this->config()->getDb()->rollBack();

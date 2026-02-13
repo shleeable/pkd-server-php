@@ -84,7 +84,7 @@ class Peers extends Table
             $newUniqueId,
             $publicKey,
             new IncrementalTree(),
-            new Tree()->getEncodedRoot(),
+            (new Tree())->getEncodedRoot(),
             $cosign,
             $replicate,
             new DateTimeImmutable('NOW'),

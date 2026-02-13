@@ -163,7 +163,7 @@ class TotpEnrollTest extends TestCase
         $handler = new Handler();
 
         $addKey = new AddKey($canonical, $keypair->getPublicKey());
-        $akm = new AttributeKeyMap()
+        $akm = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('public-key', SymmetricKey::generate());
         $encryptedMsg = $addKey->encrypt($akm);
@@ -185,7 +185,7 @@ class TotpEnrollTest extends TestCase
 
         // Encrypt the TOTP secret for the server
         $hpke = $this->config->getHPKE();
-        $encryptedSecret = new HPKEAdapter($hpke->cs, 'fedi-e2ee:v1/api/totp/enroll')->seal(
+        $encryptedSecret = (new HPKEAdapter($hpke->cs, 'fedi-e2ee:v1/api/totp/enroll'))->seal(
             $hpke->getEncapsKey(),
             $totpSecret
         );
@@ -219,14 +219,14 @@ class TotpEnrollTest extends TestCase
         ];
 
         // Dispatch the request
-        $request = new ServerRequest(
+        $request = (new ServerRequest(
             [],
             [],
             '/api/totp/enroll',
             'POST'
-        )
+        ))
             ->withHeader('Content-Type', 'application/json')
-            ->withBody(new StreamFactory()->createStream(json_encode($body)));
+            ->withBody((new StreamFactory())->createStream(json_encode($body)));
         $response = $this->dispatchRequest($request);
 
         // Assertions
@@ -271,9 +271,9 @@ class TotpEnrollTest extends TestCase
             'signature' => 'fake-signature'
         ];
 
-        $request = new ServerRequest([], [], '/api/totp/enroll', 'POST')
+        $request = (new ServerRequest([], [], '/api/totp/enroll', 'POST'))
             ->withHeader('Content-Type', 'application/json')
-            ->withBody(new StreamFactory()->createStream(json_encode($body)));
+            ->withBody((new StreamFactory())->createStream(json_encode($body)));
         $response = $this->dispatchRequest($request);
 
         $this->assertSame(400, $response->getStatusCode());
@@ -302,9 +302,9 @@ class TotpEnrollTest extends TestCase
             'signature' => 'fake-signature'
         ];
 
-        $request = new ServerRequest([], [], '/api/totp/enroll', 'POST')
+        $request = (new ServerRequest([], [], '/api/totp/enroll', 'POST'))
             ->withHeader('Content-Type', 'application/json')
-            ->withBody(new StreamFactory()->createStream(json_encode($body)));
+            ->withBody((new StreamFactory())->createStream(json_encode($body)));
         $response = $this->dispatchRequest($request);
 
         $this->assertSame(400, $response->getStatusCode());
@@ -331,9 +331,9 @@ class TotpEnrollTest extends TestCase
             'signature' => 'fake-signature'
         ];
 
-        $request = new ServerRequest([], [], '/api/totp/enroll', 'POST')
+        $request = (new ServerRequest([], [], '/api/totp/enroll', 'POST'))
             ->withHeader('Content-Type', 'application/json')
-            ->withBody(new StreamFactory()->createStream(json_encode($body)));
+            ->withBody((new StreamFactory())->createStream(json_encode($body)));
         $response = $this->dispatchRequest($request);
 
         $this->assertSame(400, $response->getStatusCode());
@@ -360,9 +360,9 @@ class TotpEnrollTest extends TestCase
             'signature' => 'fake-signature'
         ];
 
-        $request = new ServerRequest([], [], '/api/totp/enroll', 'POST')
+        $request = (new ServerRequest([], [], '/api/totp/enroll', 'POST'))
             ->withHeader('Content-Type', 'application/json')
-            ->withBody(new StreamFactory()->createStream(json_encode($body)));
+            ->withBody((new StreamFactory())->createStream(json_encode($body)));
         $response = $this->dispatchRequest($request);
 
         $this->assertSame(400, $response->getStatusCode());
@@ -389,9 +389,9 @@ class TotpEnrollTest extends TestCase
             'signature' => 'fake-signature'
         ];
 
-        $request = new ServerRequest([], [], '/api/totp/enroll', 'POST')
+        $request = (new ServerRequest([], [], '/api/totp/enroll', 'POST'))
             ->withHeader('Content-Type', 'application/json')
-            ->withBody(new StreamFactory()->createStream(json_encode($body)));
+            ->withBody((new StreamFactory())->createStream(json_encode($body)));
         $response = $this->dispatchRequest($request);
 
         $this->assertSame(400, $response->getStatusCode());
@@ -418,9 +418,9 @@ class TotpEnrollTest extends TestCase
             'signature' => 'fake-signature'
         ];
 
-        $request = new ServerRequest([], [], '/api/totp/enroll', 'POST')
+        $request = (new ServerRequest([], [], '/api/totp/enroll', 'POST'))
             ->withHeader('Content-Type', 'application/json')
-            ->withBody(new StreamFactory()->createStream(json_encode($body)));
+            ->withBody((new StreamFactory())->createStream(json_encode($body)));
         $response = $this->dispatchRequest($request);
 
         $this->assertSame(400, $response->getStatusCode());
@@ -447,9 +447,9 @@ class TotpEnrollTest extends TestCase
             'signature' => 'fake-signature'
         ];
 
-        $request = new ServerRequest([], [], '/api/totp/enroll', 'POST')
+        $request = (new ServerRequest([], [], '/api/totp/enroll', 'POST'))
             ->withHeader('Content-Type', 'application/json')
-            ->withBody(new StreamFactory()->createStream(json_encode($body)));
+            ->withBody((new StreamFactory())->createStream(json_encode($body)));
         $response = $this->dispatchRequest($request);
 
         $this->assertSame(400, $response->getStatusCode());
@@ -476,9 +476,9 @@ class TotpEnrollTest extends TestCase
             'signature' => 'fake-signature'
         ];
 
-        $request = new ServerRequest([], [], '/api/totp/enroll', 'POST')
+        $request = (new ServerRequest([], [], '/api/totp/enroll', 'POST'))
             ->withHeader('Content-Type', 'application/json')
-            ->withBody(new StreamFactory()->createStream(json_encode($body)));
+            ->withBody((new StreamFactory())->createStream(json_encode($body)));
         $response = $this->dispatchRequest($request);
 
         $this->assertSame(400, $response->getStatusCode());
@@ -491,9 +491,9 @@ class TotpEnrollTest extends TestCase
      */
     public function testInvalidJson(): void
     {
-        $request = new ServerRequest([], [], '/api/totp/enroll', 'POST')
+        $request = (new ServerRequest([], [], '/api/totp/enroll', 'POST'))
             ->withHeader('Content-Type', 'application/json')
-            ->withBody(new StreamFactory()->createStream('not valid json'));
+            ->withBody((new StreamFactory())->createStream('not valid json'));
         $this->clearOldTransaction($this->config);
         $response = $this->dispatchRequest($request);
 
@@ -526,7 +526,7 @@ class TotpEnrollTest extends TestCase
         $otpPrevious = self::generateTOTP($totpSecret, time() - 30);
 
         $hpke = $this->config->getHPKE();
-        $encryptedSecret = new HPKEAdapter($hpke->cs, 'fedi-e2ee:v1/api/totp/enroll')->seal(
+        $encryptedSecret = (new HPKEAdapter($hpke->cs, 'fedi-e2ee:v1/api/totp/enroll'))->seal(
             $hpke->getEncapsKey(),
             $totpSecret
         );
@@ -561,9 +561,9 @@ class TotpEnrollTest extends TestCase
             'signature' => Base64UrlSafe::encodeUnpadded($signature)
         ];
 
-        $request = new ServerRequest([], [], '/api/totp/enroll', 'POST')
+        $request = (new ServerRequest([], [], '/api/totp/enroll', 'POST'))
             ->withHeader('Content-Type', 'application/json')
-            ->withBody(new StreamFactory()->createStream(json_encode($body)));
+            ->withBody((new StreamFactory())->createStream(json_encode($body)));
         $response = $this->dispatchRequest($request);
 
         $this->assertSame(400, $response->getStatusCode());
@@ -596,7 +596,7 @@ class TotpEnrollTest extends TestCase
         $otpPrevious = self::generateTOTP($totpSecret, time() - 30);
 
         $hpke = $this->config->getHPKE();
-        $encryptedSecret = new HPKEAdapter($hpke->cs, 'fedi-e2ee:v1/api/totp/enroll')->seal(
+        $encryptedSecret = (new HPKEAdapter($hpke->cs, 'fedi-e2ee:v1/api/totp/enroll'))->seal(
             $hpke->getEncapsKey(),
             $totpSecret
         );
@@ -631,9 +631,9 @@ class TotpEnrollTest extends TestCase
             'signature' => Base64UrlSafe::encodeUnpadded($invalidSignature)
         ];
 
-        $request = new ServerRequest([], [], '/api/totp/enroll', 'POST')
+        $request = (new ServerRequest([], [], '/api/totp/enroll', 'POST'))
             ->withHeader('Content-Type', 'application/json')
-            ->withBody(new StreamFactory()->createStream(json_encode($body)));
+            ->withBody((new StreamFactory())->createStream(json_encode($body)));
 
         $response = $this->dispatchRequest($request);
         $body = json_decode($response->getBody()->getContents(), true);
@@ -667,7 +667,7 @@ class TotpEnrollTest extends TestCase
         $wrongOtpPrevious = '00000000';
 
         $hpke = $this->config->getHPKE();
-        $encryptedSecret = new HPKEAdapter($hpke->cs, 'fedi-e2ee:v1/api/totp/enroll')->seal(
+        $encryptedSecret = (new HPKEAdapter($hpke->cs, 'fedi-e2ee:v1/api/totp/enroll'))->seal(
             $hpke->getEncapsKey(),
             $totpSecret
         );
@@ -699,9 +699,9 @@ class TotpEnrollTest extends TestCase
             'signature' => Base64UrlSafe::encodeUnpadded($signature)
         ];
 
-        $request = new ServerRequest([], [], '/api/totp/enroll', 'POST')
+        $request = (new ServerRequest([], [], '/api/totp/enroll', 'POST'))
             ->withHeader('Content-Type', 'application/json')
-            ->withBody(new StreamFactory()->createStream(json_encode($body)));
+            ->withBody((new StreamFactory())->createStream(json_encode($body)));
         $response = $this->dispatchRequest($request);
 
         $this->assertSame(406, $response->getStatusCode());
@@ -742,7 +742,7 @@ class TotpEnrollTest extends TestCase
         $otpPrevious = self::generateTOTP($totpSecret, time() - 30);
 
         $hpke = $this->config->getHPKE();
-        $encryptedSecret = new HPKEAdapter($hpke->cs, 'fedi-e2ee:v1/api/totp/enroll')->seal(
+        $encryptedSecret = (new HPKEAdapter($hpke->cs, 'fedi-e2ee:v1/api/totp/enroll'))->seal(
             $hpke->getEncapsKey(),
             $totpSecret
         );
@@ -800,9 +800,9 @@ class TotpEnrollTest extends TestCase
             'signature' => Base64UrlSafe::encodeUnpadded($signature)
         ];
 
-        $request = new ServerRequest([], [], '/api/totp/enroll', 'POST')
+        $request = (new ServerRequest([], [], '/api/totp/enroll', 'POST'))
             ->withHeader('Content-Type', 'application/json')
-            ->withBody(new StreamFactory()->createStream(json_encode($body)));
+            ->withBody((new StreamFactory())->createStream(json_encode($body)));
         $response = $this->dispatchRequest($request);
 
         $this->assertSame($expectedStatus, $response->getStatusCode());

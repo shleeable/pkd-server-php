@@ -194,7 +194,7 @@ class TotpRotateTest extends TestCase
         $handler = new Handler();
 
         $addKey = new AddKey($canonical, $pk);
-        $akm = new AttributeKeyMap()
+        $akm = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('public-key', SymmetricKey::generate());
         $encryptedMsg = $addKey->encrypt($akm);
@@ -224,7 +224,7 @@ class TotpRotateTest extends TestCase
         $newOtpPrevious = $totpGenerator->generateTOTP($newSecret, time() - 30);
 
         $hpke = $this->config()->getHPKE();
-        $encryptedSecret = new HPKEAdapter($hpke->cs, 'fedi-e2ee:v1/api/totp/rotate')->seal(
+        $encryptedSecret = (new HPKEAdapter($hpke->cs, 'fedi-e2ee:v1/api/totp/rotate'))->seal(
             $hpke->getEncapsKey(),
             $newSecret
         );
@@ -314,9 +314,9 @@ class TotpRotateTest extends TestCase
             'signature' => 'fake-signature'
         ];
 
-        $request = new ServerRequest([], [], '/api/totp/rotate', 'POST')
+        $request = (new ServerRequest([], [], '/api/totp/rotate', 'POST'))
             ->withHeader('Content-Type', 'application/json')
-            ->withBody(new StreamFactory()->createStream(json_encode($body)));
+            ->withBody((new StreamFactory())->createStream(json_encode($body)));
         $response = $this->dispatchRequest($request);
 
         $this->assertSame(400, $response->getStatusCode());
@@ -346,9 +346,9 @@ class TotpRotateTest extends TestCase
             'signature' => 'fake-signature'
         ];
 
-        $request = new ServerRequest([], [], '/api/totp/rotate', 'POST')
+        $request = (new ServerRequest([], [], '/api/totp/rotate', 'POST'))
             ->withHeader('Content-Type', 'application/json')
-            ->withBody(new StreamFactory()->createStream(json_encode($body)));
+            ->withBody((new StreamFactory())->createStream(json_encode($body)));
         $response = $this->dispatchRequest($request);
 
         $this->assertSame(400, $response->getStatusCode());
@@ -376,9 +376,9 @@ class TotpRotateTest extends TestCase
             'signature' => 'fake-signature'
         ];
 
-        $request = new ServerRequest([], [], '/api/totp/rotate', 'POST')
+        $request = (new ServerRequest([], [], '/api/totp/rotate', 'POST'))
             ->withHeader('Content-Type', 'application/json')
-            ->withBody(new StreamFactory()->createStream(json_encode($body)));
+            ->withBody((new StreamFactory())->createStream(json_encode($body)));
         $response = $this->dispatchRequest($request);
 
         $this->assertSame(400, $response->getStatusCode());
@@ -406,9 +406,9 @@ class TotpRotateTest extends TestCase
             'signature' => 'fake-signature'
         ];
 
-        $request = new ServerRequest([], [], '/api/totp/rotate', 'POST')
+        $request = (new ServerRequest([], [], '/api/totp/rotate', 'POST'))
             ->withHeader('Content-Type', 'application/json')
-            ->withBody(new StreamFactory()->createStream(json_encode($body)));
+            ->withBody((new StreamFactory())->createStream(json_encode($body)));
         $response = $this->dispatchRequest($request);
 
         $this->assertSame(400, $response->getStatusCode());
@@ -436,9 +436,9 @@ class TotpRotateTest extends TestCase
             'signature' => 'fake-signature'
         ];
 
-        $request = new ServerRequest([], [], '/api/totp/rotate', 'POST')
+        $request = (new ServerRequest([], [], '/api/totp/rotate', 'POST'))
             ->withHeader('Content-Type', 'application/json')
-            ->withBody(new StreamFactory()->createStream(json_encode($body)));
+            ->withBody((new StreamFactory())->createStream(json_encode($body)));
         $response = $this->dispatchRequest($request);
 
         $this->assertSame(400, $response->getStatusCode());
@@ -466,9 +466,9 @@ class TotpRotateTest extends TestCase
             'signature' => 'fake-signature'
         ];
 
-        $request = new ServerRequest([], [], '/api/totp/rotate', 'POST')
+        $request = (new ServerRequest([], [], '/api/totp/rotate', 'POST'))
             ->withHeader('Content-Type', 'application/json')
-            ->withBody(new StreamFactory()->createStream(json_encode($body)));
+            ->withBody((new StreamFactory())->createStream(json_encode($body)));
         $response = $this->dispatchRequest($request);
 
         $this->assertSame(400, $response->getStatusCode());
@@ -496,9 +496,9 @@ class TotpRotateTest extends TestCase
             'signature' => 'fake-signature'
         ];
 
-        $request = new ServerRequest([], [], '/api/totp/rotate', 'POST')
+        $request = (new ServerRequest([], [], '/api/totp/rotate', 'POST'))
             ->withHeader('Content-Type', 'application/json')
-            ->withBody(new StreamFactory()->createStream(json_encode($body)));
+            ->withBody((new StreamFactory())->createStream(json_encode($body)));
         $response = $this->dispatchRequest($request);
 
         $this->assertSame(400, $response->getStatusCode());
@@ -526,9 +526,9 @@ class TotpRotateTest extends TestCase
             'signature' => 'fake-signature'
         ];
 
-        $request = new ServerRequest([], [], '/api/totp/rotate', 'POST')
+        $request = (new ServerRequest([], [], '/api/totp/rotate', 'POST'))
             ->withHeader('Content-Type', 'application/json')
-            ->withBody(new StreamFactory()->createStream(json_encode($body)));
+            ->withBody((new StreamFactory())->createStream(json_encode($body)));
         $response = $this->dispatchRequest($request);
 
         $this->assertSame(400, $response->getStatusCode());
@@ -556,9 +556,9 @@ class TotpRotateTest extends TestCase
             'signature' => 'fake-signature'
         ];
 
-        $request = new ServerRequest([], [], '/api/totp/rotate', 'POST')
+        $request = (new ServerRequest([], [], '/api/totp/rotate', 'POST'))
             ->withHeader('Content-Type', 'application/json')
-            ->withBody(new StreamFactory()->createStream(json_encode($body)));
+            ->withBody((new StreamFactory())->createStream(json_encode($body)));
         $response = $this->dispatchRequest($request);
 
         $this->assertSame(400, $response->getStatusCode());
@@ -571,9 +571,9 @@ class TotpRotateTest extends TestCase
      */
     public function testInvalidJson(): void
     {
-        $request = new ServerRequest([], [], '/api/totp/rotate', 'POST')
+        $request = (new ServerRequest([], [], '/api/totp/rotate', 'POST'))
             ->withHeader('Content-Type', 'application/json')
-            ->withBody(new StreamFactory()->createStream('not valid json'));
+            ->withBody((new StreamFactory())->createStream('not valid json'));
         $response = $this->dispatchRequest($request);
 
         $this->assertSame(400, $response->getStatusCode());
@@ -626,7 +626,7 @@ class TotpRotateTest extends TestCase
         $handler = new Handler();
 
         $addKey = new AddKey($canonical, $pk);
-        $akm = new AttributeKeyMap()
+        $akm = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('public-key', SymmetricKey::generate());
         $encryptedMsg = $addKey->encrypt($akm);
@@ -656,7 +656,7 @@ class TotpRotateTest extends TestCase
         $newOtpPrevious = $totpGenerator->generateTOTP($newSecret, time() - 30);
 
         $hpke = $this->config()->getHPKE();
-        $encryptedSecret = new HPKEAdapter($hpke->cs, 'fedi-e2ee:v1/api/totp/rotate')->seal(
+        $encryptedSecret = (new HPKEAdapter($hpke->cs, 'fedi-e2ee:v1/api/totp/rotate'))->seal(
             $hpke->getEncapsKey(),
             $newSecret
         );
@@ -757,7 +757,7 @@ class TotpRotateTest extends TestCase
         $newOtpPrevious = $totpGenerator->generateTOTP($newSecret, $sameTime);
 
         $hpke = $this->config()->getHPKE();
-        $encryptedSecret = new HPKEAdapter($hpke->cs, 'fedi-e2ee:v1/api/totp/rotate')->seal(
+        $encryptedSecret = (new HPKEAdapter($hpke->cs, 'fedi-e2ee:v1/api/totp/rotate'))->seal(
             $hpke->getEncapsKey(),
             $newSecret
         );
@@ -825,7 +825,7 @@ class TotpRotateTest extends TestCase
         $newOtpPrevious = $totpGenerator->generateTOTP($newSecret, time() - 30);
 
         $hpke = $this->config()->getHPKE();
-        $encryptedSecret = new HPKEAdapter($hpke->cs, 'fedi-e2ee:v1/api/totp/rotate')->seal(
+        $encryptedSecret = (new HPKEAdapter($hpke->cs, 'fedi-e2ee:v1/api/totp/rotate'))->seal(
             $hpke->getEncapsKey(),
             $newSecret
         );

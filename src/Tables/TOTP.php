@@ -27,12 +27,12 @@ class TOTP extends Table
     #[Override]
     public function getCipher(): WrappedEncryptedRow
     {
-        return new WrappedEncryptedRow(
+        return (new WrappedEncryptedRow(
             $this->engine,
             'pkd_totp_secrets',
             false,
             'totpid'
-        )->addTextField('secret');
+        ))->addTextField('secret');
     }
 
     protected function getNextTotpId(): int

@@ -33,12 +33,12 @@ class ReplicaActors extends Table
     #[Override]
     public function getCipher(): WrappedEncryptedRow
     {
-        return new WrappedEncryptedRow(
+        return (new WrappedEncryptedRow(
             $this->engine,
             'pkd_replica_actors',
             false,
             'replicaactorid'
-        )
+        ))
             ->addTextField('activitypubid', '', 'wrap_activitypubid')
             ->addBlindIndex(
                 'activitypubid',

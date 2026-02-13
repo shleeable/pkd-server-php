@@ -29,12 +29,12 @@ class ReplicaPublicKeys extends Table
     #[Override]
     public function getCipher(): WrappedEncryptedRow
     {
-        return new WrappedEncryptedRow(
+        return (new WrappedEncryptedRow(
             $this->engine,
             'pkd_replica_actors_publickeys',
             false,
             'replicaactorpublickeyid'
-        )
+        ))
             ->addTextField('publickey')
             ->addBlindIndex('publickey', new BlindIndex('publickey_idx', [], 16, true))
         ;
@@ -93,11 +93,11 @@ class ReplicaPublicKeys extends Table
         $decrypted = $this->getCipher()->decryptRow(self::rowToStringArray($row));
         $insertTimeVal = $decrypted['inserttime'] ?? 'now';
         $insertTime = (string) (
-            new DateTimeImmutable(is_string($insertTimeVal) ? $insertTimeVal : 'now')->getTimestamp()
+            (new DateTimeImmutable(is_string($insertTimeVal) ? $insertTimeVal : 'now'))->getTimestamp()
         );
         $revokeTimeVal = $decrypted['revoketime'] ?? null;
         $revokeTime = is_string($revokeTimeVal) && !empty($revokeTimeVal)
-            ? (string) new DateTimeImmutable($revokeTimeVal)->getTimestamp()
+            ? (string) (new DateTimeImmutable($revokeTimeVal))->getTimestamp()
             : null;
         $inclusionVal = $decrypted['inclusionproof'] ?? '[]';
         $inclusionProof = json_decode(
@@ -158,7 +158,7 @@ class ReplicaPublicKeys extends Table
             $rowArray = self::rowToStringArray($row);
             $decrypt = $this->getCipher()->decryptRow($rowArray);
             $insertTimeVal = $decrypt['inserttime'] ?? 'now';
-            $insertTime = (string) new DateTimeImmutable(is_string($insertTimeVal) ? $insertTimeVal : 'now')->getTimestamp();
+            $insertTime = (string) (new DateTimeImmutable(is_string($insertTimeVal) ? $insertTimeVal : 'now'))->getTimestamp();
             $inclusionVal = $decrypt['inclusionproof'] ?? '[]';
             $inclusionProof = json_decode(
                 is_string($inclusionVal) ? $inclusionVal : '[]',

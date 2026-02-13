@@ -144,7 +144,7 @@ class CosignLifecycleTest extends TestCase
 
         // Add a key
         $addKey = new AddKey($canonical, $keypair->getPublicKey());
-        $akm = new AttributeKeyMap()
+        $akm = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('public-key', SymmetricKey::generate());
         $encryptedMsg = $addKey->encrypt($akm);
@@ -180,7 +180,7 @@ class CosignLifecycleTest extends TestCase
 
         $tree = new IncrementalTree();
         // Let's get all history since the beginning:
-        $zerothRoot = new Tree()->getEncodedRoot();
+        $zerothRoot = (new Tree())->getEncodedRoot();
         $merkleState = $this->table('MerkleState');
         if (!($merkleState instanceof MerkleState)) {
             $this->fail('Could not load table: MerkleState');

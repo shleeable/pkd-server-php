@@ -119,7 +119,7 @@ class TotpDisenrollTest extends TestCase
         $handler = new Handler();
 
         $addKey = new AddKey($canonical, $keypair->getPublicKey());
-        $akm = new AttributeKeyMap()
+        $akm = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('public-key', SymmetricKey::generate());
         $encryptedMsg = $addKey->encrypt($akm);
@@ -171,14 +171,14 @@ class TotpDisenrollTest extends TestCase
         ];
 
         // Dispatch the request
-        $request = new ServerRequest(
+        $request = (new ServerRequest(
             [],
             [],
             '/api/totp/disenroll',
             'POST'
-        )
+        ))
             ->withHeader('Content-Type', 'application/json')
-            ->withBody(new StreamFactory()->createStream(json_encode($body)));
+            ->withBody((new StreamFactory())->createStream(json_encode($body)));
         $response = $this->dispatchRequest($request);
 
         // Validate the HTTP response
@@ -214,9 +214,9 @@ class TotpDisenrollTest extends TestCase
             'signature' => 'fake-signature'
         ];
 
-        $request = new ServerRequest([], [], '/api/totp/disenroll', 'POST')
+        $request = (new ServerRequest([], [], '/api/totp/disenroll', 'POST'))
             ->withHeader('Content-Type', 'application/json')
-            ->withBody(new StreamFactory()->createStream(json_encode($body)));
+            ->withBody((new StreamFactory())->createStream(json_encode($body)));
         $response = $this->dispatchRequest($request);
 
         $this->assertSame(400, $response->getStatusCode());
@@ -243,9 +243,9 @@ class TotpDisenrollTest extends TestCase
             'signature' => 'fake-signature'
         ];
 
-        $request = new ServerRequest([], [], '/api/totp/disenroll', 'POST')
+        $request = (new ServerRequest([], [], '/api/totp/disenroll', 'POST'))
             ->withHeader('Content-Type', 'application/json')
-            ->withBody(new StreamFactory()->createStream(json_encode($body)));
+            ->withBody((new StreamFactory())->createStream(json_encode($body)));
         $response = $this->dispatchRequest($request);
 
         $this->assertSame(400, $response->getStatusCode());
@@ -270,9 +270,9 @@ class TotpDisenrollTest extends TestCase
             'signature' => 'fake-signature'
         ];
 
-        $request = new ServerRequest([], [], '/api/totp/disenroll', 'POST')
+        $request = (new ServerRequest([], [], '/api/totp/disenroll', 'POST'))
             ->withHeader('Content-Type', 'application/json')
-            ->withBody(new StreamFactory()->createStream(json_encode($body)));
+            ->withBody((new StreamFactory())->createStream(json_encode($body)));
         $response = $this->dispatchRequest($request);
 
         $this->assertSame(400, $response->getStatusCode());
@@ -297,9 +297,9 @@ class TotpDisenrollTest extends TestCase
             'signature' => 'fake-signature'
         ];
 
-        $request = new ServerRequest([], [], '/api/totp/disenroll', 'POST')
+        $request = (new ServerRequest([], [], '/api/totp/disenroll', 'POST'))
             ->withHeader('Content-Type', 'application/json')
-            ->withBody(new StreamFactory()->createStream(json_encode($body)));
+            ->withBody((new StreamFactory())->createStream(json_encode($body)));
         $response = $this->dispatchRequest($request);
 
         $this->assertSame(400, $response->getStatusCode());
@@ -324,9 +324,9 @@ class TotpDisenrollTest extends TestCase
             'signature' => 'fake-signature'
         ];
 
-        $request = new ServerRequest([], [], '/api/totp/disenroll', 'POST')
+        $request = (new ServerRequest([], [], '/api/totp/disenroll', 'POST'))
             ->withHeader('Content-Type', 'application/json')
-            ->withBody(new StreamFactory()->createStream(json_encode($body)));
+            ->withBody((new StreamFactory())->createStream(json_encode($body)));
         $response = $this->dispatchRequest($request);
 
         $this->assertSame(400, $response->getStatusCode());
@@ -351,9 +351,9 @@ class TotpDisenrollTest extends TestCase
             'signature' => 'fake-signature'
         ];
 
-        $request = new ServerRequest([], [], '/api/totp/disenroll', 'POST')
+        $request = (new ServerRequest([], [], '/api/totp/disenroll', 'POST'))
             ->withHeader('Content-Type', 'application/json')
-            ->withBody(new StreamFactory()->createStream(json_encode($body)));
+            ->withBody((new StreamFactory())->createStream(json_encode($body)));
         $response = $this->dispatchRequest($request);
 
         $this->assertSame(400, $response->getStatusCode());
@@ -366,9 +366,9 @@ class TotpDisenrollTest extends TestCase
      */
     public function testInvalidJson(): void
     {
-        $request = new ServerRequest([], [], '/api/totp/disenroll', 'POST')
+        $request = (new ServerRequest([], [], '/api/totp/disenroll', 'POST'))
             ->withHeader('Content-Type', 'application/json')
-            ->withBody(new StreamFactory()->createStream('not valid json'));
+            ->withBody((new StreamFactory())->createStream('not valid json'));
         $this->clearOldTransaction($this->config());
         $response = $this->dispatchRequest($request);
 
@@ -406,7 +406,7 @@ class TotpDisenrollTest extends TestCase
         $handler = new Handler();
 
         $addKey = new AddKey($canonical, $keypair->getPublicKey());
-        $akm = new AttributeKeyMap()
+        $akm = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('public-key', SymmetricKey::generate());
         $encryptedMsg = $addKey->encrypt($akm);
@@ -459,14 +459,14 @@ class TotpDisenrollTest extends TestCase
         ];
 
         // Dispatch the request
-        $request = new ServerRequest(
+        $request = (new ServerRequest(
             [],
             [],
             '/api/totp/disenroll',
             'POST'
-        )
+        ))
             ->withHeader('Content-Type', 'application/json')
-            ->withBody(new StreamFactory()->createStream(json_encode($body)));
+            ->withBody((new StreamFactory())->createStream(json_encode($body)));
         $response = $this->dispatchRequest($request);
 
         // Validate the HTTP response
@@ -581,7 +581,7 @@ class TotpDisenrollTest extends TestCase
         $handler = new Handler();
 
         $addKey = new AddKey($canonical, $keypair->getPublicKey());
-        $akm = new AttributeKeyMap()
+        $akm = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('public-key', SymmetricKey::generate());
         $encryptedMsg = $addKey->encrypt($akm);
@@ -629,14 +629,14 @@ class TotpDisenrollTest extends TestCase
         ];
 
         // Dispatch the request
-        $request = new ServerRequest(
+        $request = (new ServerRequest(
             [],
             [],
             '/api/totp/disenroll',
             'POST'
-        )
+        ))
             ->withHeader('Content-Type', 'application/json')
-            ->withBody(new StreamFactory()->createStream(json_encode($body)));
+            ->withBody((new StreamFactory())->createStream(json_encode($body)));
         $response = $this->dispatchRequest($request);
 
         // Should return 400 error for timestamp outside window
@@ -671,7 +671,7 @@ class TotpDisenrollTest extends TestCase
         $handler = new Handler();
 
         $addKey = new AddKey($canonical, $keypair->getPublicKey());
-        $akm = new AttributeKeyMap()
+        $akm = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('public-key', SymmetricKey::generate());
         $encryptedMsg = $addKey->encrypt($akm);
@@ -719,14 +719,14 @@ class TotpDisenrollTest extends TestCase
         $table->updateLastTimeStep($domain, $ts);
 
         // Dispatch the request
-        $request = new ServerRequest(
+        $request = (new ServerRequest(
             [],
             [],
             '/api/totp/disenroll',
             'POST'
-        )
+        ))
             ->withHeader('Content-Type', 'application/json')
-            ->withBody(new StreamFactory()->createStream(json_encode($message)));
+            ->withBody((new StreamFactory())->createStream(json_encode($message)));
         $response = $this->dispatchRequest($request);
 
         // Validate the HTTP response: should be 403 Forbidden because OTP already used

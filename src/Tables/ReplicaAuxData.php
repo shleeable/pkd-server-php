@@ -28,12 +28,12 @@ class ReplicaAuxData extends Table
     #[Override]
     public function getCipher(): WrappedEncryptedRow
     {
-        return new WrappedEncryptedRow(
+        return (new WrappedEncryptedRow(
             $this->engine,
             'pkd_replica_actors_auxdata',
             false,
             'replicaactorauxdataid'
-        )
+        ))
             ->addTextField('auxdata')
             ->addBlindIndex('auxdata', new BlindIndex('auxdata_idx', [], 16, true))
         ;
@@ -76,7 +76,7 @@ class ReplicaAuxData extends Table
             $actorID
         );
         foreach ($query as $row) {
-            $insertTime = (string) new DateTimeImmutable($row['inserttime'] ?? 'now')->getTimestamp();
+            $insertTime = (string) (new DateTimeImmutable($row['inserttime'] ?? 'now'))->getTimestamp();
             $results[] = [
                 'aux-id' => $row['replicaactorauxdataid'],
                 'aux-type' => $row['auxdatatype'],
@@ -123,12 +123,12 @@ class ReplicaAuxData extends Table
         }
         $decrypted = $this->getCipher()->decryptRow(self::rowToStringArray($row));
         $insertTimeVal = $decrypted['inserttime'] ?? 'now';
-        $insertTime = (string) new DateTimeImmutable(
+        $insertTime = (string) (new DateTimeImmutable(
             is_string($insertTimeVal) ? $insertTimeVal : 'now'
-        )->getTimestamp();
+        ))->getTimestamp();
         $revokeTimeVal = $decrypted['revoketime'] ?? null;
         $revokeTime = is_string($revokeTimeVal) && !empty($revokeTimeVal)
-            ? (string) new DateTimeImmutable($revokeTimeVal)->getTimestamp()
+            ? (string) (new DateTimeImmutable($revokeTimeVal))->getTimestamp()
             : null;
         $inclusionVal = $decrypted['inclusionproof'] ?? '[]';
         $inclusionProof = json_decode(

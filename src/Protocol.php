@@ -40,6 +40,7 @@ use ParagonIE\HPKE\HPKEException;
 use Random\RandomException;
 use SodiumException;
 
+use function hash_equals;
 use function property_exists;
 
 /**
@@ -81,10 +82,15 @@ class Protocol
      * @throws RandomException
      * @throws SodiumException
      * @throws TableException
+     * @throws CertaintyException
      */
     public function process(ActivityStream $enqueued, bool $isActivityPub = true): array
     {
         $envelope = $this->parseOuterEnvelope($enqueued);
+
+        if ($isActivityPub) {
+            $this->verifyActivityPubActor($enqueued, $envelope['actor']);
+        }
 
         $hpke = $this->config()->getHPKE();
         $adapter = new HPKEAdapter($hpke->cs);
@@ -124,6 +130,27 @@ class Protocol
             $this->wrapLocalKeys($payload);
         }
         return ['action' => $action, 'result' => $result, 'latest-root' => $merkleRoot];
+    }
+
+    /**
+     * @throws CacheException
+     * @throws CertaintyException
+     * @throws DependencyException
+     * @throws ProtocolException
+     * @throws SodiumException
+     */
+    protected function verifyActivityPubActor(ActivityStream $enqueued, string $outerActor): void
+    {
+        if (hash_equals($enqueued->actor, $outerActor)) {
+            return;
+        }
+        $wf = $this->webfinger();
+        $canonicalEnqueued = $wf->canonicalize($enqueued->actor);
+        $canonicalOuter = $wf->canonicalize($outerActor);
+        if (hash_equals($canonicalEnqueued, $canonicalOuter)) {
+            return;
+        }
+        throw new ProtocolException('ActivityPub actor mismatch');
     }
 
     /**
@@ -263,7 +290,7 @@ class Protocol
         /** @var PublicKeys $publicKeyTable */
         $publicKeyTable = $this->table('PublicKeys');
         return match ($action) {
-            'BurnDown' => $publicKeyTable->burndown($payload, $outerActor),
+            'BurnDown' => $publicKeyTable->burnDown($payload, $outerActor),
             'Checkpoint' => $publicKeyTable->checkpoint($payload),
             'AddAuxData', 'AddKey', 'Fireproof', 'MoveIdentity', 'RevokeAuxData', 'RevokeKey', 'UndoFireproof' =>
                 throw new ProtocolException('This action MUST be HPKE-encrypted: ' . $action),
@@ -334,7 +361,7 @@ class Protocol
     protected function hpkeUnwrap(string $arbitrary): Payload
     {
         $hpke = $this->config()->getHPKE();
-        $raw = new HPKEAdapter($hpke->cs)
+        $raw = (new HPKEAdapter($hpke->cs))
             ->open($hpke->decapsKey, $hpke->encapsKey, $arbitrary);
         $parsed = $this->parser->parseUnverified($raw);
         return new Payload($parsed->getMessage(), $parsed->getKeyMap(), $raw);
@@ -478,7 +505,7 @@ class Protocol
     public function burnDown(string $body, string $outerActor): bool
     {
         $hpke = $this->config()->getHPKE();
-        if (new HPKEAdapter($hpke->cs)->isHpkeCiphertext($body)) {
+        if ((new HPKEAdapter($hpke->cs))->isHpkeCiphertext($body)) {
             throw new ProtocolException('BurnDown MUST NOT be encrypted.');
         }
         // BurnDown messages are NOT HPKE-encrypted, parse directly

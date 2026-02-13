@@ -80,12 +80,12 @@ class PublicKeys extends Table
     #[Override]
     public function getCipher(): WrappedEncryptedRow
     {
-        return new WrappedEncryptedRow(
+        return (new WrappedEncryptedRow(
             $this->engine,
             'pkd_actors_publickeys',
             false,
             'actorpublickeyid'
-        )
+        ))
             ->addTextField('publickey')
             ->addBlindIndex(
                 'publickey',
@@ -153,10 +153,10 @@ class PublicKeys extends Table
             return [];
         }
         $decrypted = $this->getCipher()->decryptRow(self::rowToStringArray($row));
-        $insertTime = (string) new DateTimeImmutable(self::decryptedString($decrypted, 'inserttime'))->getTimestamp();
+        $insertTime = (string) (new DateTimeImmutable(self::decryptedString($decrypted, 'inserttime')))->getTimestamp();
         $revokeTimeValue = $decrypted['revoketime'] ?? null;
         $revokeTime = is_string($revokeTimeValue) && !empty($revokeTimeValue)
-            ? (string) new DateTimeImmutable($revokeTimeValue)->getTimestamp()
+            ? (string) (new DateTimeImmutable($revokeTimeValue))->getTimestamp()
             : null;
         $inclusionProof = json_decode(
             self::decryptedString($decrypted, 'inclusionproof'),
@@ -286,7 +286,7 @@ class PublicKeys extends Table
             $rowArray = self::rowToStringArray($row);
             $decrypt = $this->getCipher()->decryptRow($rowArray);
             if (empty($keyId) || hash_equals($rowArray['key_id'] ?? '', $keyId)) {
-                $insertTime = new DateTimeImmutable(self::decryptedString($decrypt, 'inserttime'))->getTimestamp();
+                $insertTime = (new DateTimeImmutable(self::decryptedString($decrypt, 'inserttime')))->getTimestamp();
                 $inclusionProof = json_decode(
                     self::decryptedString($decrypt, 'inclusionproof'),
                     true,

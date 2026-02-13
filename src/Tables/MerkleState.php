@@ -36,6 +36,7 @@ use PDOException;
 use Psr\SimpleCache\InvalidArgumentException;
 use Random\RandomException;
 use SodiumException;
+use Throwable;
 
 use function array_key_exists;
 use function hash_equals;
@@ -204,7 +205,7 @@ class MerkleState extends Table
             "SELECT root FROM pkd_merkle_leaves ORDER BY merkleleafid DESC LIMIT 1"
         );
         if (empty($result)) {
-            return new Tree([], $this->config()->getParams()->hashAlgo)->getEncodedRoot();
+            return (new Tree([], $this->config()->getParams()->hashAlgo))->getEncodedRoot();
         }
         return (string) $result;
     }
@@ -564,20 +565,14 @@ class MerkleState extends Table
 
             // We only commit this transaction if all was successful:
             return $this->db->commit();
+        } catch (Throwable $e) {
+            if ($this->config()->getDb()->inTransaction()) {
+                $this->config()->getDb()->rollBack();
+            }
+            throw $e;
         } finally {
-            // @phpstan-ignore-next-line
-            $wrap = !$this->db->inTransaction();
-            // @phpstan-ignore-next-line
-            if ($wrap) {
-                $this->db->beginTransaction();
-            }
             // Unlock challenge
-
             $this->db->exec("UPDATE pkd_merkle_state SET lock_challenge = ''");
-            // @phpstan-ignore-next-line
-            if ($wrap) {
-                $this->db->commit();
-            }
         }
     }
 }

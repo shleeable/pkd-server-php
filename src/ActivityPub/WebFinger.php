@@ -27,6 +27,9 @@ use SodiumException;
 
 use function array_key_exists;
 use function explode;
+use function gethostbynamel;
+use function in_array;
+use function ip2long;
 use function is_array;
 use function is_null;
 use function is_object;
@@ -37,6 +40,7 @@ use function parse_url;
 use function property_exists;
 use function str_replace;
 use function str_starts_with;
+use function strtolower;
 use function substr;
 use function trim;
 
@@ -70,7 +74,7 @@ class WebFinger
         }
         $this->fetch = $fetch;
         if (is_null($client)) {
-            $client = new Client(['verify' => $this->fetch->getLatestBundle()]);
+            $client = new Client(['verify' => ($this->fetch->getLatestBundle())->getFilePath()]);
         }
         $this->http = $client;
     }
@@ -132,11 +136,12 @@ class WebFinger
     {
         [, $host] = explode('@', ltrim($identifier, '@'));
         $url = "https://{$host}/.well-known/webfinger?resource=acct:{$identifier}";
+        $this->validateUrl($url);
         $response = $this->http->get($url);
         if ($response->getStatusCode() !== 200) {
             throw new NetworkException('Could not connect to ' . $host);
         }
-        $jrd = json_decode($response->getBody()->getContents(), true);
+        $jrd = json_decode(($response->getBody())->getContents(), true);
         if (!is_array($jrd)) {
             throw new NetworkException('Invalid JSON: ' . json_last_error_msg());
         }
@@ -167,11 +172,12 @@ class WebFinger
      */
     protected function lookupUrl(string $url): string
     {
+        $this->validateUrl($url);
         $response = $this->http->get($url);
         if ($response->getStatusCode() !== 200) {
             throw new NetworkException('Could not connect to ' . $url);
         }
-        $actor = json_decode($response->getBody()->getContents(), true);
+        $actor = json_decode(($response->getBody())->getContents(), true);
         if (!is_array($actor)) {
             throw new NetworkException('Invalid JSON');
         }
@@ -192,11 +198,12 @@ class WebFinger
     {
         $url = $this->inboxCache->cache($actorUrl, function () use ($actorUrl) {
             $canonicalUrl = $this->canonicalize($actorUrl);
+            $this->validateUrl($canonicalUrl . '.json');
             $raw = $this->http->get(
                 $canonicalUrl . '.json',
                 ['Accept' => 'application/activity+json']
             );
-            $decoded = json_decode($raw->getBody()->getContents());
+            $decoded = json_decode(($raw->getBody())->getContents());
             if (!is_object($decoded) || !property_exists($decoded, 'inbox')) {
                 throw new NetworkException('Could not decode ' . $canonicalUrl);
             }
@@ -228,14 +235,17 @@ class WebFinger
 
             try {
                 $url = "https://{$host}/.well-known/webfinger?resource=acct:{$username}@{$host}";
+                $this->validateUrl($url);
                 $response = $this->http->get($url);
             } catch (GuzzleException $e) {
                 throw new FetchException("Could not fetch WebFinger data for {$actorUrl}", 0, $e);
+            } catch (NetworkException $e) {
+                throw new FetchException($e->getMessage(), 0, $e);
             }
             if ($response->getStatusCode() !== 200) {
                 throw new FetchException("Could not fetch WebFinger data for {$actorUrl}");
             }
-            $jrd = json_decode($response->getBody()->getContents(), true);
+            $jrd = json_decode(($response->getBody())->getContents(), true);
             if (!is_array($jrd)) {
                 throw new FetchException("Could not parse WebFinger data for {$actorUrl}");
             }
@@ -250,7 +260,7 @@ class WebFinger
                     continue;
                 }
                 if ($link['rel'] === 'self' && $link['type'] === 'application/activity+json') {
-                    return $this->getPublicKeyFromActivityPub($link['href'])->toString();
+                    return ($this->getPublicKeyFromActivityPub($link['href']))->toString();
                 }
             }
             throw new FetchException("No valid self href found for {$actorUrl}");
@@ -261,9 +271,18 @@ class WebFinger
         return PublicKey::fromString($publicKey);
     }
 
-    public function trimUsername(string $username): string
+    public function trimUsername(string $path): string
     {
-        return trim(str_replace('/', '', $username));
+        $path = trim($path, '/');
+        if (str_starts_with($path, 'users/')) {
+            $path = substr($path, 6);
+        }
+        if (str_starts_with($path, '@')) {
+            $path = substr($path, 1);
+        }
+        // Handle trailing slashes or other components if any
+        $parts = explode('/', $path);
+        return $parts[0];
     }
 
     /**
@@ -273,14 +292,17 @@ class WebFinger
     protected function getPublicKeyFromActivityPub(string $actorUrl): PublicKey
     {
         try {
+            $this->validateUrl($actorUrl);
             $response = $this->http->get($actorUrl);
         } catch (GuzzleException $e) {
             throw new FetchException("Could not fetch ActivityPub data for {$actorUrl}", 0, $e);
+        } catch (NetworkException $e) {
+            throw new FetchException($e->getMessage(), 0, $e);
         }
         if ($response->getStatusCode() !== 200) {
             throw new FetchException("Could not fetch ActivityPub data for {$actorUrl}");
         }
-        $actor = json_decode($response->getBody()->getContents());
+        $actor = json_decode(($response->getBody())->getContents());
         if (!is_object($actor)) {
             throw new FetchException("Could not parse ActivityPub data for {$actorUrl}");
         }
@@ -334,5 +356,60 @@ class WebFinger
     protected function pemToPublicKey(string $pem): PublicKey
     {
         return PublicKey::importPem($pem);
+    }
+
+    /**
+     * @throws NetworkException
+     */
+    protected function validateUrl(string $url): void
+    {
+        $parsed = parse_url($url);
+        if ($parsed === false || !isset($parsed['host'])) {
+            throw new NetworkException("Invalid URL: {$url}");
+        }
+        $host = $parsed['host'];
+
+        // Block localhost and standard loopback IPs
+        if (in_array(strtolower($host), ['localhost', '127.0.0.1', '[::1]'], true)) {
+            throw new NetworkException("Access to localhost is blocked: {$host}");
+        }
+
+        // Resolve IP and check ranges to prevent SSRF against internal network
+        $ips = gethostbynamel($host);
+        if ($ips === false) {
+            return; // Cannot resolve, Guzzle will handle it if it's not a valid host
+        }
+
+        foreach ($ips as $ip) {
+            if ($this->isPrivateIp($ip)) {
+                throw new NetworkException("Access to private IP is blocked: {$ip}");
+            }
+        }
+    }
+
+    protected function isPrivateIp(string $ip): bool
+    {
+        $ipLong = ip2long($ip);
+        if ($ipLong === false) {
+            return false;
+        }
+
+        // Standard private IP ranges
+        $privateRanges = [
+            ['10.0.0.0', '10.255.255.255'],
+            ['172.16.0.0', '172.31.255.255'],
+            ['192.168.0.0', '192.168.255.255'],
+            ['127.0.0.0', '127.255.255.255'],
+            ['169.254.0.0', '169.254.255.255'],
+        ];
+
+        foreach ($privateRanges as $range) {
+            $start = ip2long($range[0]);
+            $end = ip2long($range[1]);
+            if ($ipLong >= $start && $ipLong <= $end) {
+                return true;
+            }
+        }
+        return false;
     }
 }

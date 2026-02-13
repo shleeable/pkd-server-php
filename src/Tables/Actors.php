@@ -36,12 +36,12 @@ class Actors extends Table
     #[Override]
     public function getCipher(): WrappedEncryptedRow
     {
-        return new WrappedEncryptedRow(
+        return (new WrappedEncryptedRow(
             $this->engine,
             'pkd_actors',
             false,
             'actorid'
-        )
+        ))
             ->addTextField('activitypubid', '', 'wrap_activitypubid')
             ->addBlindIndex(
                 'activitypubid',
@@ -222,7 +222,7 @@ class Actors extends Table
             $this->convertKeyMap($payload->keyMap, $payload->message->getAction())
         );
         [$fields, $blindIndexes] = $encryptor->prepareRowForStorage($plaintext);
-        $fields['activitypubid_idx'] = $blindIndexes['activitypubid_idx'];
+        $fields['activitypubid_idx'] = self::blindIndexValue($blindIndexes['activitypubid_idx']);
         /** @var array<string, scalar|null> $fields */
         $inserted = $this->db->insert('pkd_actors', $fields);
         if (!$inserted) {

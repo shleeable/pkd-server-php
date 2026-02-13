@@ -13,7 +13,7 @@ const PKD_SERVER_ROOT = __DIR__;
 require_once PKD_SERVER_ROOT . '/vendor/autoload.php';
 
 // We load this config and store it in a global variable for use in public/index.php
-$GLOBALS['pkdConfig'] = new ServerConfig(require_once PKD_SERVER_ROOT . '/config/params.php')
+$GLOBALS['pkdConfig'] = (new ServerConfig(require_once PKD_SERVER_ROOT . '/config/params.php'))
     ->withAuxDataRegistry(require_once PKD_SERVER_ROOT . '/config/aux-type-registry.php')
     ->withAuxDataTypeAllowList(require_once PKD_SERVER_ROOT . '/config/aux-type-allow-list.php')
     ->withCACertFetch(require_once PKD_SERVER_ROOT . '/config/certainty.php')

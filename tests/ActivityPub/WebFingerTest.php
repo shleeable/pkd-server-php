@@ -53,7 +53,7 @@ class WebFingerTest extends TestCase
 
     public function tearDown(): void
     {
-        new WebFinger($this->getConfig())->clearCaches();
+        (new WebFinger($this->getConfig()))->clearCaches();
     }
 
     public function testConstructorDefaults(): void
@@ -135,21 +135,21 @@ class WebFingerTest extends TestCase
         $canonicalCache = $canonicalCacheProp->getValue($webFinger);
         $this->assertSame(
             3600,
-            new ReflectionProperty(AppCache::class, 'defaultTTL')->getValue($canonicalCache)
+            (new ReflectionProperty(AppCache::class, 'defaultTTL'))->getValue($canonicalCache)
         );
 
         $inboxCacheProp = new ReflectionProperty(WebFinger::class, 'inboxCache');
         $inboxCache = $inboxCacheProp->getValue($webFinger);
         $this->assertSame(
             60,
-            new ReflectionProperty(AppCache::class, 'defaultTTL')->getValue($inboxCache)
+            (new ReflectionProperty(AppCache::class, 'defaultTTL'))->getValue($inboxCache)
         );
 
         $pkCacheProp = new ReflectionProperty(WebFinger::class, 'pkCache');
         $pkCache = $pkCacheProp->getValue($webFinger);
         $this->assertSame(
             60,
-            new ReflectionProperty(AppCache::class, 'defaultTTL')->getValue($pkCache)
+            (new ReflectionProperty(AppCache::class, 'defaultTTL'))->getValue($pkCache)
         );
     }
 
@@ -214,7 +214,8 @@ class WebFingerTest extends TestCase
     {
         return [
             ['alice', 'alice'],
-            ['     alice/in/chains/    ', 'aliceinchains'],
+            ['/users/alice', 'alice'],
+            ['/@alice', 'alice'],
         ];
     }
 
@@ -807,5 +808,38 @@ class WebFingerTest extends TestCase
         $fetchedPk = $webFinger->getPublicKey($actorUrl);
 
         $this->assertSame($pk->toString(), $fetchedPk->toString());
+    }
+
+    /**
+     * @throws CertaintyException
+     * @throws DependencyException
+     * @throws GuzzleException
+     * @throws NetworkException
+     * @throws SodiumException
+     */
+    public function testSsrfProtection(): void
+    {
+        $webFinger = new WebFinger($this->getConfig());
+
+        $this->expectException(NetworkException::class);
+        $this->expectExceptionMessage('Access to localhost is blocked');
+        $webFinger->fetch('alice@localhost');
+    }
+
+    /**
+     * @throws CertaintyException
+     * @throws DependencyException
+     * @throws GuzzleException
+     * @throws NetworkException
+     * @throws SodiumException
+     */
+    public function testSsrfProtectionPrivateIp(): void
+    {
+        $webFinger = new WebFinger($this->getConfig());
+
+        $this->expectException(NetworkException::class);
+        $this->expectExceptionMessage('Access to private IP is blocked');
+        // Assuming 10.0.0.1 is not reachable but recognized as private
+        $webFinger->fetch('alice@10.0.0.1');
     }
 }

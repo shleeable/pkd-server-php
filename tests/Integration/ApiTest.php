@@ -180,7 +180,7 @@ class ApiTest extends TestCase
 
         // Add a key
         $addKey = new AddKey($canonical, $keypair->getPublicKey());
-        $akm = new AttributeKeyMap()
+        $akm = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('public-key', SymmetricKey::generate());
         $encryptedMsg = $addKey->encrypt($akm);
@@ -196,7 +196,7 @@ class ApiTest extends TestCase
 
         // Add aux data
         $addAux = new AddAuxData($canonical, 'test', 'test');
-        $akm = new AttributeKeyMap()
+        $akm = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('aux-type', SymmetricKey::generate())
             ->addKey('aux-data', SymmetricKey::generate());
@@ -278,7 +278,7 @@ class ApiTest extends TestCase
 
         // Add a key
         $addKey = new AddKey($canonical, $keypair->getPublicKey());
-        $akm = new AttributeKeyMap()
+        $akm = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('public-key', SymmetricKey::generate());
         $encryptedMsg = $addKey->encrypt($akm);
@@ -378,7 +378,7 @@ class ApiTest extends TestCase
 
         // Add a key
         $addKey = new AddKey($canonical, $keypair->getPublicKey());
-        $akm = new AttributeKeyMap()
+        $akm = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('public-key', SymmetricKey::generate());
         $encryptedMsg = $addKey->encrypt($akm);
@@ -393,7 +393,7 @@ class ApiTest extends TestCase
 
         // Add aux data
         $addAux = new AddAuxData($canonical, 'test', 'test-data');
-        $akm = new AttributeKeyMap()
+        $akm = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('aux-type', SymmetricKey::generate())
             ->addKey('aux-data', SymmetricKey::generate());
@@ -490,7 +490,7 @@ class ApiTest extends TestCase
 
         // Add a key
         $addKey = new AddKey($canonical, $keypair->getPublicKey());
-        $akm = new AttributeKeyMap()
+        $akm = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('public-key', SymmetricKey::generate());
         $encryptedMsg = $addKey->encrypt($akm);
@@ -631,7 +631,7 @@ class ApiTest extends TestCase
 
         // Add a key
         $addKey = new AddKey($canonical, $keypair->getPublicKey());
-        $akm = new AttributeKeyMap()
+        $akm = (new AttributeKeyMap())
             ->addKey('actor', SymmetricKey::generate())
             ->addKey('public-key', SymmetricKey::generate());
         $encryptedMsg = $addKey->encrypt($akm);

@@ -62,12 +62,12 @@ class AuxData extends Table
     #[Override]
     public function getCipher(): WrappedEncryptedRow
     {
-        return new WrappedEncryptedRow(
+        return (new WrappedEncryptedRow(
             $this->engine,
             'pkd_actors_auxdata',
             false,
             'actorauxdataid'
-        )
+        ))
             ->addTextField('auxdata')
             ->addBlindIndex('auxdata', new BlindIndex('auxdata_idx', [], 16, true))
         ;
@@ -110,7 +110,7 @@ class AuxData extends Table
             $actorId
         );
         foreach ($query as $row) {
-            $insertTime = new DateTimeImmutable((string) $row['inserttime'])->getTimestamp();
+            $insertTime = (new DateTimeImmutable((string) $row['inserttime']))->getTimestamp();
             $results[] = [
                 'aux-id' => $row['auxdataid'],
                 'aux-type' => $row['auxdatatype'],
@@ -158,11 +158,11 @@ class AuxData extends Table
             return [];
         }
         $decrypted = $this->getCipher()->decryptRow(self::rowToStringArray($row));
-        $insertTime = (string) new DateTimeImmutable(
+        $insertTime = (string) (new DateTimeImmutable(
             self::decryptedString($decrypted, 'inserttime')
-        )->getTimestamp();
+        ))->getTimestamp();
         $revokeTime = is_string($decrypted['revoketime'])
-            ? (string) new DateTimeImmutable($decrypted['revoketime'])->getTimestamp()
+            ? (string) (new DateTimeImmutable($decrypted['revoketime']))->getTimestamp()
             : null;
         $inclusionProof = null;
         if (is_string($decrypted['inclusionproof'])) {
