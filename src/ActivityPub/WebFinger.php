@@ -132,6 +132,9 @@ class WebFinger
     {
         [, $host] = explode('@', ltrim($identifier, '@'));
         $url = "https://{$host}/.well-known/webfinger?resource=acct:{$identifier}";
+        if (!$this->isSafeUrl($url)) {
+            throw new NetworkException('URL is not safe: ' . $url);
+        }
         $response = $this->http->get($url);
         if ($response->getStatusCode() !== 200) {
             throw new NetworkException('Could not connect to ' . $host);
@@ -167,6 +170,9 @@ class WebFinger
      */
     protected function lookupUrl(string $url): string
     {
+        if (!$this->isSafeUrl($url)) {
+            throw new NetworkException('URL is not safe: ' . $url);
+        }
         $response = $this->http->get($url);
         if ($response->getStatusCode() !== 200) {
             throw new NetworkException('Could not connect to ' . $url);
@@ -192,6 +198,9 @@ class WebFinger
     {
         $url = $this->inboxCache->cache($actorUrl, function () use ($actorUrl) {
             $canonicalUrl = $this->canonicalize($actorUrl);
+            if (!$this->isSafeUrl($canonicalUrl)) {
+                throw new NetworkException('URL is not safe: ' . $canonicalUrl);
+            }
             $raw = $this->http->get(
                 $canonicalUrl . '.json',
                 ['Accept' => 'application/activity+json']
@@ -263,7 +272,7 @@ class WebFinger
 
     public function trimUsername(string $username): string
     {
-        return trim(str_replace('/', '', $username));
+        return basename($username);
     }
 
     /**
@@ -272,6 +281,9 @@ class WebFinger
      */
     protected function getPublicKeyFromActivityPub(string $actorUrl): PublicKey
     {
+        if (!$this->isSafeUrl($actorUrl)) {
+            throw new FetchException('URL is not safe: ' . $actorUrl);
+        }
         try {
             $response = $this->http->get($actorUrl);
         } catch (GuzzleException $e) {
@@ -334,5 +346,40 @@ class WebFinger
     protected function pemToPublicKey(string $pem): PublicKey
     {
         return PublicKey::importPem($pem);
+    }
+
+    /**
+     * @param string $url
+     * @return bool
+     */
+    private function isSafeUrl(string $url): bool
+    {
+        $parsed = parse_url($url);
+        if ($parsed === false || !isset($parsed['host'])) {
+            return false;
+        }
+        $host = $parsed['host'];
+
+        // If it's already an IP, validate it:
+        if (filter_var($host, FILTER_VALIDATE_IP)) {
+            return (bool) filter_var(
+                $host,
+                FILTER_VALIDATE_IP,
+                FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE
+            );
+        }
+
+        // Resolve host to IP
+        $ips = gethostbynamel($host);
+        if ($ips === false) {
+            return false;
+        }
+
+        foreach ($ips as $ip) {
+            if (!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

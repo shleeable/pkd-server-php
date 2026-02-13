@@ -18,6 +18,7 @@ use FediE2EE\PKDServer\Exceptions\{
     TableException
 };
 use FediE2EE\PKDServer\{
+    Interfaces\LimitingHandlerInterface,
     Meta\Route,
     Protocol
 };
@@ -36,7 +37,7 @@ use Psr\Http\Message\{
 use Psr\Http\Server\RequestHandlerInterface;
 use SodiumException;
 
-class BurnDown implements RequestHandlerInterface
+class BurnDown implements RequestHandlerInterface, LimitingHandlerInterface
 {
     use ActivityStreamsTrait;
     use ReqTrait;
@@ -64,7 +65,13 @@ class BurnDown implements RequestHandlerInterface
      * @throws TableException
      * @throws InvalidArgumentException
      */
-    #[Route("/api/revoke")]
+    #[Override]
+    public function getEnabledRateLimits(): array
+    {
+        return ['ip'];
+    }
+
+    #[Route("/api/burndown")]
     #[Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {

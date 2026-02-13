@@ -24,6 +24,8 @@ readonly class Params
         public string $hostname = 'localhost',
         public string $cacheKey = '',
         public int $httpCacheTtl = 60,
+        /** @var array<string, string> $checkpointPublicKeys */
+        public array $checkpointPublicKeys = [],
     ) {
         if (!Tree::isHashFunctionAllowed($this->hashAlgo)) {
             throw new DependencyException('Disallowed hash algorithm');

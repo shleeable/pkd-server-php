@@ -1150,7 +1150,21 @@ class PublicKeys extends Table
         if (!($payload->message instanceof Checkpoint)) {
             throw new ProtocolException('Invalid message type');
         }
-        // TODO: In the future, verify the signature against a known directory public key
+
+        $allowedKeys = $this->config()->getParams()->checkpointPublicKeys;
+        if (!empty($allowedKeys)) {
+            $sm = Bundle::fromJson($rawJson)->toSignedMessage();
+            $signatureIsValid = false;
+            foreach ($allowedKeys as $pkStr) {
+                if ($sm->verify(PublicKey::fromString($pkStr))) {
+                    $signatureIsValid = true;
+                    break;
+                }
+            }
+            if (!$signatureIsValid) {
+                throw new ProtocolException('Invalid checkpoint signature');
+            }
+        }
         return true;
     }
 }
