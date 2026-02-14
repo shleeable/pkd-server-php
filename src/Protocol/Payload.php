@@ -3,15 +3,20 @@ declare(strict_types=1);
 namespace FediE2EE\PKDServer\Protocol;
 
 use FediE2EE\PKD\Crypto\AttributeEncryption\AttributeKeyMap;
-use JsonException;
 use FediE2EE\PKD\Crypto\Protocol\{
     EncryptedProtocolMessageInterface,
     ProtocolMessageInterface
 };
+use FediE2EE\PKDServer\Exceptions\ProtocolException;
 use FediE2EE\PKDServer\Traits\JsonTrait;
+use JsonException as BaseJsonException;
+use stdClass;
 
-use function array_key_exists;
+use function array_map;
+use function get_object_vars;
+use function is_array;
 use function json_decode;
+use function ksort;
 
 readonly class Payload
 {
@@ -32,7 +37,7 @@ readonly class Payload
 
     /**
      * @return array<string, mixed>
-     * @throws JsonException
+     * @throws BaseJsonException
      */
     public function decode(): array
     {
@@ -40,21 +45,42 @@ readonly class Payload
     }
 
     /**
-     * @throws JsonException
+     * @throws BaseJsonException
+     * @throws ProtocolException
      */
     public function getMerkleTreePayload(): string
     {
-        $decoded = json_decode($this->rawJson, true);
-        if (array_key_exists('key-id', $decoded)) {
-            unset($decoded['key-id']);
+        $decoded = json_decode($this->rawJson, false, 512, JSON_THROW_ON_ERROR);
+        if (!($decoded instanceof stdClass)) {
+            throw new ProtocolException('Merkle payload must be a JSON object');
         }
-        if (array_key_exists('symmetric-keys', $decoded)) {
-            unset($decoded['symmetric-keys']);
+
+        // Remove fields that are not part of the Merkle leaf
+        unset($decoded->{'key-id'}, $decoded->{'symmetric-keys'}, $decoded->otp);
+
+        // Canonicalize: recursively sort object keys for deterministic hashing
+        $canonicalized = self::canonicalize($decoded);
+        return self::jsonEncode($canonicalized);
+    }
+
+    /**
+     * Recursively sort object keys in ASCII byte order while preserving
+     * the distinction between objects (stdClass) and arrays.
+     */
+    private static function canonicalize(mixed $value): mixed
+    {
+        if ($value instanceof stdClass) {
+            $props = get_object_vars($value);
+            ksort($props);
+            $sorted = new stdClass();
+            foreach ($props as $k => $v) {
+                $sorted->{$k} = self::canonicalize($v);
+            }
+            return $sorted;
         }
-        // OTP is a top-level Bundle field, not part of the Merkle leaf.
-        if (array_key_exists('otp', $decoded)) {
-            unset($decoded['otp']);
+        if (is_array($value)) {
+            return array_map(self::canonicalize(...), $value);
         }
-        return self::jsonEncode($decoded);
+        return $value;
     }
 }
