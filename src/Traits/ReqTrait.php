@@ -27,6 +27,8 @@ use Twig\Error\{
 use TypeError;
 
 use function array_key_exists;
+use function is_array;
+use function ksort;
 use function time;
 
 /**
@@ -111,6 +113,9 @@ trait ReqTrait
     ): ResponseInterface {
         if (!array_key_exists('Content-Type', $headers)) {
             $headers['Content-Type'] = 'application/json';
+        }
+        if (is_array($data)) {
+            ksort($data);
         }
         $json = self::jsoNEncode($data);
         $stream = new Stream('php://temp', 'wb');

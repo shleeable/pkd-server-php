@@ -7,6 +7,8 @@ use FediE2EE\PKDServer\Meta\RecordForTable;
 use FediE2EE\PKDServer\Traits\TableRecordTrait;
 use FediE2EE\PKDServer\Tables\Actors;
 
+use function ksort;
+
 /**
  * Abstraction for a row in the Actors table
  */
@@ -50,10 +52,12 @@ final class Actor
      */
     public function toArray(): array
     {
-        return [
+        $data = [
             'activitypubid' => $this->actorID,
             'rfc9421pubkey' => $this->rfc9421pk?->toString() ?? '',
             'fireproof' => $this->fireProof,
         ];
+        ksort($data);
+        return $data;
     }
 }

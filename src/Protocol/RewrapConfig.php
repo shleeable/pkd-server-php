@@ -17,6 +17,7 @@ use ParagonIE\HPKE\KEM\DiffieHellmanKEM;
 use function is_object;
 use function json_decode;
 use function json_last_error_msg;
+use function ksort;
 use function property_exists;
 
 readonly class RewrapConfig implements JsonSerializable
@@ -63,10 +64,12 @@ readonly class RewrapConfig implements JsonSerializable
     #[Override]
     public function jsonSerialize(): array
     {
-        return [
+        $data = [
             'cs' => $this->cs,
             'ek' => $this->encapsKey,
         ];
+        ksort($data);
+        return $data;
     }
 
     /**

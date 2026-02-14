@@ -17,6 +17,7 @@ use FediE2EE\PKDServer\Traits\TableRecordTrait;
 use ParagonIE\ConstantTime\Base64UrlSafe;
 
 use function is_null;
+use function ksort;
 
 #[RecordForTable(Peers::class)]
 class Peer
@@ -48,7 +49,7 @@ class Peer
      */
     public function toArray(): array
     {
-        return [
+        $data = [
             'uniqueid' =>
                 $this->uniqueId,
             'hostname' =>
@@ -72,5 +73,7 @@ class Peer
             'modified' =>
                 $this->modified->format(DateTimeImmutable::ATOM),
         ];
+        ksort($data);
+        return $data;
     }
 }

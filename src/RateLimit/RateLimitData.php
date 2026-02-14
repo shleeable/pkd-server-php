@@ -13,6 +13,7 @@ use JsonSerializable;
 
 use function is_array;
 use function is_null;
+use function ksort;
 
 class RateLimitData implements JsonSerializable
 {
@@ -90,11 +91,13 @@ class RateLimitData implements JsonSerializable
     #[Override]
     public function jsonSerialize(): array
     {
-        return [
+        $data = [
             'failures' => $this->failures,
             'last-fail-time' => $this->lastFailTime,
             'cooldown-start' => $this->cooldownStart,
         ];
+        ksort($data);
+        return $data;
     }
 
     public function failure(?DateTimeImmutable $cooldownStart = null): self

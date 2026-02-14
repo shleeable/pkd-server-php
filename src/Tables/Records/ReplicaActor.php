@@ -9,6 +9,8 @@ use FediE2EE\PKD\Crypto\{
 use FediE2EE\PKDServer\Meta\RecordForTable;
 use FediE2EE\PKDServer\Traits\TableRecordTrait;
 
+use function ksort;
+
 #[RecordForTable(ReplicaActor::class)]
 final class ReplicaActor
 {
@@ -29,10 +31,12 @@ final class ReplicaActor
      */
     public function toArray(): array
     {
-        return [
+        $data = [
             'activitypubid' => $this->actorID,
             'rfc9421pubkey' => $this->rfc9421pk,
             'fireproof' => $this->fireProof,
         ];
+        ksort($data);
+        return $data;
     }
 }

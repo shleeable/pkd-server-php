@@ -11,6 +11,7 @@ use JsonException;
 use SodiumException;
 
 use function is_null;
+use function ksort;
 use function sodium_hex2bin;
 
 #[RecordForTable(ReplicaHistory::class)]
@@ -40,7 +41,7 @@ final class ReplicaLeaf
      */
     public function toArray(): array
     {
-        return [
+        $data = [
             'root' =>
                 $this->root,
             'publickeyhash' =>
@@ -62,6 +63,8 @@ final class ReplicaLeaf
             'replicated' =>
                 $this->replicated,
         ];
+        ksort($data);
+        return $data;
     }
 
     /**
