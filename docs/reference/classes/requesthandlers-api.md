@@ -4912,9 +4912,13 @@ Returns `void`
 
 **Throws:** `DependencyException`, `ProtocolException`
 
-#### [`assertAllArrayKeysExist`](../../../src/RequestHandlers/Api/TotpDisenroll.php#L27-L32)
+#### [`assertAllArrayKeysExist`](../../../src/RequestHandlers/Api/TotpDisenroll.php#L29-L34)
 
 static · Returns `void`
+
+This method throws an InputException if any of the expected keys are absent.
+
+It does not return anything.
 
 **Parameters:**
 
@@ -4923,18 +4927,26 @@ static · Returns `void`
 
 **Throws:** `InputException`
 
-#### [`allArrayKeysExist`](../../../src/RequestHandlers/Api/TotpDisenroll.php#L34-L41)
+#### [`allArrayKeysExist`](../../../src/RequestHandlers/Api/TotpDisenroll.php#L42-L49)
 
 static · Returns `bool`
+
+This method returns true if every expected array key is found in the target array.
+
+Otherwise, it returns false. This is useful for input validation.
 
 **Parameters:**
 
 - `$target`: `array`
 - `...$arrayKeys`: `string`
 
-#### [`constantTimeSelect`](../../../src/RequestHandlers/Api/TotpDisenroll.php#L48-L65)
+#### [`constantTimeSelect`](../../../src/RequestHandlers/Api/TotpDisenroll.php#L64-L81)
 
 Returns `string`
+
+This is a constant-time conditional select. It should be read like a ternary operation.
+
+$result = ClassWithTrait::constantTimeSelect(1, $left, $right); -> $result === $left. $result = ClassWithTrait::constantTimeSelect(0, $left, $right); -> $result === $right.
 
 **Parameters:**
 
@@ -4944,49 +4956,63 @@ Returns `string`
 
 **Throws:** `CryptoException`
 
-#### [`dos2unix`](../../../src/RequestHandlers/Api/TotpDisenroll.php#L73-L76)
+#### [`dos2unix`](../../../src/RequestHandlers/Api/TotpDisenroll.php#L91-L94)
 
 static · Returns `string`
 
 Normalize line-endings to UNIX-style (LF rather than CRLF).
 
+This is mostly used for PEM-encoded strings.
+
 **Parameters:**
 
 - `$in`: `string`
 
-#### [`preAuthEncode`](../../../src/RequestHandlers/Api/TotpDisenroll.php#L84-L97)
+#### [`preAuthEncode`](../../../src/RequestHandlers/Api/TotpDisenroll.php#L112-L125)
 
 static · Returns `string`
+
+This is an implementation of PAE() from PASETO. It encodes an array of strings into a flat string consisting of:
+
+1. The number of pieces. 2. For each piece: 1. The length of the piece (in bytes). 2. The contents of the piece. This allows multipart messages to have an injective canonical representation before passing ot a hash function (or other cryptographic function).
 
 **Parameters:**
 
 - `$pieces`: `array`
 
-#### [`sortByKey`](../../../src/RequestHandlers/Api/TotpDisenroll.php#L99-L107)
+#### [`sortByKey`](../../../src/RequestHandlers/Api/TotpDisenroll.php#L132-L140)
 
 static · Returns `void`
+
+This sorts the target array in-place, by its keys, including child arrays.
+
+Used for ensuring arrays are sorted before JSON encoding.
 
 **Parameters:**
 
 - `$arr`: `array`
 
-#### [`LE64`](../../../src/RequestHandlers/Api/TotpDisenroll.php#L111-L114)
+#### [`LE64`](../../../src/RequestHandlers/Api/TotpDisenroll.php#L147-L150)
 
 static · Returns `string`
+
+Mostly used by preAuthEncode() above. This packs an integer as 8 bytes.
 
 **Parameters:**
 
 - `$n`: `int`
 
-#### [`stringToByteArray`](../../../src/RequestHandlers/Api/TotpDisenroll.php#L116-L123)
+#### [`stringToByteArray`](../../../src/RequestHandlers/Api/TotpDisenroll.php#L155-L162)
 
 Returns `array`
+
+Get an array of bytes representing the input string.
 
 **Parameters:**
 
 - `$str`: `string`
 
-#### [`stripNewlines`](../../../src/RequestHandlers/Api/TotpDisenroll.php#L131-L165)
+#### [`stripNewlines`](../../../src/RequestHandlers/Api/TotpDisenroll.php#L170-L204)
 
 static · Returns `string`
 
@@ -5304,9 +5330,13 @@ Returns `void`
 
 **Throws:** `DependencyException`, `ProtocolException`
 
-#### [`assertAllArrayKeysExist`](../../../src/RequestHandlers/Api/TotpEnroll.php#L27-L32)
+#### [`assertAllArrayKeysExist`](../../../src/RequestHandlers/Api/TotpEnroll.php#L29-L34)
 
 static · Returns `void`
+
+This method throws an InputException if any of the expected keys are absent.
+
+It does not return anything.
 
 **Parameters:**
 
@@ -5315,18 +5345,26 @@ static · Returns `void`
 
 **Throws:** `InputException`
 
-#### [`allArrayKeysExist`](../../../src/RequestHandlers/Api/TotpEnroll.php#L34-L41)
+#### [`allArrayKeysExist`](../../../src/RequestHandlers/Api/TotpEnroll.php#L42-L49)
 
 static · Returns `bool`
+
+This method returns true if every expected array key is found in the target array.
+
+Otherwise, it returns false. This is useful for input validation.
 
 **Parameters:**
 
 - `$target`: `array`
 - `...$arrayKeys`: `string`
 
-#### [`constantTimeSelect`](../../../src/RequestHandlers/Api/TotpEnroll.php#L48-L65)
+#### [`constantTimeSelect`](../../../src/RequestHandlers/Api/TotpEnroll.php#L64-L81)
 
 Returns `string`
+
+This is a constant-time conditional select. It should be read like a ternary operation.
+
+$result = ClassWithTrait::constantTimeSelect(1, $left, $right); -> $result === $left. $result = ClassWithTrait::constantTimeSelect(0, $left, $right); -> $result === $right.
 
 **Parameters:**
 
@@ -5336,49 +5374,63 @@ Returns `string`
 
 **Throws:** `CryptoException`
 
-#### [`dos2unix`](../../../src/RequestHandlers/Api/TotpEnroll.php#L73-L76)
+#### [`dos2unix`](../../../src/RequestHandlers/Api/TotpEnroll.php#L91-L94)
 
 static · Returns `string`
 
 Normalize line-endings to UNIX-style (LF rather than CRLF).
 
+This is mostly used for PEM-encoded strings.
+
 **Parameters:**
 
 - `$in`: `string`
 
-#### [`preAuthEncode`](../../../src/RequestHandlers/Api/TotpEnroll.php#L84-L97)
+#### [`preAuthEncode`](../../../src/RequestHandlers/Api/TotpEnroll.php#L112-L125)
 
 static · Returns `string`
+
+This is an implementation of PAE() from PASETO. It encodes an array of strings into a flat string consisting of:
+
+1. The number of pieces. 2. For each piece: 1. The length of the piece (in bytes). 2. The contents of the piece. This allows multipart messages to have an injective canonical representation before passing ot a hash function (or other cryptographic function).
 
 **Parameters:**
 
 - `$pieces`: `array`
 
-#### [`sortByKey`](../../../src/RequestHandlers/Api/TotpEnroll.php#L99-L107)
+#### [`sortByKey`](../../../src/RequestHandlers/Api/TotpEnroll.php#L132-L140)
 
 static · Returns `void`
+
+This sorts the target array in-place, by its keys, including child arrays.
+
+Used for ensuring arrays are sorted before JSON encoding.
 
 **Parameters:**
 
 - `$arr`: `array`
 
-#### [`LE64`](../../../src/RequestHandlers/Api/TotpEnroll.php#L111-L114)
+#### [`LE64`](../../../src/RequestHandlers/Api/TotpEnroll.php#L147-L150)
 
 static · Returns `string`
+
+Mostly used by preAuthEncode() above. This packs an integer as 8 bytes.
 
 **Parameters:**
 
 - `$n`: `int`
 
-#### [`stringToByteArray`](../../../src/RequestHandlers/Api/TotpEnroll.php#L116-L123)
+#### [`stringToByteArray`](../../../src/RequestHandlers/Api/TotpEnroll.php#L155-L162)
 
 Returns `array`
+
+Get an array of bytes representing the input string.
 
 **Parameters:**
 
 - `$str`: `string`
 
-#### [`stripNewlines`](../../../src/RequestHandlers/Api/TotpEnroll.php#L131-L165)
+#### [`stripNewlines`](../../../src/RequestHandlers/Api/TotpEnroll.php#L170-L204)
 
 static · Returns `string`
 
@@ -5696,9 +5748,13 @@ Returns `void`
 
 **Throws:** `DependencyException`, `ProtocolException`
 
-#### [`assertAllArrayKeysExist`](../../../src/RequestHandlers/Api/TotpRotate.php#L27-L32)
+#### [`assertAllArrayKeysExist`](../../../src/RequestHandlers/Api/TotpRotate.php#L29-L34)
 
 static · Returns `void`
+
+This method throws an InputException if any of the expected keys are absent.
+
+It does not return anything.
 
 **Parameters:**
 
@@ -5707,18 +5763,26 @@ static · Returns `void`
 
 **Throws:** `InputException`
 
-#### [`allArrayKeysExist`](../../../src/RequestHandlers/Api/TotpRotate.php#L34-L41)
+#### [`allArrayKeysExist`](../../../src/RequestHandlers/Api/TotpRotate.php#L42-L49)
 
 static · Returns `bool`
+
+This method returns true if every expected array key is found in the target array.
+
+Otherwise, it returns false. This is useful for input validation.
 
 **Parameters:**
 
 - `$target`: `array`
 - `...$arrayKeys`: `string`
 
-#### [`constantTimeSelect`](../../../src/RequestHandlers/Api/TotpRotate.php#L48-L65)
+#### [`constantTimeSelect`](../../../src/RequestHandlers/Api/TotpRotate.php#L64-L81)
 
 Returns `string`
+
+This is a constant-time conditional select. It should be read like a ternary operation.
+
+$result = ClassWithTrait::constantTimeSelect(1, $left, $right); -> $result === $left. $result = ClassWithTrait::constantTimeSelect(0, $left, $right); -> $result === $right.
 
 **Parameters:**
 
@@ -5728,49 +5792,63 @@ Returns `string`
 
 **Throws:** `CryptoException`
 
-#### [`dos2unix`](../../../src/RequestHandlers/Api/TotpRotate.php#L73-L76)
+#### [`dos2unix`](../../../src/RequestHandlers/Api/TotpRotate.php#L91-L94)
 
 static · Returns `string`
 
 Normalize line-endings to UNIX-style (LF rather than CRLF).
 
+This is mostly used for PEM-encoded strings.
+
 **Parameters:**
 
 - `$in`: `string`
 
-#### [`preAuthEncode`](../../../src/RequestHandlers/Api/TotpRotate.php#L84-L97)
+#### [`preAuthEncode`](../../../src/RequestHandlers/Api/TotpRotate.php#L112-L125)
 
 static · Returns `string`
+
+This is an implementation of PAE() from PASETO. It encodes an array of strings into a flat string consisting of:
+
+1. The number of pieces. 2. For each piece: 1. The length of the piece (in bytes). 2. The contents of the piece. This allows multipart messages to have an injective canonical representation before passing ot a hash function (or other cryptographic function).
 
 **Parameters:**
 
 - `$pieces`: `array`
 
-#### [`sortByKey`](../../../src/RequestHandlers/Api/TotpRotate.php#L99-L107)
+#### [`sortByKey`](../../../src/RequestHandlers/Api/TotpRotate.php#L132-L140)
 
 static · Returns `void`
+
+This sorts the target array in-place, by its keys, including child arrays.
+
+Used for ensuring arrays are sorted before JSON encoding.
 
 **Parameters:**
 
 - `$arr`: `array`
 
-#### [`LE64`](../../../src/RequestHandlers/Api/TotpRotate.php#L111-L114)
+#### [`LE64`](../../../src/RequestHandlers/Api/TotpRotate.php#L147-L150)
 
 static · Returns `string`
+
+Mostly used by preAuthEncode() above. This packs an integer as 8 bytes.
 
 **Parameters:**
 
 - `$n`: `int`
 
-#### [`stringToByteArray`](../../../src/RequestHandlers/Api/TotpRotate.php#L116-L123)
+#### [`stringToByteArray`](../../../src/RequestHandlers/Api/TotpRotate.php#L155-L162)
 
 Returns `array`
+
+Get an array of bytes representing the input string.
 
 **Parameters:**
 
 - `$str`: `string`
 
-#### [`stripNewlines`](../../../src/RequestHandlers/Api/TotpRotate.php#L131-L165)
+#### [`stripNewlines`](../../../src/RequestHandlers/Api/TotpRotate.php#L170-L204)
 
 static · Returns `string`
 

@@ -560,9 +560,13 @@ static · Returns `string`
 
 **Throws:** `BaseJsonException`
 
-#### [`assertAllArrayKeysExist`](../../../src/Tables/Records/MerkleLeaf.php#L27-L32)
+#### [`assertAllArrayKeysExist`](../../../src/Tables/Records/MerkleLeaf.php#L29-L34)
 
 static · Returns `void`
+
+This method throws an InputException if any of the expected keys are absent.
+
+It does not return anything.
 
 **Parameters:**
 
@@ -571,18 +575,26 @@ static · Returns `void`
 
 **Throws:** `InputException`
 
-#### [`allArrayKeysExist`](../../../src/Tables/Records/MerkleLeaf.php#L34-L41)
+#### [`allArrayKeysExist`](../../../src/Tables/Records/MerkleLeaf.php#L42-L49)
 
 static · Returns `bool`
+
+This method returns true if every expected array key is found in the target array.
+
+Otherwise, it returns false. This is useful for input validation.
 
 **Parameters:**
 
 - `$target`: `array`
 - `...$arrayKeys`: `string`
 
-#### [`constantTimeSelect`](../../../src/Tables/Records/MerkleLeaf.php#L48-L65)
+#### [`constantTimeSelect`](../../../src/Tables/Records/MerkleLeaf.php#L64-L81)
 
 Returns `string`
+
+This is a constant-time conditional select. It should be read like a ternary operation.
+
+$result = ClassWithTrait::constantTimeSelect(1, $left, $right); -> $result === $left. $result = ClassWithTrait::constantTimeSelect(0, $left, $right); -> $result === $right.
 
 **Parameters:**
 
@@ -592,49 +604,63 @@ Returns `string`
 
 **Throws:** `CryptoException`
 
-#### [`dos2unix`](../../../src/Tables/Records/MerkleLeaf.php#L73-L76)
+#### [`dos2unix`](../../../src/Tables/Records/MerkleLeaf.php#L91-L94)
 
 static · Returns `string`
 
 Normalize line-endings to UNIX-style (LF rather than CRLF).
 
+This is mostly used for PEM-encoded strings.
+
 **Parameters:**
 
 - `$in`: `string`
 
-#### [`preAuthEncode`](../../../src/Tables/Records/MerkleLeaf.php#L84-L97)
+#### [`preAuthEncode`](../../../src/Tables/Records/MerkleLeaf.php#L112-L125)
 
 static · Returns `string`
+
+This is an implementation of PAE() from PASETO. It encodes an array of strings into a flat string consisting of:
+
+1. The number of pieces. 2. For each piece: 1. The length of the piece (in bytes). 2. The contents of the piece. This allows multipart messages to have an injective canonical representation before passing ot a hash function (or other cryptographic function).
 
 **Parameters:**
 
 - `$pieces`: `array`
 
-#### [`sortByKey`](../../../src/Tables/Records/MerkleLeaf.php#L99-L107)
+#### [`sortByKey`](../../../src/Tables/Records/MerkleLeaf.php#L132-L140)
 
 static · Returns `void`
+
+This sorts the target array in-place, by its keys, including child arrays.
+
+Used for ensuring arrays are sorted before JSON encoding.
 
 **Parameters:**
 
 - `$arr`: `array`
 
-#### [`LE64`](../../../src/Tables/Records/MerkleLeaf.php#L111-L114)
+#### [`LE64`](../../../src/Tables/Records/MerkleLeaf.php#L147-L150)
 
 static · Returns `string`
+
+Mostly used by preAuthEncode() above. This packs an integer as 8 bytes.
 
 **Parameters:**
 
 - `$n`: `int`
 
-#### [`stringToByteArray`](../../../src/Tables/Records/MerkleLeaf.php#L116-L123)
+#### [`stringToByteArray`](../../../src/Tables/Records/MerkleLeaf.php#L155-L162)
 
 Returns `array`
+
+Get an array of bytes representing the input string.
 
 **Parameters:**
 
 - `$str`: `string`
 
-#### [`stripNewlines`](../../../src/Tables/Records/MerkleLeaf.php#L131-L165)
+#### [`stripNewlines`](../../../src/Tables/Records/MerkleLeaf.php#L170-L204)
 
 static · Returns `string`
 
@@ -776,9 +802,13 @@ static · Returns `string`
 
 **Throws:** `BaseJsonException`
 
-#### [`assertAllArrayKeysExist`](../../../src/Tables/Records/Peer.php#L27-L32)
+#### [`assertAllArrayKeysExist`](../../../src/Tables/Records/Peer.php#L29-L34)
 
 static · Returns `void`
+
+This method throws an InputException if any of the expected keys are absent.
+
+It does not return anything.
 
 **Parameters:**
 
@@ -787,18 +817,26 @@ static · Returns `void`
 
 **Throws:** `InputException`
 
-#### [`allArrayKeysExist`](../../../src/Tables/Records/Peer.php#L34-L41)
+#### [`allArrayKeysExist`](../../../src/Tables/Records/Peer.php#L42-L49)
 
 static · Returns `bool`
+
+This method returns true if every expected array key is found in the target array.
+
+Otherwise, it returns false. This is useful for input validation.
 
 **Parameters:**
 
 - `$target`: `array`
 - `...$arrayKeys`: `string`
 
-#### [`constantTimeSelect`](../../../src/Tables/Records/Peer.php#L48-L65)
+#### [`constantTimeSelect`](../../../src/Tables/Records/Peer.php#L64-L81)
 
 Returns `string`
+
+This is a constant-time conditional select. It should be read like a ternary operation.
+
+$result = ClassWithTrait::constantTimeSelect(1, $left, $right); -> $result === $left. $result = ClassWithTrait::constantTimeSelect(0, $left, $right); -> $result === $right.
 
 **Parameters:**
 
@@ -808,49 +846,63 @@ Returns `string`
 
 **Throws:** `CryptoException`
 
-#### [`dos2unix`](../../../src/Tables/Records/Peer.php#L73-L76)
+#### [`dos2unix`](../../../src/Tables/Records/Peer.php#L91-L94)
 
 static · Returns `string`
 
 Normalize line-endings to UNIX-style (LF rather than CRLF).
 
+This is mostly used for PEM-encoded strings.
+
 **Parameters:**
 
 - `$in`: `string`
 
-#### [`preAuthEncode`](../../../src/Tables/Records/Peer.php#L84-L97)
+#### [`preAuthEncode`](../../../src/Tables/Records/Peer.php#L112-L125)
 
 static · Returns `string`
+
+This is an implementation of PAE() from PASETO. It encodes an array of strings into a flat string consisting of:
+
+1. The number of pieces. 2. For each piece: 1. The length of the piece (in bytes). 2. The contents of the piece. This allows multipart messages to have an injective canonical representation before passing ot a hash function (or other cryptographic function).
 
 **Parameters:**
 
 - `$pieces`: `array`
 
-#### [`sortByKey`](../../../src/Tables/Records/Peer.php#L99-L107)
+#### [`sortByKey`](../../../src/Tables/Records/Peer.php#L132-L140)
 
 static · Returns `void`
+
+This sorts the target array in-place, by its keys, including child arrays.
+
+Used for ensuring arrays are sorted before JSON encoding.
 
 **Parameters:**
 
 - `$arr`: `array`
 
-#### [`LE64`](../../../src/Tables/Records/Peer.php#L111-L114)
+#### [`LE64`](../../../src/Tables/Records/Peer.php#L147-L150)
 
 static · Returns `string`
+
+Mostly used by preAuthEncode() above. This packs an integer as 8 bytes.
 
 **Parameters:**
 
 - `$n`: `int`
 
-#### [`stringToByteArray`](../../../src/Tables/Records/Peer.php#L116-L123)
+#### [`stringToByteArray`](../../../src/Tables/Records/Peer.php#L155-L162)
 
 Returns `array`
+
+Get an array of bytes representing the input string.
 
 **Parameters:**
 
 - `$str`: `string`
 
-#### [`stripNewlines`](../../../src/Tables/Records/Peer.php#L131-L165)
+#### [`stripNewlines`](../../../src/Tables/Records/Peer.php#L170-L204)
 
 static · Returns `string`
 
@@ -976,9 +1028,13 @@ static · Returns `string`
 
 **Throws:** `BaseJsonException`
 
-#### [`assertAllArrayKeysExist`](../../../src/Tables/Records/ReplicaActor.php#L27-L32)
+#### [`assertAllArrayKeysExist`](../../../src/Tables/Records/ReplicaActor.php#L29-L34)
 
 static · Returns `void`
+
+This method throws an InputException if any of the expected keys are absent.
+
+It does not return anything.
 
 **Parameters:**
 
@@ -987,18 +1043,26 @@ static · Returns `void`
 
 **Throws:** `InputException`
 
-#### [`allArrayKeysExist`](../../../src/Tables/Records/ReplicaActor.php#L34-L41)
+#### [`allArrayKeysExist`](../../../src/Tables/Records/ReplicaActor.php#L42-L49)
 
 static · Returns `bool`
+
+This method returns true if every expected array key is found in the target array.
+
+Otherwise, it returns false. This is useful for input validation.
 
 **Parameters:**
 
 - `$target`: `array`
 - `...$arrayKeys`: `string`
 
-#### [`constantTimeSelect`](../../../src/Tables/Records/ReplicaActor.php#L48-L65)
+#### [`constantTimeSelect`](../../../src/Tables/Records/ReplicaActor.php#L64-L81)
 
 Returns `string`
+
+This is a constant-time conditional select. It should be read like a ternary operation.
+
+$result = ClassWithTrait::constantTimeSelect(1, $left, $right); -> $result === $left. $result = ClassWithTrait::constantTimeSelect(0, $left, $right); -> $result === $right.
 
 **Parameters:**
 
@@ -1008,49 +1072,63 @@ Returns `string`
 
 **Throws:** `CryptoException`
 
-#### [`dos2unix`](../../../src/Tables/Records/ReplicaActor.php#L73-L76)
+#### [`dos2unix`](../../../src/Tables/Records/ReplicaActor.php#L91-L94)
 
 static · Returns `string`
 
 Normalize line-endings to UNIX-style (LF rather than CRLF).
 
+This is mostly used for PEM-encoded strings.
+
 **Parameters:**
 
 - `$in`: `string`
 
-#### [`preAuthEncode`](../../../src/Tables/Records/ReplicaActor.php#L84-L97)
+#### [`preAuthEncode`](../../../src/Tables/Records/ReplicaActor.php#L112-L125)
 
 static · Returns `string`
+
+This is an implementation of PAE() from PASETO. It encodes an array of strings into a flat string consisting of:
+
+1. The number of pieces. 2. For each piece: 1. The length of the piece (in bytes). 2. The contents of the piece. This allows multipart messages to have an injective canonical representation before passing ot a hash function (or other cryptographic function).
 
 **Parameters:**
 
 - `$pieces`: `array`
 
-#### [`sortByKey`](../../../src/Tables/Records/ReplicaActor.php#L99-L107)
+#### [`sortByKey`](../../../src/Tables/Records/ReplicaActor.php#L132-L140)
 
 static · Returns `void`
+
+This sorts the target array in-place, by its keys, including child arrays.
+
+Used for ensuring arrays are sorted before JSON encoding.
 
 **Parameters:**
 
 - `$arr`: `array`
 
-#### [`LE64`](../../../src/Tables/Records/ReplicaActor.php#L111-L114)
+#### [`LE64`](../../../src/Tables/Records/ReplicaActor.php#L147-L150)
 
 static · Returns `string`
+
+Mostly used by preAuthEncode() above. This packs an integer as 8 bytes.
 
 **Parameters:**
 
 - `$n`: `int`
 
-#### [`stringToByteArray`](../../../src/Tables/Records/ReplicaActor.php#L116-L123)
+#### [`stringToByteArray`](../../../src/Tables/Records/ReplicaActor.php#L155-L162)
 
 Returns `array`
+
+Get an array of bytes representing the input string.
 
 **Parameters:**
 
 - `$str`: `string`
 
-#### [`stripNewlines`](../../../src/Tables/Records/ReplicaActor.php#L131-L165)
+#### [`stripNewlines`](../../../src/Tables/Records/ReplicaActor.php#L170-L204)
 
 static · Returns `string`
 
@@ -1180,9 +1258,13 @@ static · Returns `string`
 
 **Throws:** `BaseJsonException`
 
-#### [`assertAllArrayKeysExist`](../../../src/Tables/Records/ReplicaAuxDatum.php#L27-L32)
+#### [`assertAllArrayKeysExist`](../../../src/Tables/Records/ReplicaAuxDatum.php#L29-L34)
 
 static · Returns `void`
+
+This method throws an InputException if any of the expected keys are absent.
+
+It does not return anything.
 
 **Parameters:**
 
@@ -1191,18 +1273,26 @@ static · Returns `void`
 
 **Throws:** `InputException`
 
-#### [`allArrayKeysExist`](../../../src/Tables/Records/ReplicaAuxDatum.php#L34-L41)
+#### [`allArrayKeysExist`](../../../src/Tables/Records/ReplicaAuxDatum.php#L42-L49)
 
 static · Returns `bool`
+
+This method returns true if every expected array key is found in the target array.
+
+Otherwise, it returns false. This is useful for input validation.
 
 **Parameters:**
 
 - `$target`: `array`
 - `...$arrayKeys`: `string`
 
-#### [`constantTimeSelect`](../../../src/Tables/Records/ReplicaAuxDatum.php#L48-L65)
+#### [`constantTimeSelect`](../../../src/Tables/Records/ReplicaAuxDatum.php#L64-L81)
 
 Returns `string`
+
+This is a constant-time conditional select. It should be read like a ternary operation.
+
+$result = ClassWithTrait::constantTimeSelect(1, $left, $right); -> $result === $left. $result = ClassWithTrait::constantTimeSelect(0, $left, $right); -> $result === $right.
 
 **Parameters:**
 
@@ -1212,49 +1302,63 @@ Returns `string`
 
 **Throws:** `CryptoException`
 
-#### [`dos2unix`](../../../src/Tables/Records/ReplicaAuxDatum.php#L73-L76)
+#### [`dos2unix`](../../../src/Tables/Records/ReplicaAuxDatum.php#L91-L94)
 
 static · Returns `string`
 
 Normalize line-endings to UNIX-style (LF rather than CRLF).
 
+This is mostly used for PEM-encoded strings.
+
 **Parameters:**
 
 - `$in`: `string`
 
-#### [`preAuthEncode`](../../../src/Tables/Records/ReplicaAuxDatum.php#L84-L97)
+#### [`preAuthEncode`](../../../src/Tables/Records/ReplicaAuxDatum.php#L112-L125)
 
 static · Returns `string`
+
+This is an implementation of PAE() from PASETO. It encodes an array of strings into a flat string consisting of:
+
+1. The number of pieces. 2. For each piece: 1. The length of the piece (in bytes). 2. The contents of the piece. This allows multipart messages to have an injective canonical representation before passing ot a hash function (or other cryptographic function).
 
 **Parameters:**
 
 - `$pieces`: `array`
 
-#### [`sortByKey`](../../../src/Tables/Records/ReplicaAuxDatum.php#L99-L107)
+#### [`sortByKey`](../../../src/Tables/Records/ReplicaAuxDatum.php#L132-L140)
 
 static · Returns `void`
+
+This sorts the target array in-place, by its keys, including child arrays.
+
+Used for ensuring arrays are sorted before JSON encoding.
 
 **Parameters:**
 
 - `$arr`: `array`
 
-#### [`LE64`](../../../src/Tables/Records/ReplicaAuxDatum.php#L111-L114)
+#### [`LE64`](../../../src/Tables/Records/ReplicaAuxDatum.php#L147-L150)
 
 static · Returns `string`
+
+Mostly used by preAuthEncode() above. This packs an integer as 8 bytes.
 
 **Parameters:**
 
 - `$n`: `int`
 
-#### [`stringToByteArray`](../../../src/Tables/Records/ReplicaAuxDatum.php#L116-L123)
+#### [`stringToByteArray`](../../../src/Tables/Records/ReplicaAuxDatum.php#L155-L162)
 
 Returns `array`
+
+Get an array of bytes representing the input string.
 
 **Parameters:**
 
 - `$str`: `string`
 
-#### [`stripNewlines`](../../../src/Tables/Records/ReplicaAuxDatum.php#L131-L165)
+#### [`stripNewlines`](../../../src/Tables/Records/ReplicaAuxDatum.php#L170-L204)
 
 static · Returns `string`
 
@@ -1400,9 +1504,13 @@ static · Returns `string`
 
 **Throws:** `BaseJsonException`
 
-#### [`assertAllArrayKeysExist`](../../../src/Tables/Records/ReplicaLeaf.php#L27-L32)
+#### [`assertAllArrayKeysExist`](../../../src/Tables/Records/ReplicaLeaf.php#L29-L34)
 
 static · Returns `void`
+
+This method throws an InputException if any of the expected keys are absent.
+
+It does not return anything.
 
 **Parameters:**
 
@@ -1411,18 +1519,26 @@ static · Returns `void`
 
 **Throws:** `InputException`
 
-#### [`allArrayKeysExist`](../../../src/Tables/Records/ReplicaLeaf.php#L34-L41)
+#### [`allArrayKeysExist`](../../../src/Tables/Records/ReplicaLeaf.php#L42-L49)
 
 static · Returns `bool`
+
+This method returns true if every expected array key is found in the target array.
+
+Otherwise, it returns false. This is useful for input validation.
 
 **Parameters:**
 
 - `$target`: `array`
 - `...$arrayKeys`: `string`
 
-#### [`constantTimeSelect`](../../../src/Tables/Records/ReplicaLeaf.php#L48-L65)
+#### [`constantTimeSelect`](../../../src/Tables/Records/ReplicaLeaf.php#L64-L81)
 
 Returns `string`
+
+This is a constant-time conditional select. It should be read like a ternary operation.
+
+$result = ClassWithTrait::constantTimeSelect(1, $left, $right); -> $result === $left. $result = ClassWithTrait::constantTimeSelect(0, $left, $right); -> $result === $right.
 
 **Parameters:**
 
@@ -1432,49 +1548,63 @@ Returns `string`
 
 **Throws:** `CryptoException`
 
-#### [`dos2unix`](../../../src/Tables/Records/ReplicaLeaf.php#L73-L76)
+#### [`dos2unix`](../../../src/Tables/Records/ReplicaLeaf.php#L91-L94)
 
 static · Returns `string`
 
 Normalize line-endings to UNIX-style (LF rather than CRLF).
 
+This is mostly used for PEM-encoded strings.
+
 **Parameters:**
 
 - `$in`: `string`
 
-#### [`preAuthEncode`](../../../src/Tables/Records/ReplicaLeaf.php#L84-L97)
+#### [`preAuthEncode`](../../../src/Tables/Records/ReplicaLeaf.php#L112-L125)
 
 static · Returns `string`
+
+This is an implementation of PAE() from PASETO. It encodes an array of strings into a flat string consisting of:
+
+1. The number of pieces. 2. For each piece: 1. The length of the piece (in bytes). 2. The contents of the piece. This allows multipart messages to have an injective canonical representation before passing ot a hash function (or other cryptographic function).
 
 **Parameters:**
 
 - `$pieces`: `array`
 
-#### [`sortByKey`](../../../src/Tables/Records/ReplicaLeaf.php#L99-L107)
+#### [`sortByKey`](../../../src/Tables/Records/ReplicaLeaf.php#L132-L140)
 
 static · Returns `void`
+
+This sorts the target array in-place, by its keys, including child arrays.
+
+Used for ensuring arrays are sorted before JSON encoding.
 
 **Parameters:**
 
 - `$arr`: `array`
 
-#### [`LE64`](../../../src/Tables/Records/ReplicaLeaf.php#L111-L114)
+#### [`LE64`](../../../src/Tables/Records/ReplicaLeaf.php#L147-L150)
 
 static · Returns `string`
+
+Mostly used by preAuthEncode() above. This packs an integer as 8 bytes.
 
 **Parameters:**
 
 - `$n`: `int`
 
-#### [`stringToByteArray`](../../../src/Tables/Records/ReplicaLeaf.php#L116-L123)
+#### [`stringToByteArray`](../../../src/Tables/Records/ReplicaLeaf.php#L155-L162)
 
 Returns `array`
+
+Get an array of bytes representing the input string.
 
 **Parameters:**
 
 - `$str`: `string`
 
-#### [`stripNewlines`](../../../src/Tables/Records/ReplicaLeaf.php#L131-L165)
+#### [`stripNewlines`](../../../src/Tables/Records/ReplicaLeaf.php#L170-L204)
 
 static · Returns `string`
 
@@ -1604,9 +1734,13 @@ static · Returns `string`
 
 **Throws:** `BaseJsonException`
 
-#### [`assertAllArrayKeysExist`](../../../src/Tables/Records/ReplicaPublicKey.php#L27-L32)
+#### [`assertAllArrayKeysExist`](../../../src/Tables/Records/ReplicaPublicKey.php#L29-L34)
 
 static · Returns `void`
+
+This method throws an InputException if any of the expected keys are absent.
+
+It does not return anything.
 
 **Parameters:**
 
@@ -1615,18 +1749,26 @@ static · Returns `void`
 
 **Throws:** `InputException`
 
-#### [`allArrayKeysExist`](../../../src/Tables/Records/ReplicaPublicKey.php#L34-L41)
+#### [`allArrayKeysExist`](../../../src/Tables/Records/ReplicaPublicKey.php#L42-L49)
 
 static · Returns `bool`
+
+This method returns true if every expected array key is found in the target array.
+
+Otherwise, it returns false. This is useful for input validation.
 
 **Parameters:**
 
 - `$target`: `array`
 - `...$arrayKeys`: `string`
 
-#### [`constantTimeSelect`](../../../src/Tables/Records/ReplicaPublicKey.php#L48-L65)
+#### [`constantTimeSelect`](../../../src/Tables/Records/ReplicaPublicKey.php#L64-L81)
 
 Returns `string`
+
+This is a constant-time conditional select. It should be read like a ternary operation.
+
+$result = ClassWithTrait::constantTimeSelect(1, $left, $right); -> $result === $left. $result = ClassWithTrait::constantTimeSelect(0, $left, $right); -> $result === $right.
 
 **Parameters:**
 
@@ -1636,49 +1778,63 @@ Returns `string`
 
 **Throws:** `CryptoException`
 
-#### [`dos2unix`](../../../src/Tables/Records/ReplicaPublicKey.php#L73-L76)
+#### [`dos2unix`](../../../src/Tables/Records/ReplicaPublicKey.php#L91-L94)
 
 static · Returns `string`
 
 Normalize line-endings to UNIX-style (LF rather than CRLF).
 
+This is mostly used for PEM-encoded strings.
+
 **Parameters:**
 
 - `$in`: `string`
 
-#### [`preAuthEncode`](../../../src/Tables/Records/ReplicaPublicKey.php#L84-L97)
+#### [`preAuthEncode`](../../../src/Tables/Records/ReplicaPublicKey.php#L112-L125)
 
 static · Returns `string`
+
+This is an implementation of PAE() from PASETO. It encodes an array of strings into a flat string consisting of:
+
+1. The number of pieces. 2. For each piece: 1. The length of the piece (in bytes). 2. The contents of the piece. This allows multipart messages to have an injective canonical representation before passing ot a hash function (or other cryptographic function).
 
 **Parameters:**
 
 - `$pieces`: `array`
 
-#### [`sortByKey`](../../../src/Tables/Records/ReplicaPublicKey.php#L99-L107)
+#### [`sortByKey`](../../../src/Tables/Records/ReplicaPublicKey.php#L132-L140)
 
 static · Returns `void`
+
+This sorts the target array in-place, by its keys, including child arrays.
+
+Used for ensuring arrays are sorted before JSON encoding.
 
 **Parameters:**
 
 - `$arr`: `array`
 
-#### [`LE64`](../../../src/Tables/Records/ReplicaPublicKey.php#L111-L114)
+#### [`LE64`](../../../src/Tables/Records/ReplicaPublicKey.php#L147-L150)
 
 static · Returns `string`
+
+Mostly used by preAuthEncode() above. This packs an integer as 8 bytes.
 
 **Parameters:**
 
 - `$n`: `int`
 
-#### [`stringToByteArray`](../../../src/Tables/Records/ReplicaPublicKey.php#L116-L123)
+#### [`stringToByteArray`](../../../src/Tables/Records/ReplicaPublicKey.php#L155-L162)
 
 Returns `array`
+
+Get an array of bytes representing the input string.
 
 **Parameters:**
 
 - `$str`: `string`
 
-#### [`stripNewlines`](../../../src/Tables/Records/ReplicaPublicKey.php#L131-L165)
+#### [`stripNewlines`](../../../src/Tables/Records/ReplicaPublicKey.php#L170-L204)
 
 static · Returns `string`
 
