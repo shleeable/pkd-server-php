@@ -125,10 +125,13 @@ class MerkleState extends Table
 
         // Validate hostname:
         $hostname = $this->config()->getParams()->hostname;
-        if ($tmp['hostname'] !== $hostname) {
+        if (!hash_equals($tmp['hostname'], $hostname)) {
             // If hostname is formatted as a URL, just grab the hostname:
             $parsedHost = self::parseUrlHost($tmp['hostname']);
-            if ($parsedHost !== $hostname) {
+            if (!is_string($parsedHost)) {
+                throw new ProtocolException('Invalid hostname');
+            }
+            if (!hash_equals($parsedHost, $hostname)) {
                 // Both mismatched? Bail out.
                 throw new ProtocolException('Hostname mismatch');
             }
@@ -225,7 +228,7 @@ class MerkleState extends Table
      *
      * @api
      */
-    public function insertLeaf(MerkleLeaf $leaf, callable $inTransaction, int $maxRetries = 5): bool
+    public function insertLeaf(MerkleLeaf $leaf, callable $inTransaction, int $maxRetries = 20): bool
     {
         $attempt = 0;
         $lockChallenge = sodium_bin2hex(random_bytes(32));
@@ -240,7 +243,7 @@ class MerkleState extends Table
             } catch (ConcurrentException $e) {
                 if ($attempt < $maxRetries - 1) {
                     $attempt++;
-                    usleep(random_int(10000, 100000)); // Random backoff 10-100ms
+                    usleep(random_int(10000, 1000000)); // Random backoff 10-1000ms
                     continue;
                 }
                 throw $e;
@@ -405,8 +408,10 @@ class MerkleState extends Table
             "SELECT publickeyhash, contents, contenthash, wrappedkeys, root, created, signature
             FROM pkd_merkle_leaves
             WHERE merkleleafid > ?
-            LIMIT {$limit} OFFSET {$offset}",
-            $oldRootID
+            LIMIT ? OFFSET ?",
+            $oldRootID,
+            $limit,
+            $offset
         );
         $return = [];
         $keyWrapping = new KeyWrapping($this->config());
@@ -459,8 +464,9 @@ class MerkleState extends Table
                 $storedChallenge = $row['lock_challenge'] ?? null;
                 break;
             case "sqlite":
-                $this->db->beginTransaction();
-                $this->db->exec("PRAGMA busy_timeout=5000");
+                $this->db->exec("PRAGMA busy_timeout=1000");
+                $this->db->getPdo()->setAttribute(PDO::ATTR_TIMEOUT, 1);
+                $this->db->exec("BEGIN EXCLUSIVE TRANSACTION");
                 $row = self::assertArray($this->db->row(
                     "SELECT merkle_state, lock_challenge
                         FROM pkd_merkle_state WHERE 1"
@@ -562,8 +568,18 @@ class MerkleState extends Table
             $inTransaction();
 
             // We only commit this transaction if all was successful:
+            if ($this->db->getDriver() === 'sqlite') {
+                $this->db->exec("END TRANSACTION");
+                return true;
+            }
             return $this->db->commit();
         } finally {
+            if ($this->db->getDriver() === 'sqlite') {
+                try {
+                    $this->db->exec("ROLLBACK");
+                } catch (PDOException) {
+                }
+            }
             // @phpstan-ignore-next-line
             $wrap = !$this->db->inTransaction();
             // @phpstan-ignore-next-line

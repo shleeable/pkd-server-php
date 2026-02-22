@@ -196,6 +196,9 @@ trait HttpTestTrait
         } else {
             $db = $GLOBALS['pkdConfig']->getDb();
         }
+        if ($db->inTransaction()) {
+            $db->rollback();
+        }
         $tables = [
             'pkd_merkle_witness_cosignatures',
             'pkd_merkle_witnesses',

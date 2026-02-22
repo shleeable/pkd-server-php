@@ -41,6 +41,7 @@ use FediE2EE\PKDServer\Exceptions\{
 };
 use FediE2EE\PKDServer\{
     AppCache,
+    Meta\Params,
     Traits\ConfigTrait,
     Math,
     Protocol,
@@ -66,6 +67,7 @@ use FediE2EE\PKDServer\Tables\Records\{
     Peer
 };
 use FediE2EE\PKDServer\Tests\HttpTestTrait;
+use FediE2EE\PKDServer\Traits\TOTPTrait;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\{
     Response,
@@ -116,10 +118,12 @@ use SodiumException;
 #[UsesClass(Math::class)]
 #[UsesClass(RewrapConfig::class)]
 #[UsesClass(Peer::class)]
+#[UsesClass(Params::class)]
 class BurnDownTest extends TestCase
 {
     use ConfigTrait;
     use HttpTestTrait;
+    use TOTPTrait;
 
     /**
      * @throws ArrayKeyException
@@ -152,8 +156,8 @@ class BurnDownTest extends TestCase
     {
         // Create two actors on the SAME domain: one to burn down, one as operator
         // Per spec, BurnDown must be from an operator on the same instance as the target
-        [$actorHandle, $canonActor] = $this->makeDummyActor();
-        [$operatorHandle, $canonOperator] = $this->makeDummyActor();
+        [$actorHandle, $canonActor] = $this->makeDummyActor('text-burndown.example.com');
+        [$operatorHandle, $canonOperator] = $this->makeDummyActor('text-burndown.example.com');
 
         $actorKey = SecretKey::generate();
         $operatorKey = SecretKey::generate();
@@ -168,6 +172,7 @@ class BurnDownTest extends TestCase
         $serverHpke = $config->getHPKE();
         $handler = new Handler();
 
+        $this->assertNotInTransaction();
         // 1. Add key for the actor (victim)
         $latestRoot1 = $merkleState->getLatestRoot();
         $addKey1 = new AddKey($canonActor, $actorKey->getPublicKey());
@@ -219,9 +224,14 @@ class BurnDownTest extends TestCase
             ]))
         );
 
+        $totpSecret = random_bytes(20);
+        /** @var TOTP $totpTable */
+        $totpTable = $this->table('TOTP');
+        $totpTable->saveSecret('text-burndown.example.com', $totpSecret);
+
         $latestRoot3 = $merkleState->getLatestRoot();
         // Note: BurnDownAction canonicalizes actor but NOT operator, so operator must be canonical URL
-        $otp = '12345678';
+        $otp = self::generateTOTP($totpSecret);
         $now = (new DateTimeImmutable('NOW'));
         $burnDown = new BurnDownAction($actorHandle, $canonOperator, $now, $otp);
         $akm3 = (new AttributeKeyMap())
@@ -231,6 +241,7 @@ class BurnDownTest extends TestCase
 
         // OTP is a top-level Bundle field (not part of the signed/encrypted message)
         $bundleData = json_decode($bundle3->toJson(), true);
+        $otp = self::generateTOTP($totpSecret);
         $bundleData['otp'] = $otp;
         $bundleJson = json_encode($bundleData, JSON_UNESCAPED_SLASHES);
 
@@ -366,7 +377,7 @@ class BurnDownTest extends TestCase
         // Handle request - should fail signature verification
         $this->clearOldTransaction($config);
         $response = $burnDownHandler->handle($request);
-        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame(400, $response->getStatusCode());
 
         $body = json_decode($response->getBody()->getContents(), true);
         $this->assertSame('fedi-e2ee:v1/api/burndown', $body['!pkd-context']);

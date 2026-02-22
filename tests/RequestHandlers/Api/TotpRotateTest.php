@@ -166,6 +166,7 @@ class TotpRotateTest extends TestCase
     #[DataProvider("timeOffsetProvider")]
     public function testHandle(int $timeOffset): void
     {
+        $this->assertNotInTransaction();
         $sk = SecretKey::generate();
         $pk = $sk->getPublicKey();
         $hash = hash('sha256', pack('q', $timeOffset));
@@ -204,8 +205,10 @@ class TotpRotateTest extends TestCase
             $serverHpke->encapsKey,
             $serverHpke->cs,
         );
+        $this->assertNotInTransaction();
         $addKeyResult = $protocol->addKey($encryptedForServer, $canonical);
         $keyId = $addKeyResult->keyID;
+        $this->assertNotInTransaction();
 
         $domain = parse_url($canonical)['host'];
         $this->assertSame($rotatedomain, $domain);
@@ -636,6 +639,7 @@ class TotpRotateTest extends TestCase
             $serverHpke->encapsKey,
             $serverHpke->cs,
         );
+        $this->assertNotInTransaction();
         $addKeyResult = $protocol->addKey($encryptedForServer, $canonical);
         $keyId = $addKeyResult->keyID;
 
@@ -736,6 +740,7 @@ class TotpRotateTest extends TestCase
         $this->clearOldTransaction($config);
         $protocol = new Protocol($config);
 
+        $this->assertNotInTransaction();
         $addKeyResult = $this->addKeyForActor($canonical, $sk, $protocol, $config);
         $keyId = $addKeyResult->keyID;
 
@@ -806,6 +811,7 @@ class TotpRotateTest extends TestCase
         $this->clearOldTransaction($config);
         $protocol = new Protocol($config);
 
+        $this->assertNotInTransaction();
         $addKeyResult = $this->addKeyForActor($canonical, $sk, $protocol, $config);
         $keyId = $addKeyResult->keyID;
 
